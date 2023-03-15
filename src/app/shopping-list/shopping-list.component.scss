@@ -179,6 +179,7 @@ form {
 .add-button{
   margin-left: 1rem;
   background-color: #7fd679;
+  transition: opacity 400ms linear 0ms;
 }
 
 .add-button:hover{
@@ -191,4 +192,9 @@ form {
 
 .clear-button:hover{
   box-shadow: 0px 0px 10px 0px rgb(25, 112, 198);
+}
+
+.add-button.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }

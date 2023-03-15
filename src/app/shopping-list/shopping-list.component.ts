@@ -42,6 +42,10 @@ export class ShoppingListComponent implements OnInit {
     this.form.reset();
   }
 
+  onClearButtonClick(): void {
+    this.form.reset();
+  }
+
   isFormValid(): boolean {
     return !this.form.valid && this.form.touched
   }
