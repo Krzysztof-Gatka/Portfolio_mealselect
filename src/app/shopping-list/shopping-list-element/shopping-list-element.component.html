@@ -1,6 +1,7 @@
 <div class="shopping-list-element-container">
+
   <button
-    *ngIf="product"
+    *ngIf="product && !editMode"
     class="app-shopping-list-element-button"
     (click)="onProductClick()"
     [class.non-active]="!isActive"
@@ -10,14 +11,47 @@
     <p>{{ product.quantity}} {{product.unit}}</p>
 
   </button>
+
+  <div
+      *ngIf="editMode"
+      class="product-edit-container"
+    >
+      <form [formGroup]="form">
+        <div class="shopping-list-inputs-container">
+          <input
+            formControlName="productName"
+            placeholder="Name"
+            class="shopping-list-input product-name-input"
+            type="text"
+          >
+          <input
+            formControlName="productQuantity"
+            placeholder="Quantity"
+            class="shopping-list-input product-quantity-input"
+            type="number"
+          >
+          <input
+            formControlName="productUnit"
+            placeholder="Unit"
+            class="shopping-list-input product-unit-input"
+            type="text"
+          >
+        </div>
+      </form>
+    </div>
+
+
   <div class="buttons-container">
     <button
     (click)="onButtonClick()"
     class="delete-button"
   >
   </button>
-  <button class="edit-button" (click)="onEditButtonClick()">
+  <button *ngIf="!editMode" class="edit-button" (click)="onEditButtonClick()">
     <img class="edit-img" src="../../../assets/edit-1-svgrepo-com.svg">
+  </button>
+  <button *ngIf="editMode" class="save-button" (click)="onSaveButtonClick()">
+    <img class="save-img" src="../../../assets/tick-svgrepo-com.svg">
   </button>
   </div>
 </div>

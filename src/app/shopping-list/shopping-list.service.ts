@@ -11,6 +11,7 @@ export class ShoppingListService {
     new Product('chicken breast', 500, 'g'),
   ];
   productDeleted = new Subject();
+  productUpdated = new Subject();
 
   getShoppingListElements(): Product[] {
     return this.shoppingListElements.slice();
@@ -24,5 +25,13 @@ export class ShoppingListService {
   deleteElement(index: number): void {
     this.shoppingListElements = this.shoppingListElements.filter((element, i) => i !== index);
     this.productDeleted.next('');
+  }
+
+  updateElement(index: number, product: Product): void {
+    this.shoppingListElements = this.shoppingListElements.map((prod, i)=> {
+      if (i === index) return product;
+      return prod;
+    });
+    this.productUpdated.next('');
   }
 }

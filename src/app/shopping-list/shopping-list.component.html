@@ -12,28 +12,28 @@
       [ngClass]="isFormValid() ? 'invalid-form' : ''"
       class="shopping-list-add-element-placeholder"
     >
-    <form [formGroup]="form">
-      <div class="shopping-list-inputs-container">
-        <input
-          formControlName="productName"
-          placeholder="Name"
-          class="shopping-list-input product-name-input"
-          type="text"
-        >
-        <input
-          formControlName="productQuantity"
-          placeholder="Quantity"
-          class="shopping-list-input product-quantity-input"
-          type="number"
-        >
-        <input
-          formControlName="productUnit"
-          placeholder="Unit"
-          class="shopping-list-input product-unit-input"
-          type="text"
-        >
-      </div>
-    </form>
+      <form [formGroup]="form">
+        <div class="shopping-list-inputs-container">
+          <input
+            formControlName="productName"
+            placeholder="Name"
+            class="shopping-list-input product-name-input"
+            type="text"
+          >
+          <input
+            formControlName="productQuantity"
+            placeholder="Quantity"
+            class="shopping-list-input product-quantity-input"
+            type="number"
+          >
+          <input
+            formControlName="productUnit"
+            placeholder="Unit"
+            class="shopping-list-input product-unit-input"
+            type="text"
+          >
+        </div>
+      </form>
     </div>
 
     <div class="shopping-list-add-button-container">
