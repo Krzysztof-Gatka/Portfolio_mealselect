@@ -15,7 +15,7 @@
 .shopping-list-add-element-placeholder {
   position: relative;
 
-  width: 100%;
+  width: calc(100% - 8rem);
 
   padding: 1.5rem;
   margin: 5px 0px;
@@ -38,7 +38,7 @@
   margin-top: 1rem;
   position: relative;
 
-  width: 100%;
+  width: calc(100% - 10rem);
   margin: 1.5rem 0px;
 
   display: flex;

@@ -10,9 +10,14 @@
     <p>{{ product.quantity}} {{product.unit}}</p>
 
   </button>
-  <button
+  <div class="buttons-container">
+    <button
     (click)="onButtonClick()"
     class="delete-button"
   >
   </button>
+  <button class="edit-button" (click)="onEditButtonClick()">
+    <img class="edit-img" src="../../../assets/edit-1-svgrepo-com.svg">
+  </button>
+  </div>
 </div>

@@ -15,11 +15,15 @@ export class ShoppingListElementComponent {
 
   constructor(private shoppingListService: ShoppingListService) {}
 
+  onProductClick(): void {
+    this.isActive = !this.isActive;
+  }
+
   onButtonClick(): void {
     this.shoppingListService.deleteElement(this.productIndex!);
   }
 
-  onProductClick(): void {
-    this.isActive = !this.isActive;
+  onEditButtonClick(): void {
+
   }
 }
