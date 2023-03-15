@@ -13,4 +13,9 @@ export class ShoppingListService {
   getShoppingListElements(): Product[] {
     return this.shoppingListElements.slice();
   }
+
+  addElement(product: Product): Product[] {
+    this.shoppingListElements.push(product);
+    return this.shoppingListElements;
+  }
 }

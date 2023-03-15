@@ -8,14 +8,29 @@
   <div class="shopping-list-buttons-container">
 
     <div
+      [ngClass]="isFormValid() ? 'invalid-form' : ''"
       class="shopping-list-add-element-placeholder"
-      (click)="onAddButtonClick()"
     >
-    <form>
+    <form [formGroup]="form">
       <div class="shopping-list-inputs-container">
-        <input placeholder="Name" class="shopping-list-input product-name-input" type="text">
-        <input placeholder="Quantity" class="shopping-list-input product-quantity-input" type="text">
-        <input placeholder="Unit" class="shopping-list-input product-unit-input" type="text">
+        <input
+          formControlName="productName"
+          placeholder="Name"
+          class="shopping-list-input product-name-input"
+          type="text"
+        >
+        <input
+          formControlName="productQuantity"
+          placeholder="Quantity"
+          class="shopping-list-input product-quantity-input"
+          type="number"
+        >
+        <input
+          formControlName="productUnit"
+          placeholder="Unit"
+          class="shopping-list-input product-unit-input"
+          type="text"
+        >
       </div>
     </form>
     </div>
@@ -23,6 +38,8 @@
     <div class="shopping-list-add-button-container">
       <button
         class="shopping-list-add-button"
+        [ngClass]="isFormValid() ? 'invalid-form-add-button' : ''"
+        (click)="onAddButtonClick()"
       >
       </button>
     </div>
