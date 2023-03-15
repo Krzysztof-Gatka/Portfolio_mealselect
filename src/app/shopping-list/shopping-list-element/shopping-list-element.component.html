@@ -1,12 +1,18 @@
-<button
-  *ngIf="product"
-  #button
-  class="app-shopping-list-element-button"
-  (click)="onButtonClick()"
-  [class.non-active]="!isActive"
->
+<div class="shopping-list-element-container">
+  <button
+    *ngIf="product"
+    class="app-shopping-list-element-button"
+    (click)="onProductClick()"
+    [class.non-active]="!isActive"
+  >
 
-  <p>{{ product.name }}</p>
-  <p>{{ product.quantity}} {{product.unit}}</p>
+    <p>{{ product.name }}</p>
+    <p>{{ product.quantity}} {{product.unit}}</p>
 
-</button>
+  </button>
+  <button
+    (click)="onButtonClick()"
+    class="delete-button"
+  >
+  </button>
+</div>

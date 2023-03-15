@@ -21,6 +21,9 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.shoppingListElements = this.shoppingListService.getShoppingListElements();
+    this.shoppingListService.productDeleted.subscribe(()=> {
+      this.shoppingListElements = this.shoppingListService.getShoppingListElements();
+    })
   }
 
   onAddButtonClick(): void {

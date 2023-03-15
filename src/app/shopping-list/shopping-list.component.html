@@ -1,8 +1,9 @@
 <div class="shopping-list-container">
 
   <app-shopping-list-element
-    *ngFor="let element of shoppingListElements"
+    *ngFor="let element of shoppingListElements; let i = index"
     [product]="element"
+    [productIndex]="i"
   ></app-shopping-list-element>
 
   <div class="shopping-list-buttons-container">

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ShoppingListService } from '../shopping-list.service';
 
 import { Product } from './product.model';
 
@@ -9,9 +10,16 @@ import { Product } from './product.model';
 })
 export class ShoppingListElementComponent {
   @Input() product: Product | undefined;
+  @Input() productIndex: number | undefined;
   isActive: boolean = true;
 
-  onButtonClick():void {
+  constructor(private shoppingListService: ShoppingListService) {}
+
+  onButtonClick(): void {
+    this.shoppingListService.deleteElement(this.productIndex!);
+  }
+
+  onProductClick(): void {
     this.isActive = !this.isActive;
   }
 }
