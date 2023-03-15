@@ -9,13 +9,16 @@
 }
 
 .shopping-list-buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   margin-top: 2rem;
 }
 
 .shopping-list-add-element-placeholder {
   position: relative;
 
-  width: calc(100% - 8rem);
+  width: 100%;
 
   padding: 1.5rem;
   margin: 5px 0px;
@@ -38,13 +41,13 @@
   margin-top: 1rem;
   position: relative;
 
-  width: calc(100% - 10rem);
+  width: 10rem;
   margin: 1.5rem 0px;
 
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 
 }
 
@@ -135,4 +138,57 @@ form {
 
 .invalid-form {
   box-shadow: 0px 0px 5px 0px rgb(157, 1, 1);
+}
+
+
+.clear-img {
+  width: 1.75rem;
+  height: 1.75rem;
+  transform: rotate(-45deg);
+}
+
+.add-img {
+  width: 2rem;
+  height: 2rem;
+  transform: rotate(-45deg);
+}
+
+.placeholder-button {
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  min-width: 2.15rem;
+  min-height: 2.5rem;
+  background-color: rgb(85, 99, 249);
+  transform: rotate(45deg);
+  box-shadow: 0px 0px 5px 0px black;
+  transition: translate 200ms ease-in-out 0ms;
+
+}
+
+.placeholder-button:hover {
+  box-shadow: 0px 0px 10px 0px rgb(60, 70, 176);
+  translate: 3px;
+}
+
+.placeholder-button:hover .clear-img,
+  .placeholder-button:hover .add-img{
+  filter: invert(99%) sepia(71%) saturate(305%) hue-rotate(13deg) brightness(105%) contrast(92%);
+}
+
+.add-button{
+  margin-left: 1rem;
+  background-color: #7fd679;
+}
+
+.add-button:hover{
+  box-shadow: 0px 0px 10px 0px #57a336;
+}
+
+.clear-button{
+  background-color: #1e90ff;
+}
+
+.clear-button:hover{
+  box-shadow: 0px 0px 10px 0px rgb(25, 112, 198);
 }

@@ -37,12 +37,18 @@
     </div>
 
     <div class="shopping-list-add-button-container">
-      <button
+      <button class="placeholder-button add-button" (click)="onAddButtonClick()" [disabled]="form.valid">
+        <img class="add-img" src="../../assets/add-svgrepo-com.svg">
+      </button>
+      <button class="placeholder-button clear-button">
+        <img class="clear-img" src="../../assets/clear-svgrepo-com.svg">
+      </button>
+      <!-- <button
         class="shopping-list-add-button"
         [ngClass]="isFormValid() ? 'invalid-form-add-button' : ''"
         (click)="onAddButtonClick()"
       >
-      </button>
+      </button> -->
     </div>
 
   </div>
