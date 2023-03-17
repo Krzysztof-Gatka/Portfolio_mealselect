@@ -2,22 +2,26 @@
 
   <div
     class="inputs-container"
+    [formGroup]="form"
   >
 
     <input
       type="text"
       class="name-input ipt"
       placeholder="Name"
+      formControlName="productName"
     >
     <input
       type="number"
       class="quantity-input ipt"
-      placeholder="Quantity"
+      placeholder="Qty"
+      formControlName="productQuantity"
     >
     <input
       type="text"
       class="unit-input ipt"
       placeholder="Unit"
+      formControlName="productUnit"
     >
 
   </div>
@@ -26,11 +30,18 @@
     class="buttons-container"
   >
     <button
-      class="btn"
-    ></button>
+      [ngClass]="!form.valid ? 'disabled' : ''"
+      (click)="onAddButtonClick()"
+      class="btn btn-add"
+    >
+      <img class="add-img" src="../../../assets/add-svgrepo-com.svg">
+    </button>
     <button
-      class="btn"
-    ></button>
+      (click)="onClearButtonClick()"
+      class="btn btn-clear"
+    >
+      <img class="clear-img" src="../../../assets/clear-svgrepo-com.svg">
+    </button>
 
   </div>
 
