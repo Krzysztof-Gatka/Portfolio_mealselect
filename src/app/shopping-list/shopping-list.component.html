@@ -1,1 +1,32 @@
-<p>shopping-list works!</p>
+<div class="shopping-list-container">
+
+  <app-shopping-list-element
+    *ngFor="let element of shoppingListElements"
+    [product]="element"
+  ></app-shopping-list-element>
+
+  <div class="shopping-list-buttons-container">
+
+    <div
+      class="shopping-list-add-element-placeholder"
+      (click)="onAddButtonClick()"
+    >
+    <form>
+      <div class="shopping-list-inputs-container">
+        <input placeholder="Name" class="shopping-list-input product-name-input" type="text">
+        <input placeholder="Quantity" class="shopping-list-input product-quantity-input" type="text">
+        <input placeholder="Unit" class="shopping-list-input product-unit-input" type="text">
+      </div>
+    </form>
+    </div>
+
+    <div class="shopping-list-add-button-container">
+      <button
+        class="shopping-list-add-button"
+      >
+      </button>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,127 @@
+.shopping-list-container {
+  width: 100%;
+
+  margin: 20px 0px;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.shopping-list-buttons-container {
+  margin-top: 2rem;
+}
+
+.shopping-list-add-element-placeholder {
+  position: relative;
+
+  width: 100%;
+
+  padding: 1.5rem;
+  margin: 5px 0px;
+
+  cursor: pointer;
+  text-align: left;
+
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 6px 0px gray;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  background-color: rgb(244, 244, 244);
+}
+
+.shopping-list-add-button-container {
+  margin-top: 1rem;
+  position: relative;
+
+  width: 100%;
+  margin: 1rem 0px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.shopping-list-add-button {
+  cursor: pointer;
+  position: relative;
+
+  width: 2.5rem;
+  height: 2.5rem;
+
+  border-radius: 50%;
+  background-color: #6CCA43;
+  box-shadow: 0px 0px 3px 0px black;
+  border:none;
+
+  transition: translate 1000ms ease-in-out 0ms, transform 400ms ease-in-out 300ms;
+}
+
+.shopping-list-add-button:hover {
+  box-shadow: 0px 0px 5px 0px black;
+  translate: 0px -5px;
+  transform: rotate(360deg);
+}
+
+.shopping-list-add-button::after,
+.shopping-list-add-button::before {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+
+  content: "";
+  display: block;
+
+  height: 60%;
+  width: 0.3rem;
+
+  border-radius: 1rem;
+  background: black;
+}
+
+.shopping-list-add-button::before {
+  width: 60%;
+  height: 0.3rem;
+}
+
+.shopping-list-add-button:hover::after,
+.shopping-list-add-button:hover::before {
+  background-color: beige;
+}
+
+.shopping-list-input {
+  width: 10rem;
+  height: 1.5rem;
+  padding: 0 5px;
+
+  border: none;
+  box-shadow: 0px 0px 3px 0px black;
+}
+
+.product-unit-input {
+  width: 3rem;
+}
+
+.product-quantity-input {
+  width: 5rem;
+}
+
+form {
+  width: 100%
+}
+
+.shopping-list-inputs-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

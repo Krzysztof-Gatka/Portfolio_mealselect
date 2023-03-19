@@ -1,0 +1,12 @@
+<button
+  *ngIf="product"
+  #button
+  class="app-shopping-list-element-button"
+  (click)="onButtonClick()"
+  [class.non-active]="!isActive"
+>
+
+  <p>{{ product.name }}</p>
+  <p>{{ product.quantity}} {{product.unit}}</p>
+
+</button>
