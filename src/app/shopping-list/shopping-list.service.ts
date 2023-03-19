@@ -14,7 +14,8 @@ export class ShoppingListService {
   productsChanged = new Subject();
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
-  lastDeletedProduct: Product | undefined;
+  deletedProducts = new Subject<number>();
+  deletedProductsStack: Product[] = [];
 
   getShoppingListElements(): Product[] {
     return this.shoppingListElements.slice();
@@ -27,7 +28,10 @@ export class ShoppingListService {
 
   deleteElement(index: number): void {
     this.shoppingListElements = this.shoppingListElements.filter((element, i) =>{ if(i === index){
-        this.lastDeletedProduct = element;
+        this.deletedProductsStack.push(element);
+        if(this.deletedProductsStack.length === 1) {
+          this.deletedProducts.next(1);
+        }
     }
     return i !==index
   });
@@ -44,5 +48,16 @@ export class ShoppingListService {
 
   clear() :void {
     this.shoppingListElements = [];
+  }
+
+  private _getLastDeletedProduct(): Product | undefined {
+    return this.deletedProductsStack.pop()
+  }
+
+  reviveLastProduct(): Product[] {
+    const deletedProduct = this._getLastDeletedProduct()
+    if(this.deletedProductsStack.length === 0) this.deletedProducts.next(-1);
+    if(!deletedProduct) return this.shoppingListElements;
+    return this.addElement(deletedProduct);
   }
 }
