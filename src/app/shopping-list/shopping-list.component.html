@@ -1,0 +1,27 @@
+<div class="shopping-list-container">
+
+  <app-shopping-list-element
+    *ngFor="let element of shoppingListElements; let i = index"
+    [product]="element"
+    [productIndex]="i"
+  ></app-shopping-list-element>
+
+  <app-shopping-list-input
+    (itemAdded)="onItemAdded($event)"
+    [editing]="false"
+  ></app-shopping-list-input>
+
+  <div class="btns-container">
+    <button *ngIf="deletedProductsAvailable" class="btn" (click)="onReviveLastProduct()">Bring back last deleted product</button>
+    <button *ngIf="shoppingListElements?.length !== 0" class="btn" (click)="onClearList()">Clear list</button>
+  </div>
+
+  <div *ngIf="modalOpened" class="clear-list-modal" (click)="onModalClick()">
+    <h3 class="header" >Are you sure that you want to clear the list ?</h3>
+    <button (click)="onYesClick()" class="btn btn-yes">Yes</button>
+    <button class="btn btn-cancel">Cancel</button>
+  </div>
+
+</div>
+
+

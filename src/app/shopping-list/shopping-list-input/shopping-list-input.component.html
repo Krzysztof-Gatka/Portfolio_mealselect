@@ -1,0 +1,51 @@
+<div class="main-container">
+
+  <div
+    class="inputs-container"
+    [formGroup]="form"
+  >
+
+    <input
+      type="text"
+      class="name-input ipt"
+      placeholder="Name"
+      formControlName="productName"
+    >
+    <input
+      type="number"
+      class="quantity-input ipt"
+      placeholder="Qty"
+      formControlName="productQuantity"
+    >
+    <input
+      type="text"
+      class="unit-input ipt"
+      placeholder="Unit"
+      formControlName="productUnit"
+    >
+
+  </div>
+
+  <div
+    class="buttons-container"
+    *ngIf="!editing"
+  >
+    <button
+      [ngClass]="!form.valid ? 'disabled' : ''"
+      (click)="onAddButtonClick()"
+      class="btn btn-add"
+      [tabIndex]="!form.valid ? -1 : ''"
+    >
+      <img class="add-img" src="../../../assets/add-svgrepo-com.svg">
+    </button>
+    <button
+      (click)="onClearButtonClick()"
+      class="btn btn-clear"
+    >
+      <img class="clear-img" src="../../../assets/clear-svgrepo-com.svg">
+    </button>
+
+  </div>
+
+</div>
+
