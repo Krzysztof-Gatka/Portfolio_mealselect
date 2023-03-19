@@ -1,6 +1,7 @@
 <div class="main-container">
 
   <div
+    [ngClass]="isActive ? '' : 'non-active'"
     *ngIf="product && !editMode"
     class="list-element"
     (click)="onProductClick()"
@@ -14,9 +15,11 @@
       <p>{{ product.quantity}} {{product.unit}}</p>
     </div>
 
+    <div class="green-window"></div>
+    <div class="tick">Got it!</div>
   </div>
 
-  <app-shopping-list-input *ngIf="editMode" [editing]="editMode"></app-shopping-list-input>
+  <app-shopping-list-input *ngIf="editMode" [editing]="editMode" [product]="product"></app-shopping-list-input>
 
   <div class="buttons-container" >
 

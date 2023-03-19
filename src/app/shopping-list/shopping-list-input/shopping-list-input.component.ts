@@ -18,17 +18,22 @@ export class ShoppingListInputComponent implements OnInit {
 
   @Output() itemAdded = new EventEmitter<Product>();
   @Input() editing: boolean | undefined;
+  @Input() product: Product | undefined;
 
   ngOnInit(): void {
-    // debugger;
-    // throw new Error('Method not implemented.');
+    if(this.product) {
+      this.form = new FormGroup({
+        productName: new FormControl(this.product.name, Validators.required),
+        productQuantity: new FormControl(this.product.quantity.toString(), Validators.pattern(/^[1-9][0-9]*/)),
+        productUnit: new FormControl(this.product.unit,)
+      })
+    }
   }
 
   onAddButtonClick(): void {
     const name = this.form.controls.productName.value!;
     const quantity = +this.form.controls.productQuantity.value!;
     const unit = this.form.controls.productUnit.value!;
-
     const newProduct = new Product(name, quantity, unit);
     this.itemAdded.emit(newProduct);
     this.form.reset();

@@ -1,11 +1,11 @@
 @import '../../../scss/variables';
 
-$btn-delete-color:#66d85e;
-$btn-delete-shadow-color:#57a336;
-$btn-edit-color: #1e90ff;
-$btn-edit-shadow-color:#1970c6;
-$btn-save-color: #1e90ff;
-$btn-save-shadow-color:#1970c6;
+$btn-delete-color:hsl(348, 100%, 31%);
+$btn-delete-shadow-color:hsl(348, 50%, 31%);
+$btn-edit-color: hsl(210, 100%, 56%);
+$btn-edit-shadow-color:hsl(210, 50%, 44%);
+$btn-save-color: #1de581;
+$btn-save-shadow-color:hsl(150, 50%, 56%);
 
 
 .main-container{
@@ -17,9 +17,12 @@ $btn-save-shadow-color:#1970c6;
 }
 
 .list-element {
+  position: relative;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 
   width: 80%;
   padding: 1rem;
@@ -29,6 +32,62 @@ $btn-save-shadow-color:#1970c6;
 
   box-shadow: 0px 0px 6px 0px gray;
   background-color: $primary-gray;
+
+  transition: transform 200ms ease-in-out 0ms, color 600ms ease-in-out 0ms;
+  overflow: hidden;
+}
+
+.non-active {
+  box-shadow: 0px 0px 0px 2px green;
+}
+
+.list-element:hover {
+  transform: translate(-7px);
+  box-shadow: 0px 0px 7px 1px gray;
+}
+
+.non-active .tick {
+  transform: scale(1);
+}
+
+.tick {
+  position: absolute;
+  top: 50%;
+  left:50%;
+  min-width: 7rem;
+  width: 20%;
+  height: 70%;
+  border-radius: 5px;
+  translate:-50% -50%;
+  background-color: #1de581;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bolder;
+  border: 2px solid white;
+  color: white;
+  transform: scale(0);
+
+  transition: transform 600ms ease-in-out 0ms;
+}
+
+.green-window {
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  transition: background-color 600ms ease-in-out 0ms;
+}
+
+.list-element.non-active .green-window {
+  background-color: rgba(39, 200, 7,0.5);
+}
+
+.list-element.non-active {
+  color: gray;
 }
 
 .buttons-container {
@@ -40,6 +99,12 @@ $btn-save-shadow-color:#1970c6;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.btn:focus {
+  outline: none;
+  border: 2px solid white;
 }
 
 .btn {
