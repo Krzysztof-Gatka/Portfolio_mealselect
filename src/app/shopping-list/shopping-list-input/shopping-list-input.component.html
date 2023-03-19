@@ -28,6 +28,7 @@
 
   <div
     class="buttons-container"
+    *ngIf="!editing"
   >
     <button
       [ngClass]="!form.valid ? 'disabled' : ''"

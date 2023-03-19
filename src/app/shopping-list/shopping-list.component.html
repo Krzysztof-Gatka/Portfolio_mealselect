@@ -6,52 +6,10 @@
     [productIndex]="i"
   ></app-shopping-list-element>
 
-  <div class="shopping-list-buttons-container">
-
-    <div
-      [ngClass]="isFormValid() ? 'invalid-form' : ''"
-      class="shopping-list-add-element-placeholder"
-    >
-      <form [formGroup]="form">
-        <div class="shopping-list-inputs-container">
-          <input
-            formControlName="productName"
-            placeholder="Name"
-            class="shopping-list-input product-name-input"
-            type="text"
-          >
-          <input
-            formControlName="productQuantity"
-            placeholder="Quantity"
-            class="shopping-list-input product-quantity-input"
-            type="number"
-          >
-          <input
-            formControlName="productUnit"
-            placeholder="Unit"
-            class="shopping-list-input product-unit-input"
-            type="text"
-          >
-        </div>
-      </form>
-    </div>
-
-    <div class="shopping-list-add-button-container">
-      <button class="placeholder-button add-button" (click)="onAddButtonClick()" [ngClass]="!form.valid || !form.touched ? 'disabled' : ''">
-        <img class="add-img" src="../../assets/add-svgrepo-com.svg">
-      </button>
-      <button class="placeholder-button clear-button" (click)="onClearButtonClick()">
-        <img class="clear-img" src="../../assets/clear-svgrepo-com.svg">
-      </button>
-      <!-- <button
-        class="shopping-list-add-button"
-        [ngClass]="isFormValid() ? 'invalid-form-add-button' : ''"
-        (click)="onAddButtonClick()"
-      >
-      </button> -->
-    </div>
-
-  </div>
+  <app-shopping-list-input
+    (itemAdded)="onItemAdded($event)"
+    [editing]="false"
+  ></app-shopping-list-input>
 
 </div>
 

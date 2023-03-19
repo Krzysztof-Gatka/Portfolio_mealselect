@@ -1,236 +1,101 @@
-.app-shopping-list-element-button {
+@import '../../../scss/variables';
+
+$btn-delete-color:#66d85e;
+$btn-delete-shadow-color:#57a336;
+$btn-edit-color: #1e90ff;
+$btn-edit-shadow-color:#1970c6;
+$btn-save-color: #1e90ff;
+$btn-save-shadow-color:#1970c6;
+
+
+.main-container{
   width: 100%;
+  display: flex;
+  max-width: 35rem;
 
+  flex-direction: row;
+}
+
+.list-element {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 80%;
   padding: 1rem;
-  margin: 5px 0px;
+  margin-bottom: 0.6rem;
 
-  cursor: pointer;
-  text-align: left;
-
-  border: none;
   border-radius: 5px;
+
   box-shadow: 0px 0px 6px 0px gray;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  background-color: rgb(236, 236, 236);
-
-  transition: transform 300ms ease-in-out 0ms, opacity 300ms ease-out 0ms,
-}
-
-.app-shopping-list-element-button::before {
-  position: absolute;
-  content:"";
-  width: 0;
-  height: 0;
-  transition: width 300ms ease-in 0ms;
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  background: rgb(157, 1, 1);
-}
-
-.app-shopping-list-element-button:hover {
-  transform: translate(0, -5px);
-  box-shadow: 0px 0px 6px 0px black;
-  background-color: rgb(244, 244, 244);
-}
-
-.non-active {
-  position: relative;
-  opacity: 0.4;
-}
-
-.non-active::before {
-  content:"";
-  z-index: 100;
-  width: 95%;
-  height: 0.2rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  background: rgb(157, 1, 1);
-}
-
-.shopping-list-element-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.delete-button {
-  cursor: pointer;
-
-  position: relative;
-  min-width: 2.15rem;
-  min-height: 2.5rem;
-
-  border-radius: 50%;
-  border:none;
-  margin-left: 1rem;
-  transform: rotate(45deg);
-  background-color: rgb(157, 1, 1);
-  box-shadow: 0px 0px 5px 0px black;
-
-  transition: translate 200ms ease-in-out 0ms;
-
-}
-
-.delete-button:hover {
-  box-shadow: 0px 0px 10px 0px rgb(101, 0, 0);
-  translate: 3px;
-
-}
-
-.delete-button::after,
-.delete-button::before {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-
-  content: "";
-  display: block;
-
-  height: 21.141px;
-  width: 0.3rem;
-
-  border-radius: 1rem;
-  background: black;
-}
-
-.delete-button::before {
-  width: 21.141px;
-  height: 0.3rem;
-
-}
-
-.delete-button:hover::after,
-.delete-button:hover::before {
-  background-color: #f5f5dc;
-}
-
-.edit-img {
-  width: 2rem;
-  height: 2rem;
-  transform: rotate(-45deg);
-}
-
-.edit-button {
-  cursor: pointer;
-  border-radius: 50%;
-  border: none;
-  min-width: 2.15rem;
-  min-height: 2.5rem;
-  background-color: rgb(85, 99, 249);
-  transform: rotate(45deg);
-  box-shadow: 0px 0px 5px 0px black;
-  transition: translate 200ms ease-in-out 0ms;
-
-}
-
-.edit-button:hover {
-  box-shadow: 0px 0px 10px 0px rgb(60, 70, 176);
-  translate: 3px;
-}
-
-.edit-button:hover .edit-img{
-  filter: invert(99%) sepia(71%) saturate(305%) hue-rotate(13deg) brightness(105%) contrast(92%);
-}
-
-.save-img {
-  width: 2rem;
-  height: 2rem;
-  transform: rotate(-45deg);
-}
-
-.save-button {
-  cursor: pointer;
-  border-radius: 50%;
-  border: none;
-  min-width: 2.15rem;
-  min-height: 2.5rem;
-  background-color: #00CA91;
-  transform: rotate(45deg);
-  box-shadow: 0px 0px 5px 0px black;
-  transition: translate 200ms ease-in-out 0ms;
-
-}
-
-.save-button:hover {
-  box-shadow: 0px 0px 10px 0px #01b280;
-  translate: 3px;
-}
-
-.save-button:hover .save-img{
-  filter: invert(99%) sepia(71%) saturate(305%) hue-rotate(13deg) brightness(105%) contrast(92%);
+  background-color: $primary-gray;
 }
 
 .buttons-container {
-  width: 10rem;
+  width: 20%;
+  min-width: 6rem;
+  max-width: 8rem;
+
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
 }
 
-
-.product-edit-container {
-  width: 100%;
-
-  padding: 1rem;
-  margin: 5px 0px;
-
+.btn {
   cursor: pointer;
-  text-align: left;
 
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0px 6px 0px gray;
+  width: 2.5rem;
+  height: 2.75rem;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  rotate: 45deg;
+  border-radius: 50%;
+  border:none;
 
-  background-color: rgb(236, 236, 236);
-
-  transition: transform 300ms ease-in-out 0ms, opacity 300ms ease-out 0ms,
+  transition: transform 500ms ease-in-out 0ms, opacity 500ms ease-in-out 0ms;
 }
 
-.shopping-list-input {
-  width: 10rem;
-  height: 1.5rem;
-  padding: 0 5px;
-
-  border-radius: 1rem;
-
-  border: none;
-  box-shadow: 0px 0px 3px 0px black;
+.btn:hover {
+  transform: translate(3px);
 }
 
-.product-unit-input {
-  width: 3rem;
+.btn-delete {
+  background-color: $btn-delete-color;
+  box-shadow: 0px 0px 5px 0px gray;
 }
 
-.product-quantity-input {
-  width: 5rem;
+.btn-edit {
+  background-color: $btn-edit-color;
+  box-shadow: 0px 0px 5px 0px gray;
 }
 
-form {
-  width: 100%
+.btn-save {
+  background-color: $btn-save-color;
+  box-shadow: 0px 0px 5px 0px gray;
 }
 
-.shopping-list-inputs-container {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.btn-delete:hover {
+  box-shadow: 0px 0px 10px 0px $btn-delete-shadow-color;
 }
+
+.btn-edit:hover {
+  box-shadow: 0px 0px 10px 0px $btn-edit-shadow-color;
+}
+
+.btn-save:hover {
+  box-shadow: 0px 0px 10px 0px $btn-save-shadow-color;
+}
+
+.delete-img,
+.edit-img,
+.save-img {
+  width: 2rem;
+  rotate: -45deg;
+}
+
+.btn:hover .delete-img,
+.btn:hover .edit-img,
+.btn:hover .save-img {
+  filter: invert(99%) sepia(71%) saturate(305%) hue-rotate(13deg) brightness(105%) contrast(92%);
+}
+

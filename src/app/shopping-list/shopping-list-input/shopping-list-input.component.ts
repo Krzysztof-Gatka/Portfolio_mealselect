@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Product } from '../shopping-list-element/product.model';
@@ -8,7 +8,8 @@ import { Product } from '../shopping-list-element/product.model';
   templateUrl: './shopping-list-input.component.html',
   styleUrls: ['./shopping-list-input.component.scss']
 })
-export class ShoppingListInputComponent {
+export class ShoppingListInputComponent implements OnInit {
+
   form = new FormGroup({
     productName: new FormControl('', Validators.required),
     productQuantity: new FormControl('', Validators.pattern(/^[1-9][0-9]*/)),
@@ -16,6 +17,12 @@ export class ShoppingListInputComponent {
   })
 
   @Output() itemAdded = new EventEmitter<Product>();
+  @Input() editing: boolean | undefined;
+
+  ngOnInit(): void {
+    // debugger;
+    // throw new Error('Method not implemented.');
+  }
 
   onAddButtonClick(): void {
     const name = this.form.controls.productName.value!;

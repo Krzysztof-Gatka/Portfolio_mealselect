@@ -29,6 +29,10 @@ export class ShoppingListComponent implements OnInit {
     })
   }
 
+  onItemAdded(product: Product): void {
+    this.shoppingListElements = this.shoppingListService.addElement(product);
+  }
+
   onAddButtonClick(): void {
     // Button is disabled when inputs are empty
     // so i am sure that in these variables will be valid value
