@@ -34,6 +34,7 @@
       [ngClass]="!form.valid ? 'disabled' : ''"
       (click)="onAddButtonClick()"
       class="btn btn-add"
+      [tabIndex]="!form.valid ? -1 : ''"
     >
       <img class="add-img" src="../../../assets/add-svgrepo-com.svg">
     </button>

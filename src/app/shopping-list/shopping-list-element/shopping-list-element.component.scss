@@ -107,6 +107,11 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
   border: 2px solid white;
 }
 
+.btn.btn-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .btn {
   cursor: pointer;
 

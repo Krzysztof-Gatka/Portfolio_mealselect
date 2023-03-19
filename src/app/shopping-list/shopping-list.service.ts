@@ -12,6 +12,8 @@ export class ShoppingListService {
   ];
   productDeleted = new Subject();
   productUpdated = new Subject();
+  productSaved = new Subject<number>();
+  productBeingEdited = new Subject<number>();
 
   getShoppingListElements(): Product[] {
     return this.shoppingListElements.slice();

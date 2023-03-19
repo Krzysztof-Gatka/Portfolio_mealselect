@@ -1,26 +1,45 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ShoppingListService } from '../shopping-list.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Product } from './product.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list-element',
   templateUrl: './shopping-list-element.component.html',
   styleUrls: ['./shopping-list-element.component.scss']
 })
-export class ShoppingListElementComponent {
+export class ShoppingListElementComponent implements OnInit, OnDestroy {
   @Input() product: Product | undefined;
   @Input() productIndex: number | undefined;
   isActive: boolean = true;
   editMode: boolean = false;
+  editButtonDisabled: boolean = false;
+  sub: Subscription | undefined;
+  sub2: Subscription | undefined;
   form = new FormGroup({
     productName: new FormControl('', Validators.required),
     productQuantity: new FormControl('', Validators.required),
     productUnit: new FormControl('', Validators.required)
   })
 
-  constructor(private shoppingListService: ShoppingListService) {}
+  constructor(private shoppingListService: ShoppingListService, private viewContainerRef: ViewContainerRef) {}
+
+  ngOnInit(): void {
+    this.sub = this.shoppingListService.productBeingEdited.subscribe((id)=>{
+      this.editButtonDisabled = id !== this.productIndex;
+    })
+
+    this.sub2 = this.shoppingListService.productSaved.subscribe(() => {
+      this.editButtonDisabled = false;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
 
   onProductClick(): void {
     this.isActive = !this.isActive;
@@ -32,20 +51,16 @@ export class ShoppingListElementComponent {
 
   onEditButtonClick(): void {
     this.editMode = true;
-    this.form.controls.productName.setValue(this.product!.name);
-    this.form.controls.productQuantity.setValue(this.product!.quantity.toString());
-    this.form.controls.productUnit.setValue(this.product!.unit);
+    this.shoppingListService.productBeingEdited.next(this.productIndex!);
   }
 
   onSaveButtonClick(): void {
     this.editMode = false;
+    this.shoppingListService.productSaved.next(this.productIndex!);
+  }
 
-    const name = this.form.controls.productName.value!;
-    const quantity = +this.form.controls.productQuantity.value!;
-    const unit = this.form.controls.productUnit.value!;
-
-    const newProduct = new Product(name, quantity, unit);
-
-    this.shoppingListService.updateElement(this.productIndex!, newProduct);
+  onSavebuttonClikced(product: Product): void {
+    this.product = product;
+    this.shoppingListService.updateElement(this.productIndex!, this.product);
   }
 }

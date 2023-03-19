@@ -19,7 +19,7 @@
     <div class="tick">Got it!</div>
   </div>
 
-  <app-shopping-list-input *ngIf="editMode" [editing]="editMode" [product]="product"></app-shopping-list-input>
+  <app-shopping-list-input *ngIf="editMode" [editing]="editMode" [product]="product" (saveButtonClicked)="onSavebuttonClikced($event)"></app-shopping-list-input>
 
   <div class="buttons-container" >
 
@@ -27,7 +27,7 @@
       <img class="delete-img" src="../../../assets/delete-svgrepo-com.svg">
     </button>
 
-    <button *ngIf="!editMode" class="btn btn-edit" (click)="onEditButtonClick()">
+    <button *ngIf="!editMode" class="btn btn-edit" (click)="onEditButtonClick()" [tabindex]="editButtonDisabled ? -1 : ''" [ngClass]="editButtonDisabled ? 'btn-disabled' : ''">
       <img class="edit-img" src="../../../assets/edit-1-svgrepo-com.svg">
     </button>
 
