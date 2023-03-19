@@ -10,8 +10,8 @@ export class ShoppingListService {
     new Product('onion', 3, 'pc'),
     new Product('chicken breast', 500, 'g'),
   ];
-  productDeleted = new Subject();
-  productUpdated = new Subject();
+
+  productsChanged = new Subject();
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
   lastDeletedProduct: Product | undefined;
@@ -22,7 +22,7 @@ export class ShoppingListService {
 
   addElement(product: Product): Product[] {
     this.shoppingListElements.push(product);
-    return this.shoppingListElements;
+    return this.shoppingListElements.slice();
   }
 
   deleteElement(index: number): void {
@@ -31,7 +31,7 @@ export class ShoppingListService {
     }
     return i !==index
   });
-    this.productDeleted.next('');
+    this.productsChanged.next('');
   }
 
   updateElement(index: number, product: Product): void {
@@ -39,7 +39,7 @@ export class ShoppingListService {
       if (i === index) return product;
       return prod;
     });
-    this.productUpdated.next('');
+    this.productsChanged.next('');
   }
 
   clear() :void {

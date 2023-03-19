@@ -24,7 +24,7 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
     productUnit: new FormControl('', Validators.required)
   })
 
-  constructor(private shoppingListService: ShoppingListService, private viewContainerRef: ViewContainerRef) {}
+  constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
     this.sub = this.shoppingListService.productBeingEdited.subscribe((id)=>{
@@ -42,14 +42,14 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+    this.sub2?.unsubscribe();
   }
-
 
   onProductClick(): void {
     this.isActive = !this.isActive;
   }
 
-  onButtonClick(): void {
+  onDeleteButtonClick(): void {
     this.shoppingListService.deleteElement(this.productIndex!);
     this.shoppingListService.productBeingEdited.next(-1);
   }
