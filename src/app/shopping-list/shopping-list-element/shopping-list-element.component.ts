@@ -28,7 +28,11 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = this.shoppingListService.productBeingEdited.subscribe((id)=>{
-      this.editButtonDisabled = id !== this.productIndex;
+      if(id === -1) {
+        this.editButtonDisabled = false;
+      } else {
+        this.editButtonDisabled = id !== this.productIndex;
+      }
     })
 
     this.sub2 = this.shoppingListService.productSaved.subscribe(() => {
@@ -47,6 +51,7 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
 
   onButtonClick(): void {
     this.shoppingListService.deleteElement(this.productIndex!);
+    this.shoppingListService.productBeingEdited.next(-1);
   }
 
   onEditButtonClick(): void {

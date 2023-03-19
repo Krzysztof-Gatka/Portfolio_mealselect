@@ -53,4 +53,16 @@ export class ShoppingListComponent implements OnInit {
   isFormValid(): boolean {
     return !this.form.valid && this.form.touched
   }
+
+  onReviveLastProduct(): void {
+    if(this.shoppingListService.lastDeletedProduct) {
+      this.shoppingListService.addElement(this.shoppingListService.lastDeletedProduct);
+      this.shoppingListElements = this.shoppingListService.getShoppingListElements();
+    }
+  }
+
+  clearList(): void {
+    this.shoppingListElements = [];
+    this.shoppingListService.clear();
+  }
 }
