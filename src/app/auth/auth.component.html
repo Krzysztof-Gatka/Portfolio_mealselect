@@ -2,17 +2,17 @@
   <h1>
     {{ type === 'login' ? 'Log in' : 'Register'}}
   </h1>
-  <div class="form-container">
-    <form class="form">
+  <div class="form-container" (submit)="onSubmit()">
+    <form class="form" [formGroup]="form">
       <div class="login-container input-container">
         <label class="label" for="login">Login</label>
-        <input class="input" id="login" type="text">
+        <input formControlName="login" class="input" id="login" type="text">
       </div>
       <div class="password-container input-container">
         <label class="label" for="password">Password</label>
-        <input class="input" id="password" type="password">
+        <input formControlName="password" class="input" id="password" type="password">
       </div>
-      <button class="btn">
+      <button class="btn" [disabled]="form.invalid">
         {{ type === 'login' ? 'Log in' : 'Sign in'}}
       </button>
     </form>

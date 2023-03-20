@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -8,6 +9,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, OnDestroy {
+  form = new FormGroup({
+    login: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+  })
+
   type: string = '';
   sub: Subscription | undefined;
   constructor(private route: ActivatedRoute) {}
@@ -20,5 +26,9 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  onSubmit(): void {
+    this.form.reset();
   }
 }
