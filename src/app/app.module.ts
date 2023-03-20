@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingListElementComponent } from './shopping-list/shopping-list-element/shopping-list-element.component';
 import { ShoppingListInputComponent } from './shopping-list/shopping-list-input/shopping-list-input.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ShoppingListInputComponent } from './shopping-list/shopping-list-input/
     HomeComponent,
     ShoppingListComponent,
     ShoppingListElementComponent,
-    ShoppingListInputComponent
+    ShoppingListInputComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
