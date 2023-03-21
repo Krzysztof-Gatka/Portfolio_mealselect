@@ -1,3 +1,11 @@
+// IDEA BEHIND MY STYLING
+// Every element gets 100% with, this is my solution to make custom components' width equal to 100%
+// in every created component the parent div has "full-width-flex-container" which again has with of 100%
+// and now every component is wrapped in <component-name>-container where i can set the with to whatever percantage i want
+// it also allows to set min and max width to that container which in my opinion creates neat environment for responsive design
+// But it also has downsides i am not sure if it will be so comfortable to style nested custom components, but this is my first
+// bigger app so i might change this approach later, at this point of development i am going to use this comment as guide
+
 * {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 500;
