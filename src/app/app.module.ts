@@ -10,6 +10,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingListElementComponent } from './shopping-list/shopping-list-element/shopping-list-element.component';
 import { ShoppingListInputComponent } from './shopping-list/shopping-list-input/shopping-list-input.component';
 import { AuthComponent } from './auth/auth.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AuthComponent } from './auth/auth.component';
     ShoppingListComponent,
     ShoppingListElementComponent,
     ShoppingListInputComponent,
-    AuthComponent
+    AuthComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

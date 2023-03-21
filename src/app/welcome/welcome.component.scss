@@ -1,0 +1,105 @@
+$btn-login-color: #2fc124;
+$btn-signin-color: #3276de;
+$main-background-color: #effcff;
+$header-background-color: #2fc124;
+$list-background-color: #004C74;
+$accent-color: #577B97;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.auth-buttons-container {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: $list-background-color;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  padding: 0.5rem;
+  box-shadow: 0px 0px 5px 1px $accent-color;
+}
+
+.btn {
+  cursor: pointer;
+  font-weight: 600;
+  width: 25%;
+  max-width: 10rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: $main-background-color;
+  box-shadow: 0px 0px 5px 0px gray;
+  transition: scale 500ms ease 0ms, color 500ms ease 0ms, background-color 500ms ease 0ms;
+}
+
+.btn:hover {
+  color:beige;
+  scale: 110%;
+}
+
+.btn-login:hover {
+  background-color: $btn-login-color;
+  box-shadow: 0px 0px 7px 1px #218d1a;
+}
+
+.btn-signin:hover {
+  background-color: $btn-signin-color;
+  box-shadow: 0px 0px 7px 1px #23539c;
+}
+
+.main-container {
+  background-color: $main-background-color;
+  margin-top: 5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 4px 4px 5px 1px $accent-color;
+  max-width: 55rem;
+}
+
+.header {
+  padding: 15px 5px;
+  background-color: $header-background-color;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 1px $accent-color;
+}
+
+.welcome {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 900;
+  color: beige;
+}
+
+.about {
+  background-color: $main-background-color;
+  padding: 15px 20px;
+}
+
+.list {
+  padding: 10px 20px;
+  list-style: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 1px $accent-color;
+}
+
+.questions,
+.filters {
+  background-color: $list-background-color;
+  color:beige;
+}
+
+p {
+  padding: 5px 0px;
+}
+
+.box {
+  margin-bottom: 2rem;
+  padding: 0px 10px;
+}
+
