@@ -13,6 +13,7 @@ import { AuthComponent } from './auth/auth.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { RecipeComponent } from './recipes/recipe/recipe.component';
+import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RecipeComponent } from './recipes/recipe/recipe.component';
     AuthComponent,
     WelcomeComponent,
     RecipesComponent,
-    RecipeComponent
+    RecipeComponent,
+    RecipesListComponent
   ],
   imports: [
     BrowserModule,
