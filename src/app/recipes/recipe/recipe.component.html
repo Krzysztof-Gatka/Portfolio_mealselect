@@ -1,1 +1,25 @@
-<p>recipe works!</p>
+<div class="main-container">
+  <h2>{{ recipe.name }}</h2>
+
+  <div class="sections-container">
+
+    <section class="section-ingredients section">
+      <h3>Ingredients</h3>
+      <ul class="list">
+        <li class="list-element" *ngFor="let product of recipe.ingredients">
+          {{ product.name }} {{ product.quantity }} {{ product.unit}}
+        </li>
+      </ul>
+    </section>
+
+    <section class="section-preparation-steps section">
+      <h3>Prepartion</h3>
+      <ul class="list">
+        <li class="list-element" *ngFor="let step of recipe.prepSteps">
+          {{ step }}
+        </li>
+      </ul>
+    </section>
+
+  </div>
+</div>
