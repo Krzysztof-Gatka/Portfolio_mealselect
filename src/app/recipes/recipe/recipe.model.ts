@@ -1,4 +1,4 @@
-import { Product } from "../shopping-list/shopping-list-element/product.model";
+import { Product } from "../../shopping-list/shopping-list-element/product.model";
 
 export class Recipe {
   constructor(
