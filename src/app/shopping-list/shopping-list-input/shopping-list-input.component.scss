@@ -5,13 +5,13 @@ $btn-add-shadow-color:#57a336;
 $btn-clear-color: #1e90ff;
 $btn-clear-shadow-color:#1970c6;
 
-.main-container{
+.shopping-list-input-container{
   width: 100%;
-  max-width: 40rem;
+  max-width: 35rem;
   display: flex;
   flex-direction: row;
-
   margin-bottom: 0.6rem;
+
 }
 
 .inputs-container {
@@ -28,7 +28,7 @@ $btn-clear-shadow-color:#1970c6;
 }
 
 .buttons-container {
-  width: 18%;
+  width: 20%;
   min-width: 6rem;
   max-width: 8rem;
 
@@ -39,7 +39,6 @@ $btn-clear-shadow-color:#1970c6;
 }
 
 .btn {
-  width: 40%;
   box-shadow: 0px 0px 6px 0px gray;
 }
 

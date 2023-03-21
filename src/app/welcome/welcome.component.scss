@@ -5,6 +5,19 @@ $header-background-color: #2fc124;
 $list-background-color: #004C74;
 $accent-color: #577B97;
 
+.welcome-container {
+  background-color: $main-background-color;
+  margin-top: 5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 4px 4px 5px 1px $accent-color;
+  width: 97%;
+  max-width: 55rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .auth-buttons-container {
   position: fixed;
   width: 100%;
@@ -46,19 +59,6 @@ $accent-color: #577B97;
 .btn-signin:hover {
   background-color: $btn-signin-color;
   box-shadow: 0px 0px 7px 1px #23539c;
-}
-
-.welcome-container {
-  background-color: $main-background-color;
-  margin-top: 5rem;
-  padding: 0.5rem;
-  border-radius: 5px;
-  box-shadow: 4px 4px 5px 1px $accent-color;
-  width: 97%;
-  max-width: 55rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .header {

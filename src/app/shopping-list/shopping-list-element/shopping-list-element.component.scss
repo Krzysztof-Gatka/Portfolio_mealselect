@@ -9,14 +9,16 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
 
 
 .shopping-list-element-container{
-  width: 95%;
-  max-width: 50rem;
+  width: 100%;
+  max-width: 35rem;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .field-second {
   width: 30%;
+  text-align: right;
 }
 
 .list-element {
