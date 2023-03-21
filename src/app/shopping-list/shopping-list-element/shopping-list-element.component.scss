@@ -8,12 +8,15 @@ $btn-save-color: #1de581;
 $btn-save-shadow-color:hsl(150, 50%, 56%);
 
 
-.main-container{
-  width: 100%;
+.shopping-list-element-container{
+  width: 95%;
+  max-width: 50rem;
   display: flex;
-  max-width: 35rem;
-
   flex-direction: row;
+}
+
+.field-second {
+  width: 30%;
 }
 
 .list-element {
@@ -24,7 +27,7 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
   justify-content: space-between;
   align-items: center;
 
-  width: 80%;
+  width: 100%;
   padding: 1rem;
   margin-bottom: 0.6rem;
 

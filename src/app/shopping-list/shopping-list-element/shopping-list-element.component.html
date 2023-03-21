@@ -1,43 +1,45 @@
-<div class="main-container">
+<div class="full-width-flex-container">
+  <div class="shopping-list-element-container">
+    <div
+      [ngClass]="isActive ? '' : 'non-active'"
+      *ngIf="product && !editMode"
+      class="list-element"
+      (click)="onProductClick()"
+      [class.non-active]="!isActive">
 
-  <div
-    [ngClass]="isActive ? '' : 'non-active'"
-    *ngIf="product && !editMode"
-    class="list-element"
-    (click)="onProductClick()"
-    [class.non-active]="!isActive">
+      <div class="field field-first">
+        <p>{{ product.name }}</p>
+      </div>
 
-    <div>
-      <p>{{ product.name }}</p>
+      <div class="field field-second">
+        <p>{{ product.quantity}} {{product.unit}}</p>
+      </div>
+
+      <div class="green-window"></div>
+      <div class="tick">Got it!</div>
     </div>
 
-    <div>
-      <p>{{ product.quantity}} {{product.unit}}</p>
+    <app-shopping-list-input *ngIf="editMode" [editing]="editMode" [product]="product" (saveButtonClicked)="onSavebuttonClikced($event)"></app-shopping-list-input>
+
+    <div class="buttons-container" >
+
+      <button  class="btn btn-delete" (click)="onDeleteButtonClick()">
+        <img class="delete-img" src="../../../assets/delete-svgrepo-com.svg">
+      </button>
+
+      <button *ngIf="!editMode" class="btn btn-edit" (click)="onEditButtonClick()" [tabindex]="editButtonDisabled ? -1 : ''" [ngClass]="editButtonDisabled ? 'btn-disabled' : ''">
+        <img class="edit-img" src="../../../assets/edit-1-svgrepo-com.svg">
+      </button>
+
+      <button *ngIf="editMode" class="btn btn-save" (click)="onSaveButtonClick()">
+      <img class="save-img" src="../../../assets/tick-svgrepo-com.svg">
+      </button>
+
     </div>
 
-    <div class="green-window"></div>
-    <div class="tick">Got it!</div>
   </div>
-
-  <app-shopping-list-input *ngIf="editMode" [editing]="editMode" [product]="product" (saveButtonClicked)="onSavebuttonClikced($event)"></app-shopping-list-input>
-
-  <div class="buttons-container" >
-
-    <button  class="btn btn-delete" (click)="onDeleteButtonClick()">
-      <img class="delete-img" src="../../../assets/delete-svgrepo-com.svg">
-    </button>
-
-    <button *ngIf="!editMode" class="btn btn-edit" (click)="onEditButtonClick()" [tabindex]="editButtonDisabled ? -1 : ''" [ngClass]="editButtonDisabled ? 'btn-disabled' : ''">
-      <img class="edit-img" src="../../../assets/edit-1-svgrepo-com.svg">
-    </button>
-
-    <button *ngIf="editMode" class="btn btn-save" (click)="onSaveButtonClick()">
-    <img class="save-img" src="../../../assets/tick-svgrepo-com.svg">
-    </button>
-
-  </div>
-
 </div>
+
 
 
 
