@@ -4,16 +4,15 @@
 
 .shopping-list-container {
   position: relative;
-  width: 100%;
+  width: 95%;
+  max-width: 50rem;
   margin: 20px 0px;
-  padding: 2rem;
+  padding: 0.5rem;
 
   display: flex;
   flex-direction: column;
-}
-
-app-shopping-list-input {
-  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .btns-container {
