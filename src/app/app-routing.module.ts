@@ -3,6 +3,7 @@ import { RouterModule, Route } from "@angular/router";
 import { AuthComponent } from "./auth/auth.component";
 
 import { HomeComponent } from "./home/home.component";
+import { RecipesComponent } from "./recipes/recipes.component";
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
 
@@ -13,6 +14,7 @@ const ROUTES: Route[] = [
   { path: 'login', component: AuthComponent },
   { path: 'home', component: HomeComponent },
   { path: 'shopping-list', component: ShoppingListComponent },
+  { path: 'recipes', component: RecipesComponent },
 ]
 
 @NgModule({
