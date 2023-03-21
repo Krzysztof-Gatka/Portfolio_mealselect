@@ -1,12 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-const WebAPIKey = 'AIzaSyA-qhl-Xy0a_-sxbwrPPeU_dLycYdAOTBo';
-const SignInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + WebAPIKey;
-const LogInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + WebAPIKey;
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -21,7 +18,10 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   type: string = '';
   sub: Subscription | undefined;
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.sub = this.route.url.subscribe((url) => {
@@ -34,18 +34,16 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    const url = this.type === 'login' ? LogInUrl : SignInUrl
     const userEmail = this.form.controls.email.value;
     const userPassword = this.form.controls.password.value;
+    // because of form validation i am sure that
+    // userEmail and userPassword will be set
+    if(this.type === 'login') {
+      this.authService.logIn(userEmail!, userPassword!);
+    } else {
+      this.authService.logIn(userEmail!, userPassword!);
+    }
 
-    this.http.post<Response>(url, {
-      email: userEmail,
-      password: userPassword,
-      returnSecureToken: true,
-    })
-    .subscribe((response) => {
-      console.log(response);
-    })
 
     this.form.reset();
   }
