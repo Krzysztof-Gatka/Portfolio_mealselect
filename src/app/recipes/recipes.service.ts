@@ -85,4 +85,28 @@ export class RecipesService {
       10
     ),
   ];
+
+  filter(name: string | null, prepTime: string | null, difficulty: string | null, price: string | null ): Recipe[] {
+    let filteredRecipes: Recipe[] = this.recipesBase.slice();
+
+    if(name !== null) {
+      filteredRecipes = filteredRecipes.filter(recipe => {
+        return recipe.name.toLowerCase().indexOf(name.toLowerCase()) !== -1;
+      })
+    }
+
+    if(prepTime !== null){
+      filteredRecipes = filteredRecipes.filter(recipe => {
+        return recipe.prepTime.toLowerCase().indexOf(prepTime.toLowerCase()) !== -1;
+      })
+    }
+
+    if(difficulty !== null) {
+      filteredRecipes = filteredRecipes.filter(recipe => {
+        return recipe.difficulty.toLowerCase().indexOf(difficulty.toLowerCase()) !== -1;
+      })
+    }
+
+    return filteredRecipes;
+  }
 }

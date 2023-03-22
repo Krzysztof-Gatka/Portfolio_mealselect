@@ -24,7 +24,11 @@ export class RecipesListComponent implements OnInit{
   }
 
   onSubmit(): void {
-    console.log(this.filterForm.controls.name.value);
+    const name = this.filterForm.controls.name.value;
+    const prepTime = this.filterForm.controls.prepTime.value;
+    const difficulty = this.filterForm.controls.difficulty.value;
+    const price = this.filterForm.controls.price.value;
+    this.recipes = this.recipesService.filter(name, prepTime, difficulty, price);
     this.filterForm.reset();
   }
 }
