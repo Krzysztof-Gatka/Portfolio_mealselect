@@ -2,6 +2,7 @@ import { Product } from "../../shopping-list/shopping-list-element/product.model
 
 export class Recipe {
   constructor(
+    public id: number,
     public name: string,
     public ingredients: Product[],
     public prepSteps: string[],

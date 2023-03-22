@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
-import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
+import { RecipesService } from '../recipes.service';
 import { Recipe } from './recipe.model';
 
 @Component({
@@ -8,27 +10,18 @@ import { Recipe } from './recipe.model';
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.scss']
 })
-export class RecipeComponent {
-  recipe = new Recipe(
-    'Spaghetii Carbonara',
-    [
-      new Product('pasta', 500, 'g'),
-      new Product('egg', 4, 'pcs'),
-      new Product('bacon', 200, 'g'),
-      new Product('Parmezan', 200, 'g'),
-      new Product('salt', 1, 'g'),
-      new Product('pepper', 1, 'g')
-    ],
-    [
-      'boil water',
-      'crush Parmezan',
-      'chop bacon',
-      'mix eggs with parmezan and pepper',
-      'fry bacon till golden',
-      'boil pasta according to package instructions',
-      'mix pasta with eggs and parmezan mixture',
-      'add bacon',
-      'serve with fresh grated cheese and pepper'
-    ]
-  )
+export class RecipeComponent implements OnInit, OnDestroy{
+  recipe: Recipe | undefined;
+  sub: Subscription | undefined;
+  constructor(private recipesService: RecipesService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.sub = this.route.params.subscribe((params) => {
+      this.recipe = this.recipesService.recipesBase.slice().filter(recipe => recipe.id == params['id'])[0];
+    })
+  }
+
+  ngOnDestroy(): void {
+      this.sub?.unsubscribe();
+  }
 }

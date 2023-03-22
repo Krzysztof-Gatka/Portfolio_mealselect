@@ -6,6 +6,7 @@ import { Recipe } from "./recipe/recipe.model";
 export class RecipesService {
   recipesBase = [
     new Recipe(
+      0,
       'Spaghetii Carbonara',
       [
         new Product('pasta', 500, 'g'),
@@ -33,6 +34,7 @@ export class RecipesService {
       20
     ),
     new Recipe(
+      1,
       'Spaghetii Bolognese',
       [
         new Product('pasta', 500, 'g'),
@@ -59,6 +61,7 @@ export class RecipesService {
       15,
     ),
     new Recipe(
+      2,
       'Penne Pesto',
       [
         new Product('pasta', 500, 'g'),

@@ -2,7 +2,8 @@
   <div class="recipes-list-element-container">
     <button
       class="recipe-attr"
-      [routerLink]="['/recipes', 'recipe', '0']">
+      [routerLink]="['/recipes', 'recipe', recipe.id.toString()]">
+      <p> {{ recipe.id }} </p>
       <p> {{ recipe.name }} </p>
       <p> {{ recipe.prepTime }} </p>
       <p> {{ recipe.difficulty }} </p>

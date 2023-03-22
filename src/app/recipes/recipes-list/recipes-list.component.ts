@@ -23,7 +23,7 @@ export class RecipesListComponent implements OnInit{
   constructor(private recipesService: RecipesService) {}
 
   ngOnInit(): void {
-    this.recipes = this.recipesService.recipesBase
+    this.recipes = this.recipesService.recipesBase.slice();
   }
 
   onSubmit(): void {
