@@ -1,0 +1,19 @@
+.recipes-list-element-container {
+  padding:0.5rem;
+  width: 95%;
+}
+
+.recipes-list-element-container p {
+  width: fit-content;
+}
+
+.recipe-attr {
+  padding: 0.75rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 0px gray;
+}
