@@ -11,6 +11,10 @@ import { ShoppingListElementComponent } from './shopping-list/shopping-list-elem
 import { ShoppingListInputComponent } from './shopping-list/shopping-list-input/shopping-list-input.component';
 import { AuthComponent } from './auth/auth.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { RecipesComponent } from './recipes/recipes.component';
+import { RecipeComponent } from './recipes/recipe/recipe.component';
+import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
+import { RecipesListElementComponent } from './recipes/recipes-list/recipes-list-element/recipes-list-element.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { WelcomeComponent } from './welcome/welcome.component';
     ShoppingListElementComponent,
     ShoppingListInputComponent,
     AuthComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    RecipesComponent,
+    RecipeComponent,
+    RecipesListComponent,
+    RecipesListElementComponent
   ],
   imports: [
     BrowserModule,

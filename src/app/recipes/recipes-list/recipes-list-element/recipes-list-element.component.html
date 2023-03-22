@@ -1,0 +1,13 @@
+<div class="full-width-flex-container">
+  <div class="recipes-list-element-container">
+    <button
+      class="recipe-attr"
+      [routerLink]="['/recipes', 'recipe', recipe.id.toString()]">
+      <p> {{ recipe.id }} </p>
+      <p> {{ recipe.name }} </p>
+      <p> {{ recipe.prepTime }} </p>
+      <p> {{ recipe.difficulty }} </p>
+      <p> {{ recipe.servings * recipe.pricePerServing}}</p>
+    </button>
+  </div>
+</div>

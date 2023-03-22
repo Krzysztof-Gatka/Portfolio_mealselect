@@ -1,0 +1,32 @@
+.recipes-list-container {
+  width: 100%;
+  max-width: 60rem;
+}
+
+.filter-sort-container {
+  width: 100%;
+  max-width: 60rem;
+  padding: 0.5rem;
+}
+
+.filter-container {
+  padding: 0.5rem;
+}
+
+.sort-container {
+  padding: 0.5rem;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-container label {
+  width: fit-content;
+}
