@@ -1,4 +1,15 @@
+@import '../scss/variables';
+
 .app-container {
   margin-top: 5rem;
   width: 100%;
+}
+
+.background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+
+  background-color: $dominant-color;
 }

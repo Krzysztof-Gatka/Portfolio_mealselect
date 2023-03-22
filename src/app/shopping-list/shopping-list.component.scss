@@ -1,3 +1,5 @@
+@import '../../scss/variables';
+
 * {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;;
 }
@@ -28,16 +30,18 @@
   margin-top: 7px;
   max-width: 20rem;
   padding: 1rem;
-
+  color: $accent-color;
+  font-weight: 500;
   border-radius: 5px;
-  border: none;
-  box-shadow: 0px 0px 6px 0px gray;
+  border: 2px solid $accent-color;
+  background-color: $dominant-dark-color;
+  box-shadow: 0px 0px 6px 0px $secondary-color;
   transition: transform 200ms ease-in-out 0ms,
 }
 
 .btn:hover {
   transform: translate(0,-2px);
-  box-shadow: 0px 0px 6px 0px black;
+  box-shadow: 0px 0px 6px 0px $secondary-color;
 }
 
 .clear-list-modal {

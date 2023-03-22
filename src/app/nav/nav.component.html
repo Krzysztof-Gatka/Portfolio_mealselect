@@ -1,11 +1,13 @@
 <div class="full-width-flex-container">
   <div class="navigation-container">
-    <button class="logo">mealSelect</button>
+    <button [routerLink]="['/welcome']" class="logo">mealSelect</button>
     <button (click)="onHamburgerClick()" class="hamburger">Hamburger</button>
     <nav (click)="onHamburgerClick()" class="sidenav-container" [ngClass]="navbarOpen ? 'open' : ''">
       <button [routerLink]="['/recipes']" class="btn-nav">Recipes</button>
       <button [routerLink]="['/shopping-list']" class="btn-nav">ShoppingList</button>
       <button class="btn-nav">my Recipes</button>
+      <button class="btn-nav">my Stash</button>
+      <button class="btn-nav">to cook list</button>
       <button class="btn-nav">Logout</button>
     </nav>
   </div>

@@ -1,29 +1,45 @@
+@import '../../scss/variables';
+
 .navigation-container {
   position: fixed;
   top: 0px;
   left: 0px;
-  padding: 1rem;
+  padding: 0.25rem 1rem;
   z-index: 100;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: rgb(219, 219, 219);
-  box-shadow: 0px 0px 5px 0px gray;
+  background-color: $secondary-color;
+  box-shadow: 0px 1px 3px 1px $accent-color;
 }
 
 .logo,
 .hamburger {
+  cursor: pointer;
   width: fit-content;
-  padding: 1rem;
+  padding: 0.5rem;
+  background-color: $secondary-color;
+  color: $accent-color;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 1px $secondary-color;
+  transition: background-color 500ms ease 0ms, color 500ms ease 0ms;
+}
+
+.logo:hover,
+.hamburger:hover {
+  background-color: $dominant-dark-color;
+  color: $secondary-color;
 }
 
 .sidenav-container {
-  background-color: rgb(219, 219, 219);
-  box-shadow: 3px 3px 3px 0px gray;
+  background-color: $dominant-color;
+  box-shadow: 1px 3px 3px 0px $secondary-color;
   position: fixed;
-  top:5.25rem;
+  top: 2.4rem;
   left:0;
-  height: calc(100vh - 5.25rem);
+  height: calc(100vh - 2.25rem);
 
   width: 0;
   overflow: hidden;
@@ -47,15 +63,24 @@
 
 .open .btn-nav {
   cursor: pointer;
-  min-width: 10rem;
+  min-width: 5rem;
   width: 90%;
-  padding: 1rem;
+  padding: 0.5rem;
   margin-bottom: 0.5rem;
-  transition: scale 500ms ease 0ms;
+  transition: scale 500ms ease 0ms, background-color 500ms ease 0ms, color 500ms ease 0ms;
+  background-color: $secondary-color;
+  color:$accent-color;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  box-shadow: 0px 0px 5px 1px $secondary-color;
 }
 
 .open .btn-nav:hover {
   scale: 110%;
+
+  background-color: $dominant-dark-color;
+  color: $secondary-color;
 }
 
 @media screen and (max-width: 420px) {
