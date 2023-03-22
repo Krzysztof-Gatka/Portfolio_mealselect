@@ -1,4 +1,39 @@
 <div class="full-width-flex-container">
+  <div class="filter-sort-container">
+    <div class="filter-container">
+      <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+        <div class="inputs-container">
+
+          <div class="input-container">
+            <label for="name">name</label>
+            <input formControlName="name" id="name" type="text">
+          </div>
+
+          <div class="input-container">
+            <label for="prepTime">prepTime</label>
+            <input formControlName="prepTime" id="prepTime" type="text">
+          </div>
+
+          <div class="input-container">
+            <label for="difficulty">difficulty</label>
+            <input formControlName="difficulty" id="difficulty" type="text">
+          </div>
+
+          <div class="input-container">
+            <label for="price">price</label>
+            <input formControlName="price" id="price "type="number">
+          </div>
+
+        </div>
+
+        <button>Filter</button>
+
+      </form>
+    </div>
+    <div class="sort-container">
+
+    </div>
+  </div>
   <div class="recipes-list-container">
     <app-recipes-list-element
       *ngFor="let recipe of recipes"
