@@ -1,7 +1,7 @@
 <div class="full-width-flex-container">
   <div class="filter-sort-container">
     <div class="filter-container">
-      <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="filterForm">
         <div class="inputs-container">
 
           <div class="input-container">
@@ -26,12 +26,32 @@
 
         </div>
 
-        <button>Filter</button>
+        <button (click)="onFilterClick()">Filter</button>
+        <button (click)="onClearFiltersClick()">Clear Filters</button>
 
       </form>
     </div>
     <div class="sort-container">
+      <form [formGroup]="sortForm">
+        <div class="inputs-container">
 
+          <div class="input-container">
+            <label for="sort">sort</label>
+            <select formControlName="sort" id="sort">
+              <option value="prepTimeAscending">preparation time ascending</option>
+              <option value="prepTimeDescending">preparation time descending</option>
+              <option value="difficultyAscending">difficulty ascending</option>
+              <option value="difficutlyDescending">difficulty descending</option>
+              <option value="priceAscending">price ascending</option>
+              <option value="priceDescending">price descending</option>
+            </select>
+          </div>
+        </div>
+
+        <button (click)="onSortClick()">Sort</button>
+        <button (click)="onClearSortClick()">Clear Sorting</button>
+
+      </form>
     </div>
   </div>
   <div class="recipes-list-container">

@@ -109,4 +109,49 @@ export class RecipesService {
 
     return filteredRecipes;
   }
+
+  sort(sortingValue: string): Recipe[] {
+    const diffSortHelp = {
+      easy: 1,
+      medium: 2,
+      hard: 3,
+    }
+
+    let sortedRecipes = this.recipesBase.slice();
+
+    switch(sortingValue){
+      case 'prepTimeAscending':
+        sortedRecipes.sort((a, b) => {
+          return parseInt(a.prepTime.split(' ')[0]) - parseInt(b.prepTime.split(' ')[0])
+        });
+        break;
+      case 'prepTimeDescending':
+        sortedRecipes.sort((a, b) => {
+          return parseInt(b.prepTime.split(' ')[0]) - parseInt(a.prepTime.split(' ')[0])
+        });
+        break;
+      case 'difficultyAscending':
+        sortedRecipes.sort((a, b) => {
+          return diffSortHelp[a.difficulty as keyof typeof diffSortHelp] - diffSortHelp[b.difficulty as keyof typeof diffSortHelp];
+        });
+        break;
+      case 'difficutlyDescending':
+        sortedRecipes.sort((a, b) => {
+          return diffSortHelp[b.difficulty as keyof typeof diffSortHelp] - diffSortHelp[a.difficulty as keyof typeof diffSortHelp];
+        });
+        break;
+      case 'priceAscending':
+        sortedRecipes.sort((a, b) => {
+          return (a.pricePerServing * a.servings) - (b.pricePerServing * b.servings);
+        });
+        break;
+      case 'priceDescending':
+        sortedRecipes.sort((a, b) => {
+          return (b.pricePerServing * b.servings) - (a.pricePerServing * a.servings);
+        });
+        break;
+    }
+    sortedRecipes
+    return sortedRecipes;
+  }
 }
