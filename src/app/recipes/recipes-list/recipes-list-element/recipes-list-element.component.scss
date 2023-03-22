@@ -8,12 +8,21 @@
 }
 
 .recipe-attr {
+  cursor: pointer;
   padding: 0.75rem;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
+  border: none;
   border-radius: 5px;
   box-shadow: 0px 0px 5px 0px gray;
+
+  transition: scale 400ms ease 0ms;
+}
+
+.recipe-attr:hover {
+  scale: 110%;
+  box-shadow: 0px 0px 8px 0px gray;
 }

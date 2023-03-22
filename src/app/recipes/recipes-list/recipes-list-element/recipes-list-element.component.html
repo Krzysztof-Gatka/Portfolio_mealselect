@@ -1,9 +1,11 @@
 <div class="full-width-flex-container">
   <div class="recipes-list-element-container">
-    <div class="recipe-attr">
+    <button
+      class="recipe-attr"
+      [routerLink]="['/recipes', 'recipe', '0']">
       <p> {{ recipe.name }} </p>
       <p> {{ recipe.prepTime }} </p>
       <p> {{ recipe.difficulty }} </p>
-    </div>
+    </button>
   </div>
 </div>
