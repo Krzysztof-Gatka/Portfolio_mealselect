@@ -5,11 +5,7 @@ import { Product } from "./shopping-list-element/product.model";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
-  private shoppingListElements: Product[] = [
-    new Product('pasta', 500, 'g'),
-    new Product('onion', 3, 'pc'),
-    new Product('chicken breast', 500, 'g'),
-  ];
+  private shoppingListElements: Product[] = [];
 
   productsChanged = new Subject();
   productSaved = new Subject<number>();
