@@ -1,9 +1,5 @@
 @import '../../../scss/variables';
 
-$btn-add-color:#66d85e;
-$btn-add-shadow-color:#57a336;
-$btn-clear-color: #1e90ff;
-$btn-clear-shadow-color:#1970c6;
 
 .shopping-list-input-container{
   width: 100%;
@@ -23,8 +19,8 @@ $btn-clear-shadow-color:#1970c6;
 
   border-radius: 5px;
 
-  box-shadow: 0px 0px 6px 0px gray;
-  background-color: $primary-gray;
+  box-shadow: 0px 0px 6px 0px $secondary-color;
+  background-color: $secondary-color;
 }
 
 .buttons-container {
@@ -38,9 +34,7 @@ $btn-clear-shadow-color:#1970c6;
   align-items: center;
 }
 
-.btn {
-  box-shadow: 0px 0px 6px 0px gray;
-}
+
 
 .btn:focus {
   outline: none;
@@ -55,13 +49,15 @@ $btn-clear-shadow-color:#1970c6;
 .ipt {
   border: none;
   border-radius: 1rem;
-  box-shadow: 0px 0px 6px 0px gray;
+  box-shadow: 0px 0px 6px 0px $secondary-color;
   padding: 2.5px;
   padding-left: 0.25rem;
+  background-color: rgba($accent-color, 0.75);
+  color:black;
 }
 
 .ipt:focus {
-  box-shadow: 0px 0px 6px 2px gray;
+  box-shadow: 0px 0px 6px 2px $secondary-color;
   outline: none;
 }
 
@@ -83,6 +79,7 @@ $btn-clear-shadow-color:#1970c6;
 }
 
 .btn {
+  background-color: $dominant-color;
   cursor: pointer;
 
   width: 2.5rem;
@@ -93,34 +90,24 @@ $btn-clear-shadow-color:#1970c6;
   border:none;
 
   transition: transform 500ms ease-in-out 0ms, opacity 500ms ease-in-out 0ms;
+
+  transition: background-color 500ms ease-out 0ms, opacity 500ms ease-out 0ms;
+
 }
 
 .btn:hover {
-  transform: translate(3px);
+  background-color: $accent-cta-color;
+  box-shadow: 0px 0px 10px 0px $accent-cta-color;
 }
 
-.btn-add {
-  background-color: $btn-add-color;
-  box-shadow: 0px 0px 5px 0px gray;
-}
 
-.btn-add:hover {
-  box-shadow: 0px 0px 10px 0px $btn-add-shadow-color;
-}
 
-.btn-clear {
-  background-color: $btn-clear-color;
-  box-shadow: 0px 0px 5px 0px gray;
-}
-
-.btn-clear:hover {
-  box-shadow: 0px 0px 10px 0px $btn-clear-shadow-color;
-}
 
 .clear-img,
 .add-img {
   width: 2rem;
   rotate: -45deg;
+  filter: invert(75%) sepia(21%) saturate(6337%) hue-rotate(340deg) brightness(100%) contrast(84%);
 }
 
 .btn:hover .clear-img,

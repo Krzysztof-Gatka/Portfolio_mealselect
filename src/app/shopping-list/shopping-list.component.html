@@ -13,7 +13,7 @@
     ></app-shopping-list-input>
 
     <div class="btns-container">
-      <button *ngIf="deletedProductsAvailable" class="btn" (click)="onReviveLastProduct()">Bring back last deleted product</button>
+      <button *ngIf="deletedProductsAvailable" class="btn" (click)="onReviveLastProduct()">Revive Product</button>
       <button *ngIf="shoppingListElements?.length !== 0" class="btn" (click)="onClearList()">Clear list</button>
     </div>
 

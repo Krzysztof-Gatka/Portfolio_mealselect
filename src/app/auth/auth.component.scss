@@ -1,3 +1,5 @@
+@import '../../scss/variables';
+
 $button-color: #2fc124;
 
 .auth-container {
@@ -9,6 +11,10 @@ $button-color: #2fc124;
   width: 70%;
   max-width: 25rem;
   margin-top: 3rem;
+  padding: 1rem;
+  border-radius: 5px;
+
+  box-shadow: 0px 0px 5px 0px $secondary-color;
 }
 
 .form-container {
@@ -35,28 +41,38 @@ $button-color: #2fc124;
   padding: 0.5rem;
   border: none;
   border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px gray;
+  box-shadow: 0px 0px 5px 0px $accent-cta-color;
+  background-color: $accent-color;
+  color:$accent-cta-color;
   transition: scale 300ms ease 0ms, background-color 300ms ease 0ms;
 }
 
 .btn:hover {
-  color:beige;
-  background-color: $button-color;
-  box-shadow: 0px 0px 7px 1px #25981d;
+  color:$accent-color;
+  background-color: $accent-cta-color;
+  box-shadow: 0px 0px 7px 1px $accent-cta-color;
   scale: 110%;
 }
 
 .label {
   font-size: 75%;
   padding: 5px;
+  color: $secondary-text-color;
 }
 
 .input {
   border: none;
-  box-shadow: 0px 0px 5px 0px gray;
+  box-shadow: 0px 0px 5px 0px $secondary-color;
   padding:0.25rem 0.5rem;
+  background-color: $accent-color;
+  color: $accent-text-color;
 }
 
 .form.ng-invalid .btn {
   pointer-events: none;
+}
+
+.header {
+  color: $accent-cta-color;
+  font-weight: 700;
 }

@@ -1,0 +1,22 @@
+<div class="full-width-flex-container">
+  <div class="navigation-container">
+    <button [routerLinkActive]="'active'" [routerLink]="['/welcome']" class="logo">mealSelect</button>
+    <div class="right-nav">
+        <button [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-topnav">Shopping List</button>
+        <button [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-topnav">Recipes</button>
+        <button [routerLinkActive]="'active'" [routerLink]="['/test']" class="btn-topnav">Logout</button>
+
+        <button [routerLinkActive]="'active'" (click)="onHamburgerClick()" class="hamburger">Ham</button>
+    </div>
+    <nav (click)="onHamburgerClick()" class="sidenav-container" [ngClass]="navbarOpen ? 'open' : ''">
+      <button [routerLink]="['/recipes']" class="btn-nav">Recipes</button>
+      <button [routerLink]="['/shopping-list']" class="btn-nav">ShoppingList</button>
+      <button class="btn-nav">my Recipes</button>
+      <button class="btn-nav">my Stash</button>
+      <button class="btn-nav">to cook list</button>
+      <button class="btn-nav">Logout</button>
+    </nav>
+  </div>
+
+</div>
+

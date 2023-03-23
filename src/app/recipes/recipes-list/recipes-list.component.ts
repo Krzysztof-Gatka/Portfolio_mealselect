@@ -10,6 +10,8 @@ import { RecipesService } from '../recipes.service';
 })
 export class RecipesListComponent implements OnInit{
   recipes: Recipe[] | undefined;
+  sorting: boolean = false;
+  filtering: boolean = false;
   filterForm = new FormGroup({
     name: new FormControl(''),
     prepTime: new FormControl(''),
@@ -36,19 +38,23 @@ export class RecipesListComponent implements OnInit{
     const difficulty = this.filterForm.controls.difficulty.value;
     const price = this.filterForm.controls.price.value;
     this.recipes = this.recipesService.filter(name, prepTime, difficulty, price);
+    this.filtering = true;
   }
 
   onClearFiltersClick(): void {
     this.filterForm.reset();
     this.onFilterClick();
+    this.filtering = false;
   }
 
   onSortClick(): void {
     this.recipes = this.recipesService.sort(this.sortForm.controls.sort.value!);
+    this.sorting = true;
   }
 
   onClearSortClick(): void {
     this.sortForm.reset();
     this.recipes = this.recipesService.recipesBase.slice();
+    this.sorting = false;
   }
 }
