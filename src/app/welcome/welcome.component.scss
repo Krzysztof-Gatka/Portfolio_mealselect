@@ -7,19 +7,17 @@ $header-background-color: #2fc124;
 $list-background-color: #004C74;
 
 .welcome-container {
-  width:95%;
+  width:100%;
   max-width: 50rem;
 }
 
 .auth-buttons-container {
   display: none;
-  // position: fixed;
   width: 100%;
   top: 2.5rem;
   left: 0;
   background-color: $dominant-color;
 
-  // display: flex;
   flex-direction: row;
   justify-content: space-around;
 
@@ -68,9 +66,12 @@ $list-background-color: #004C74;
   color: $accent-color;
 }
 
+.header p {
+  color: $default-text-color;
+}
+
 .about {
   background-color: $dominant-color;
-  box-shadow: 0px 0px 5px 0px $secondary-color;
   border-radius: 5px;
   padding: 15px 20px;
 }
@@ -85,11 +86,17 @@ $list-background-color: #004C74;
 .questions,
 .filters {
   background-color: $secondary-color;
-  color:$accent-color;
+}
+
+.questions p,
+.filters p {
+  color: $accent-color;
 }
 
 p {
   padding: 5px 0px;
+  line-height: 1rem;
+  color: $accent-text-color;
 }
 
 .box {
