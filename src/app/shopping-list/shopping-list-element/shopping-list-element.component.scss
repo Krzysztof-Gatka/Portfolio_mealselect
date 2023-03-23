@@ -89,7 +89,7 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
 }
 
 .list-element.non-active .green-window {
-  background-color: rgba($dominant-dark-color, 0.5);
+  background-color: rgba($accent-color, 0.5);
 }
 
 .list-element.non-active {
@@ -128,38 +128,36 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
   border-radius: 50%;
   border:none;
 
-  transition: transform 500ms ease-in-out 0ms, opacity 500ms ease-in-out 0ms;
+  transition: opacity 500ms ease-in-out 0ms;
+  transition: background-color 1500ms ease-out 0ms;
 }
 
-.btn:hover {
-  transform: translate(3px);
-}
 
 .btn-delete {
-  background-color: $dominant-dark-color;
-  box-shadow: 0px 0px 5px 0px $secondary-color;
+  background-color: $dominant-color;
 }
 
 .btn-edit {
-  background-color: $dominant-dark-color;
-  box-shadow: 0px 0px 5px 0px $secondary-color;
+  background-color: $dominant-color;
 }
 
 .btn-save {
-  background-color: $dominant-dark-color;
-  box-shadow: 0px 0px 5px 0px $secondary-color;
+  background-color: $accent-cta-color;
+  box-shadow: 0px 0px 5px 0px $accent-cta-color;
 }
 
 .btn-delete:hover {
-  box-shadow: 0px 0px 10px 0px $secondary-color;
+  background-color: $accent-cta-color;
+  box-shadow: 0px 0px 10px 0px $accent-cta-color;
 }
 
 .btn-edit:hover {
-  box-shadow: 0px 0px 10px 0px $secondary-color;
+  background-color: $accent-cta-color;
+  box-shadow: 0px 0px 10px 0px $accent-cta-color;
 }
 
 .btn-save:hover {
-  box-shadow: 0px 0px 10px 0px $secondary-color;
+  box-shadow: 0px 0px 10px 0px $accent-cta-color;
 }
 
 .delete-img,
@@ -167,11 +165,13 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
 .save-img {
   width: 2rem;
   rotate: -45deg;
+  filter: invert(75%) sepia(21%) saturate(6337%) hue-rotate(340deg) brightness(100%) contrast(84%);
 }
 
 .btn:hover .delete-img,
 .btn:hover .edit-img,
 .btn:hover .save-img {
   filter: invert(99%) sepia(71%) saturate(305%) hue-rotate(13deg) brightness(105%) contrast(92%);
+
 }
 

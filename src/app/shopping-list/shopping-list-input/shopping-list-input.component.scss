@@ -58,8 +58,8 @@ $btn-clear-shadow-color:#1970c6;
   box-shadow: 0px 0px 6px 0px $secondary-color;
   padding: 2.5px;
   padding-left: 0.25rem;
-  background-color: rgba($dominant-dark-color, 0.75);
-  color:$accent-color
+  background-color: rgba($accent-color, 0.75);
+  color:black;
 }
 
 .ipt:focus {
@@ -102,7 +102,7 @@ $btn-clear-shadow-color:#1970c6;
 }
 
 .btn-add {
-  background-color: $dominant-dark-color;
+  background-color: $accent-cta-color;
   box-shadow: 0px 0px 5px 0px $secondary-color;
 }
 
@@ -111,7 +111,7 @@ $btn-clear-shadow-color:#1970c6;
 }
 
 .btn-clear {
-  background-color: $dominant-dark-color;
+  background-color: $accent-cta-color;
   box-shadow: 0px 0px 5px 0px gray;
 }
 

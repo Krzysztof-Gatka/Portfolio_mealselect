@@ -4,33 +4,41 @@
   position: fixed;
   top: 0px;
   left: 0px;
-  padding: 0.25rem 1rem;
+  padding: 0.5rem 1rem;
   z-index: 100;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: $secondary-color;
-  box-shadow: 0px 1px 3px 1px $accent-color;
+  background-color: $dominant-color;
+  box-shadow: 0px 1px 3px 1px $secondary-color;
+}
+
+.right-nav {
+  width: fit-content;
 }
 
 .logo,
 .hamburger {
   cursor: pointer;
   width: fit-content;
-  padding: 0.5rem;
-  background-color: $secondary-color;
-  color: $accent-color;
+  padding: 0.15rem;
+  background-color: $dominant-color;
+  color: black;
   font-weight: 600;
   border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 1px $secondary-color;
   transition: background-color 500ms ease 0ms, color 500ms ease 0ms;
+}
+
+.hamburger.active,
+.logo.active {
+  box-shadow: 0px 2px 0px 0px $secondary-color;
+  color: $secondary-color;
 }
 
 .logo:hover,
 .hamburger:hover {
-  background-color: $dominant-dark-color;
-  color: $secondary-color;
+  background-color: $secondary-color;
+  color: $accent-color;
 }
 
 .sidenav-container {
@@ -79,7 +87,7 @@
 .open .btn-nav:hover {
   scale: 110%;
 
-  background-color: $dominant-dark-color;
+  background-color: $accent-cta-color;
   color: $secondary-color;
 }
 
