@@ -1,11 +1,11 @@
 <div class="full-width-flex-container">
   <div class="recipe-container">
-    <h2>{{ recipe!.name }}</h2>
+    <h2 class="header">{{ recipe!.name }}</h2>
 
     <div class="sections-container">
 
       <section class="section-ingredients section">
-        <h3>Ingredients</h3>
+        <h3 class="list-header">Ingredients</h3>
         <ul class="list">
           <li class="list-element" *ngFor="let product of recipe!.ingredients">
             {{ product.name }} {{ product.quantity }} {{ product.unit}}
@@ -14,7 +14,7 @@
       </section>
 
       <section class="section-preparation-steps section">
-        <h3>Prepartion</h3>
+        <h3 class="list-header">Prepartion</h3>
         <ul class="list">
           <li class="list-element" *ngFor="let step of recipe!.prepSteps">
             {{ step }}
@@ -23,7 +23,7 @@
       </section>
 
     </div>
-    <button (click)="onAddToShoppingListClick()">Add Ingredients to shopping List</button>
+    <button class="btn" (click)="onAddToShoppingListClick()">Add Ingredients to shopping List</button>
   </div>
 
 </div>

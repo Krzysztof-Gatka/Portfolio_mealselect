@@ -25,9 +25,10 @@
           </div>
 
         </div>
-
-        <button (click)="onFilterClick()">Filter</button>
-        <button (click)="onClearFiltersClick()">Clear Filters</button>
+        <div class="btns-container">
+          <button [ngClass]="filtering ? 'active' : ''" class="btn" (click)="onFilterClick()">Filter</button>
+          <button class="btn" (click)="onClearFiltersClick()">Clear Filters</button>
+        </div>
 
       </form>
     </div>
@@ -47,9 +48,10 @@
             </select>
           </div>
         </div>
-
-        <button (click)="onSortClick()">Sort</button>
-        <button (click)="onClearSortClick()">Clear Sorting</button>
+        <div class="btns-container">
+          <button [ngClass]="sorting ? 'active' : ''" class="btn" (click)="onSortClick()">Sort</button>
+          <button class="btn"f (click)="onClearSortClick()">Clear Sorting</button>
+        </div>
 
       </form>
     </div>

@@ -2,11 +2,11 @@
   <div class="navigation-container">
     <button [routerLinkActive]="'active'" [routerLink]="['/welcome']" class="logo">mealSelect</button>
     <div class="right-nav">
-      <div class="btns-wrapper">
         <button [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-topnav">Shopping List</button>
         <button [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-topnav">Recipes</button>
-      </div>
-      <button [routerLinkActive]="'active'" (click)="onHamburgerClick()" class="hamburger">Ham</button>
+        <button [routerLinkActive]="'active'" [routerLink]="['/test']" class="btn-topnav">Logout</button>
+
+        <button [routerLinkActive]="'active'" (click)="onHamburgerClick()" class="hamburger">Ham</button>
     </div>
     <nav (click)="onHamburgerClick()" class="sidenav-container" [ngClass]="navbarOpen ? 'open' : ''">
       <button [routerLink]="['/recipes']" class="btn-nav">Recipes</button>

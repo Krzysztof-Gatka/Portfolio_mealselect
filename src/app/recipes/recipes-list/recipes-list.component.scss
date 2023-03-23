@@ -1,3 +1,5 @@
+@import '../../../scss/variables';
+
 .recipes-list-container {
   width: 100%;
   max-width: 60rem;
@@ -5,7 +7,7 @@
 
 .filter-sort-container {
   width: 100%;
-  max-width: 60rem;
+  max-width: 30rem;
   padding: 0.5rem;
 }
 
@@ -19,14 +21,52 @@
 
 .inputs-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .input-container {
   display: flex;
   flex-direction: row;
+  padding: 0.5rem
 }
 
 .input-container label {
-  width: fit-content;
+  width: 6rem;
+  color: $accent-text-color;
+}
+
+.input-container select,
+.input-container input {
+  background-color: $accent-color;
+  border: none;
+  box-shadow: 0px 0px 3px 0px $accent-text-color;
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+}
+
+.btns-container{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.btn {
+  cursor:pointer;
+  font-weight: 600;
+  padding: 0.5rem 0.25rem;
+  width: 40%;
+  border:none;
+  border-radius: 5px;
+  color: $accent-cta-color;
+  background-color: $accent-color;
+  box-shadow: 0px 0px 5px 0px $accent-cta-color;
+  transition: scale 500ms ease-out 0ms, color 500ms ease-out 0ms, background-color 500ms ease-out 0ms;
+}
+
+.btn.active,
+.btn:hover {
+  scale: 110%;
+  background-color: $accent-cta-color;
+  color: $accent-color;
 }

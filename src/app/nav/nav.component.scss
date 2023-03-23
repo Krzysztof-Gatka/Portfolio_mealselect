@@ -14,7 +14,7 @@
   flex-direction: row;
   justify-content: space-between;
   background-color: $dominant-color;
-  box-shadow: 0px 1px 3px 1px $secondary-color;
+  box-shadow: 0px 1px 3px 1px $accent-cta-color;
 }
 
 .right-nav {
@@ -28,6 +28,7 @@
   margin-right: 2rem;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .btn-topnav {
@@ -38,11 +39,13 @@
   background-color: $dominant-color;
   border: none;
   transition: color 300ms ease-out 0ms, box-shadow 300ms ease-out 0ms;
+  margin-right: 10px;
 }
 
+.btn-topnav:hover,
 .btn-topnav.active {
-  box-shadow: 0px 2px 0px 0px $secondary-color;
-  color: $secondary-color;
+  box-shadow: 0px 2px 0px 0px $accent-cta-color;
+  color: $accent-cta-color;
 }
 
 .logo,
@@ -58,14 +61,14 @@
 
 .hamburger.active,
 .logo.active {
-  box-shadow: 0px 2px 0px 0px $secondary-color;
-  color: $secondary-color;
+  box-shadow: 0px 2px 0px 0px $accent-cta-color;
+  color: $accent-cta-color;
 }
 
 .logo:hover,
 .hamburger:hover {
-  box-shadow: 0px 2px 0px 0px $secondary-color;
-  color: $secondary-color;
+  box-shadow: 0px 2px 0px 0px $accent-cta-color;
+  color: $accent-cta-color;
 }
 
 .sidenav-container {
@@ -117,9 +120,20 @@
   background-color: $accent-cta-color;
   color: $accent-color;
 }
+.hamburger{
+  display: none;
+}
 
 @media screen and (max-width: 420px) {
   .sidenav-container.open{
     width: 100%;
+  }
+
+  .btn-topnav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
   }
 }

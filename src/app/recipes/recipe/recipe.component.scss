@@ -1,7 +1,18 @@
+@import '../../../scss/variables';
+
 .recipe-container {
   padding: 1rem;
   width: 100%;
   max-width: 60rem;
+}
+
+.header {
+  color: $secondary-text-color;
+  font-weight: 600;
+}
+
+.list-header {
+  color: $accent-text-color
 }
 
 .section-ingredients {
@@ -18,16 +29,44 @@
 }
 
 .list {
-  padding:1rem;
+  margin-top:0.5rem;
+  padding:0.25rem 2rem;
+  color: $secondary-text-color;
+  background-color: $accent-color;
+  box-shadow: 0px 0px 5px 0px $secondary-color;
+  border-radius: 5px;
+  width: fit-content;
 }
+
+
 
 .list-element {
-  padding: 0.25rem;
+  padding: 0.10rem 0.25rem;
 }
-
 
 .sections-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.btn {
+  margin-top: 2rem;
+
+  cursor: pointer;
+  width: fit-content;
+  font-size: 1.5rem;
+  padding:1rem;
+  box-shadow: 0px 0px 5px 0px $accent-cta-color;
+  border: none;
+  border-radius: 5px;
+  color: $accent-cta-color;
+  background-color: $dominant-color;
+  transition: color 500ms ease-out 0ms, scale 500ms ease-out 0ms, background-color 500ms ease-out 0ms;
+}
+
+.btn:hover {
+  background-color: $accent-cta-color;
+  color: $accent-color;
+  scale: 110%;
 }
