@@ -110,7 +110,7 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
 
 .btn:focus {
   outline: none;
-  border: 2px solid white;
+  border: 2px solid $accent-cta-color;
 }
 
 .btn.btn-disabled {
@@ -142,8 +142,7 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
 }
 
 .btn-save {
-  background-color: $accent-cta-color;
-  box-shadow: 0px 0px 5px 0px $accent-cta-color;
+  background-color: $dominant-color;
 }
 
 .btn-delete:hover {
@@ -157,6 +156,7 @@ $btn-save-shadow-color:hsl(150, 50%, 56%);
 }
 
 .btn-save:hover {
+  background-color: $accent-cta-color;
   box-shadow: 0px 0px 10px 0px $accent-cta-color;
 }
 
