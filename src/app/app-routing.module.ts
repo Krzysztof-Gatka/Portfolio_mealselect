@@ -10,7 +10,7 @@ import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
 
 const ROUTES: Route[] = [
-  { path: '', component: HomeComponent, pathMatch: "full" },
+  { path: '', component: WelcomeComponent, pathMatch: "full" },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'register', component: AuthComponent },
   { path: 'login', component: AuthComponent },
