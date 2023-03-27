@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
 
@@ -9,7 +10,8 @@ import { Recipe } from './recipe.model';
 @Component({
   selector: 'app-recipe',
   templateUrl: './recipe.component.html',
-  styleUrls: ['./recipe.component.scss']
+  styleUrls: ['./recipe.component.scss'],
+  providers: [ToastrService],
 })
 export class RecipeComponent implements OnInit, OnDestroy{
   recipe: Recipe | undefined;
@@ -17,7 +19,8 @@ export class RecipeComponent implements OnInit, OnDestroy{
   constructor(
     private recipesService: RecipesService,
     private route: ActivatedRoute,
-    private shoppingListService: ShoppingListService
+    private shoppingListService: ShoppingListService,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -34,5 +37,6 @@ export class RecipeComponent implements OnInit, OnDestroy{
     this.recipe?.ingredients.map((product) => {
       this.shoppingListService.addElement(product);
     })
+    this.toastr.success('Test');
   }
 }
