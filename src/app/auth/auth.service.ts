@@ -9,7 +9,7 @@ const WebAPIKey = 'AIzaSyA-qhl-Xy0a_-sxbwrPPeU_dLycYdAOTBo';
 const SignInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + WebAPIKey;
 const LogInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + WebAPIKey;
 
-class LoginResponse {
+class AuthResponse {
   constructor(
     public displayName: string,
     public email: string,
@@ -32,23 +32,21 @@ export class AuthService {
 
   SignIn(userEmail: string, userPassword: string): void {
     const requestBody = this._createRequestBody(userEmail, userPassword);
-    this.http.post<Response>(SignInUrl, requestBody)
+    this.http.post<AuthResponse>(SignInUrl, requestBody)
       .subscribe((response) => {
         console.log(response);
+        this.user = this._createUserObject(response);
+        this.userAuthentication.next('signIn');
         this.router.navigate(['/home']);
       })
   }
 
   logIn(userEmail: string, userPassword: string): void {
     const requestBody = this._createRequestBody(userEmail, userPassword);
-    this.http.post<LoginResponse>(LogInUrl, requestBody)
+    this.http.post<AuthResponse>(LogInUrl, requestBody)
       .subscribe((response) => {
-        const email = response.email;
-        const expiresIn = parseInt(response.expiresIn);
-        const lastLogin = new Date();
-        const token = response.idToken;
-        this.user = new User(email, lastLogin, token, expiresIn);
-        this.userAuthentication.next('login');
+        this.user = this._createUserObject(response);
+        this.userAuthentication.next('logIn');
         this.router.navigate(['/home']);
       });
   }
@@ -59,6 +57,14 @@ export class AuthService {
       password: userPassword,
       returnSecureToken: true,
     }
+  }
+
+  private _createUserObject(response: AuthResponse): User {
+    const email = response.email;
+    const expiresIn = parseInt(response.expiresIn);
+    const lastLogin = new Date();
+    const token = response.idToken;
+    return new User(email, lastLogin, token, expiresIn);
   }
 
   canActivate(): boolean | UrlTree {

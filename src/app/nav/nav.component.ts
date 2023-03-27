@@ -17,9 +17,9 @@ export class NavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.isUserLoggedIn = this.authService.userLoggedIn();
       this.sub = this.authService.userAuthentication.subscribe((operation) => {
-        if(operation === 'login') {
+        if(operation === 'logIn' || operation === 'signIn') {
           this.isUserLoggedIn = true;
-        } else if(operation === 'logout') {
+        } else if(operation === 'logOut') {
           this.isUserLoggedIn = false;
         }
       })
@@ -35,7 +35,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   onLogoutClick(): void {
     this.authService.user = null;
-    this.authService.userAuthentication.next('logout');
+    this.authService.userAuthentication.next('logOut');
     this.router.navigate(['/welcome']);
   }
 }
