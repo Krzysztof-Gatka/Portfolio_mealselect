@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { ActivatedRoute, ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { Subject } from "rxjs";
 import { User } from "./user.model";
 
 
@@ -25,6 +26,7 @@ class LoginResponse {
 @Injectable({providedIn: 'root'})
 export class AuthService {
   user: User | undefined;
+  userAuthentication =  new Subject<string>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -46,7 +48,7 @@ export class AuthService {
         const lastLogin = new Date();
         const token = response.idToken;
         this.user = new User(email, lastLogin, token, expiresIn);
-        console.log(this.user);
+        this.userAuthentication.next('login');
         this.router.navigate(['/home']);
       });
   }
@@ -64,6 +66,10 @@ export class AuthService {
     const tree: UrlTree = this.router.parseUrl('/welcome');
     if (this.user) return true;
     return tree;
+  }
+
+  userLoggedIn(): boolean {
+    return !!this.user;
   }
 
 }
