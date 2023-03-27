@@ -5,7 +5,7 @@
         <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/home']" class="btn-topnav">Home</button>
         <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-topnav">Shopping List</button>
         <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-topnav">Recipes</button>
-        <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/test']" class="btn-topnav">Logout</button>
+        <button *ngIf="isUserLoggedIn" class="btn-topnav" (click)="onLogoutClick()">Logout</button>
 
         <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/login']" class="btn-topnav">Log In</button>
         <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-topnav">Sign In</button>

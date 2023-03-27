@@ -25,7 +25,7 @@ class LoginResponse {
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-  user: User | undefined;
+  user: User | undefined | null;
   userAuthentication =  new Subject<string>();
 
   constructor(private http: HttpClient, private router: Router) {}
