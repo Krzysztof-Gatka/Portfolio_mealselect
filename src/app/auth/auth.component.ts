@@ -41,7 +41,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     if(this.type === 'login') {
       this.authService.logIn(userEmail!, userPassword!);
     } else {
-      this.authService.logIn(userEmail!, userPassword!);
+      this.authService.SignIn(userEmail!, userPassword!);
     }
 
 

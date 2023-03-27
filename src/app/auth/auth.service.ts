@@ -1,31 +1,52 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { inject, Injectable } from "@angular/core";
+import { ActivatedRoute, ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { Subject } from "rxjs";
+import { User } from "./user.model";
 
 
 const WebAPIKey = 'AIzaSyA-qhl-Xy0a_-sxbwrPPeU_dLycYdAOTBo';
 const SignInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + WebAPIKey;
 const LogInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + WebAPIKey;
 
+class AuthResponse {
+  constructor(
+    public displayName: string,
+    public email: string,
+    public expiresIn: string,
+    public idToken: string,
+    public kind: string,
+    public localId: string,
+    public refreshToken: string,
+    public registered: boolean
+  ) {}
+
+}
+
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  user: User | undefined | null;
+  userAuthentication =  new Subject<string>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
   SignIn(userEmail: string, userPassword: string): void {
     const requestBody = this._createRequestBody(userEmail, userPassword);
-    this.http.post<Response>(SignInUrl, requestBody)
+    this.http.post<AuthResponse>(SignInUrl, requestBody)
       .subscribe((response) => {
         console.log(response);
+        this.user = this._createUserObject(response);
+        this.userAuthentication.next('signIn');
         this.router.navigate(['/home']);
       })
   }
 
   logIn(userEmail: string, userPassword: string): void {
     const requestBody = this._createRequestBody(userEmail, userPassword);
-    this.http.post<Response>(LogInUrl, requestBody)
+    this.http.post<AuthResponse>(LogInUrl, requestBody)
       .subscribe((response) => {
-        console.log(response);
+        this.user = this._createUserObject(response);
+        this.userAuthentication.next('logIn');
         this.router.navigate(['/home']);
       });
   }
@@ -38,4 +59,28 @@ export class AuthService {
     }
   }
 
+  private _createUserObject(response: AuthResponse): User {
+    const email = response.email;
+    const expiresIn = parseInt(response.expiresIn);
+    const lastLogin = new Date();
+    const token = response.idToken;
+    return new User(email, lastLogin, token, expiresIn);
+  }
+
+  canActivate(): boolean | UrlTree {
+    console.log('canActivate launched!');
+    const tree: UrlTree = this.router.parseUrl('/welcome');
+    if (this.user) return true;
+    return tree;
+  }
+
+  userLoggedIn(): boolean {
+    return !!this.user;
+  }
+
 }
+
+export const canActivateUser: CanActivateFn =
+  (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    return inject(AuthService).canActivate();
+  };
