@@ -5,6 +5,8 @@
 // it also allows to set min and max width to that container which in my opinion creates neat environment for responsive design
 // But it also has downsides i am not sure if it will be so comfortable to style nested custom components, but this is my first
 // bigger app so i might change this approach later, at this point of development i am going to use this comment as guide
+@import './variables';
+
 
 * {
   font-family: Arial, Helvetica, sans-serif;
@@ -21,4 +23,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+
+.toast-container.toast-top-right {
+  top:3rem;
+  right: -2rem;
+}
+
+.toast-container.toast-top-right .toast-success{
+  background-color: $secondary-color;
 }
