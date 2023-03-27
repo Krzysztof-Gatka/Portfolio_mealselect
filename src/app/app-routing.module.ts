@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Route } from "@angular/router";
 import { AuthComponent } from "./auth/auth.component";
 
+import { canActivateUser } from "./auth/auth.service";
 import { HomeComponent } from "./home/home.component";
 import { RecipeComponent } from "./recipes/recipe/recipe.component";
 import { RecipesListComponent } from "./recipes/recipes-list/recipes-list.component";
@@ -14,8 +15,8 @@ const ROUTES: Route[] = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'register', component: AuthComponent },
   { path: 'login', component: AuthComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'shopping-list', component: ShoppingListComponent },
+  { path: 'home', component: HomeComponent, canActivate: [canActivateUser]},
+  { path: 'shopping-list', component: ShoppingListComponent, canActivate: [canActivateUser] },
   {
     path: 'recipes',
     component: RecipesComponent,
@@ -30,6 +31,7 @@ const ROUTES: Route[] = [
         path: 'recipe/:id', component: RecipeComponent,
       },
     ],
+    canActivate: [canActivateUser]
   },
 ]
 
