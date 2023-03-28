@@ -12,6 +12,7 @@ export class RecipesListComponent implements OnInit{
   recipes: Recipe[] | undefined;
   sorting: boolean = false;
   filtering: boolean = false;
+  loading: boolean = true;
   filterForm = new FormGroup({
     name: new FormControl(''),
     prepTime: new FormControl(''),
@@ -25,7 +26,11 @@ export class RecipesListComponent implements OnInit{
   constructor(private recipesService: RecipesService) {}
 
   ngOnInit(): void {
-    this.recipes = this.recipesService.recipesBase.slice();
+    this.recipesService.fetchRecipes();
+    this.recipesService.recipesFetched.subscribe(() => {
+      this.loading = false;
+      this.recipes = this.recipesService.recipesBase.slice();
+    })
   }
 
   onSubmit(): void {

@@ -56,7 +56,8 @@
       </form>
     </div>
   </div>
-  <div class="recipes-list-container">
+  <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  <div *ngIf="!loading" class="recipes-list-container">
     <app-recipes-list-element
       *ngFor="let recipe of recipes"
       [recipe]="recipe"
