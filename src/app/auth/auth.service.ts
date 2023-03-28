@@ -34,7 +34,6 @@ export class AuthService {
     const requestBody = this._createRequestBody(userEmail, userPassword);
     this.http.post<AuthResponse>(SignInUrl, requestBody)
       .subscribe((response) => {
-        console.log(response);
         this.user = this._createUserObject(response);
         this.userAuthentication.next('signIn');
         this.router.navigate(['/home']);
@@ -54,7 +53,6 @@ export class AuthService {
 
   autologin(): void {
     if( localStorage.getItem('user')) {
-      console.log('found item in localstorage');
       const user:User = JSON.parse(localStorage.getItem('user')!);
       if( new Date(user.lastLogin).getTime() + 10 * 1000 < new Date().getTime()) {
         return
@@ -65,6 +63,13 @@ export class AuthService {
     } else {
       return;
     }
+  }
+
+  logOut(): void {
+    this.user = null;
+    this.userAuthentication.next('logOut');
+    localStorage.removeItem('user');
+    this.router.navigate(['/welcome']);
   }
 
   private _createRequestBody(userEmail: string, userPassword: string) {
@@ -84,7 +89,6 @@ export class AuthService {
   }
 
   canActivate(): boolean | UrlTree {
-    console.log('canActivate launched!');
     const tree: UrlTree = this.router.parseUrl('/welcome');
     if (this.user) return true;
     return tree;
