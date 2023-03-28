@@ -27,6 +27,7 @@ class AuthResponse {
 export class AuthService {
   user: User | undefined | null;
   userAuthentication =  new Subject<string>();
+  private expirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -34,9 +35,9 @@ export class AuthService {
     const requestBody = this._createRequestBody(userEmail, userPassword);
     this.http.post<AuthResponse>(SignInUrl, requestBody)
       .subscribe((response) => {
-        console.log(response);
         this.user = this._createUserObject(response);
         this.userAuthentication.next('signIn');
+        this.autologout(this.user.expiresIn * 1000);
         this.router.navigate(['/home']);
       })
   }
@@ -46,9 +47,46 @@ export class AuthService {
     this.http.post<AuthResponse>(LogInUrl, requestBody)
       .subscribe((response) => {
         this.user = this._createUserObject(response);
+        localStorage.setItem('user', JSON.stringify(this.user));
         this.userAuthentication.next('logIn');
+        this.autologout(this.user.expiresIn * 1000);
         this.router.navigate(['/home']);
       });
+  }
+
+  autologin(): void {
+    if( localStorage.getItem('user')) {
+      const user:User = JSON.parse(localStorage.getItem('user')!);
+      if( new Date(user.lastLogin).getTime() + user.expiresIn * 1000 < new Date().getTime()) {
+        return
+      }
+      this.user = new User(user.email, user.lastLogin, user.token, user.expiresIn);
+      this.userAuthentication.next('login');
+      const timeout = new Date(user.lastLogin).getTime() + user.expiresIn*1000 - new Date().getTime()
+      console.log(timeout);
+      this.autologout(timeout);
+      this.router.navigate(['/home']);
+    } else {
+      return;
+    }
+  }
+
+  autologout(timeout: number): void {
+    this.expirationTimer = setTimeout(() => {
+      this.logOut();
+    }, timeout)
+  }
+
+  logOut(): void {
+    this.user = null;
+    this.userAuthentication.next('logOut');
+    localStorage.removeItem('user');
+    this.router.navigate(['/welcome']);
+    if(this.expirationTimer) {
+      clearTimeout(this.expirationTimer);
+    }
+
+    this.expirationTimer = null;
   }
 
   private _createRequestBody(userEmail: string, userPassword: string) {
@@ -68,7 +106,6 @@ export class AuthService {
   }
 
   canActivate(): boolean | UrlTree {
-    console.log('canActivate launched!');
     const tree: UrlTree = this.router.parseUrl('/welcome');
     if (this.user) return true;
     return tree;
