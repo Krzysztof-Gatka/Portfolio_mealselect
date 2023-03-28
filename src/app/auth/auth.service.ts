@@ -46,9 +46,25 @@ export class AuthService {
     this.http.post<AuthResponse>(LogInUrl, requestBody)
       .subscribe((response) => {
         this.user = this._createUserObject(response);
+        localStorage.setItem('user', JSON.stringify(this.user));
         this.userAuthentication.next('logIn');
         this.router.navigate(['/home']);
       });
+  }
+
+  autologin(): void {
+    if( localStorage.getItem('user')) {
+      console.log('found item in localstorage');
+      const user:User = JSON.parse(localStorage.getItem('user')!);
+      if( new Date(user.lastLogin).getTime() + 10 * 1000 < new Date().getTime()) {
+        return
+      }
+      this.user = new User(user.email, user.lastLogin, user.token, user.expiresIn);
+      this.userAuthentication.next('login');
+      this.router.navigate(['/home']);
+    } else {
+      return;
+    }
   }
 
   private _createRequestBody(userEmail: string, userPassword: string) {
