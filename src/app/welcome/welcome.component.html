@@ -46,7 +46,7 @@
   </div>
 </div>
 
-<div class="auth-buttons-container">
+<div *ngIf="!userLoggedIn" class="auth-buttons-container">
 
   <button
     class="btn btn-login"
