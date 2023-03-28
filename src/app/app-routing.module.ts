@@ -6,6 +6,7 @@ import { canActivateUser } from "./auth/auth.service";
 import { RecipeComponent } from "./recipes/recipe/recipe.component";
 import { RecipesListComponent } from "./recipes/recipes-list/recipes-list.component";
 import { RecipesComponent } from "./recipes/recipes.component";
+import { UserRecipesComponent } from "./recipes/user-recipes/user-recipes.component";
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
 
@@ -24,6 +25,9 @@ const ROUTES: Route[] = [
       },
       {
         path: 'recipes-list', component: RecipesListComponent,
+      },
+      {
+        path: 'user-recipes', component: UserRecipesComponent,
       },
       {
         path: 'recipe/:id', component: RecipeComponent,
