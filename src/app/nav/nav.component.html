@@ -1,23 +1,44 @@
 <div class="full-width-flex-container">
   <div class="navigation-container">
-    <button [routerLinkActive]="'active'" [routerLink]="['/welcome']" class="logo">mealSelect</button>
+    <div class="left-nav">
+      <button (click)="onHamburgerClick()" class="left-nav-ham" [ngClass]="navbarOpen ? 'open' : ''">
+        <div class="line first-line"></div>
+        <div class="line second-line"></div>
+        <div class="line third-line"></div>
+        <div class="x-line x-line-1"></div>
+        <div class="x-line x-line-2"></div>
+      </button>
+      <button [routerLinkActive]="'active'" [routerLink]="['/welcome']" class="logo">mealSelect</button>
+    </div>
+
     <div class="right-nav">
-        <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-topnav">Shopping List</button>
-        <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-topnav">Recipes</button>
-        <button *ngIf="isUserLoggedIn" class="btn-topnav" (click)="onLogoutClick()">Logout</button>
 
-        <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/login']" class="btn-topnav">Log In</button>
-        <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-topnav">Sign In</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-topnav">Recipes</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-topnav">Shopping List</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-topnav">Pantry</button>
+      <button *ngIf="isUserLoggedIn" class="btn-topnav" (click)="onLogoutClick()">Logout</button>
 
-        <button [routerLinkActive]="'active'" (click)="onHamburgerClick()" class="hamburger">Ham</button>
+      <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/login']" class="btn-topnav">Log In</button>
+      <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-topnav">Sign In</button>
+
+      <button (click)="onHamburgerClick()" class="right-nav-ham" [ngClass]="navbarOpen ? 'open' : ''">
+        <div class="line first-line"></div>
+        <div class="line second-line"></div>
+        <div class="line third-line"></div>
+        <div class="x-line x-line-1"></div>
+        <div class="x-line x-line-2"></div>
+      </button>
     </div>
     <nav (click)="onHamburgerClick()" class="sidenav-container" [ngClass]="navbarOpen ? 'open' : ''">
-      <button [routerLink]="['/recipes']" class="btn-nav">Recipes</button>
-      <button [routerLink]="['/shopping-list']" class="btn-nav">ShoppingList</button>
-      <button class="btn-nav">my Recipes</button>
-      <button class="btn-nav">my Stash</button>
-      <button class="btn-nav">to cook list</button>
-      <button class="btn-nav">Logout</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-nav">Recipes</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/myrecipes']" class="btn-nav">My Recipes</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/newRecipe']" class="btn-nav">New Recipe</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-nav">ShoppingList</button>
+      <button *ngIf="isUserLoggedIn"  [routerLinkActive]="'active'" [routerLink]="['/pantry']" class="btn-nav">Pantry</button>
+      <button *ngIf="isUserLoggedIn" class="btn-nav" (click)="onLogoutClick()">Logout</button>
+
+      <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/login']" class="btn-nav">Log In</button>
+      <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-nav">Sign In</button>
     </nav>
   </div>
 

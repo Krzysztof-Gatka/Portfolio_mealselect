@@ -17,6 +17,13 @@
   box-shadow: 0px 1px 3px 1px $accent-cta-color;
 }
 
+.left-nav {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
 .right-nav {
   width: fit-content;
   display: flex;
@@ -48,8 +55,21 @@
   color: $accent-cta-color;
 }
 
+.left-nav-ham {
+  position: relative;
+  cursor: pointer;
+  width: fit-content;
+  margin-right: 1rem;
+  padding: 0.15rem;
+  background-color: $dominant-color;
+  font-weight: 600;
+  border: none;
+  transition: color 300ms ease-out 0ms, box-shadow 300ms ease-out 0ms;
+}
+
 .logo,
 .hamburger {
+  margin-left: 0.5rem;
   cursor: pointer;
   width: fit-content;
   padding: 0.15rem;
@@ -73,7 +93,7 @@
 
 .sidenav-container {
   background-color: $dominant-color;
-  box-shadow: 1px 3px 3px 0px $secondary-color;
+  box-shadow: 1px 3px 3px 0px $accent-cta-color;
   position: fixed;
   top: 2.4rem;
   left:0;
@@ -90,28 +110,30 @@
 
 .sidenav-container.open {
   padding: 1rem;
-  width: 20rem;
+  width: 10rem;
 }
 
 .btn-nav {
+  cursor: pointer;
+  background-color: $dominant-color;
+  border: none;
   width: 0;
   overflow: hidden;
-  color: $accent-cta-color;
+  color: $default-text-color;
+  transition: scale 500ms ease 0ms, background-color 500ms ease 0ms, color 500ms ease 0ms;
+  border-radius: 5px;
+  margin-bottom: 0.25rem;
 
 }
 
-.open .btn-nav {
-  cursor: pointer;
-  min-width: 5rem;
-  width: 90%;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  transition: scale 500ms ease 0ms, background-color 500ms ease 0ms, color 500ms ease 0ms;
-  background-color: $dominant-color;
-  border: none;
-  border-radius: 5px;
+.btn-nav.active {
+  color: $accent-cta-color;
   font-weight: 600;
-  box-shadow: 0px 0px 5px 1px $accent-cta-color;
+}
+
+.open .btn-nav {
+  padding:0.25rem 0.5rem;
+  width: 7rem;
 }
 
 .open .btn-nav:hover {
@@ -120,11 +142,16 @@
   background-color: $accent-cta-color;
   color: $accent-color;
 }
+
 .hamburger{
   display: none;
 }
 
-@media screen and (max-width: 420px) {
+.right-nav-ham {
+  display: none;
+}
+
+@media screen and (max-width: 490px) {
   .sidenav-container.open{
     width: 100%;
   }
@@ -133,8 +160,38 @@
     display: none;
   }
 
-  .hamburger {
+  .left-nav-ham {
+    display: none;
+  }
+
+  .right-nav-ham {
+    position: relative;
+    margin-right: 1rem;
     display: block;
+    border: none;
+    background-color: $dominant-color;
+  }
+
+  .open .btn-nav {
+    cursor: pointer;
+    min-width: 5rem;
+    width: 90%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: scale 500ms ease 0ms, background-color 500ms ease 0ms, color 500ms ease 0ms;
+    background-color: $dominant-color;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    box-shadow: 0px 0px 5px 1px $accent-cta-color;
+  }
+
+  .left-nav-ham {
+    display: none;
+  }
+
+  .logo {
+    margin-left: 0;
   }
 }
 
@@ -194,3 +251,69 @@
   margin-bottom:1rem;
   min-width: 10rem;
 }
+
+.right-nav-ham,
+.left-nav-ham {
+  cursor: pointer;
+  width: 20px;
+}
+
+.open .line {
+  display: none;
+}
+
+.x-line {
+  display: none;
+  position: absolute;
+  top: 7px;
+  height: 4px;
+  width: 24px;
+  border-radius: 5px;
+  transition: background-color 300ms ease-out 0ms;
+}
+
+.open .x-line {
+  display: block;
+  background-color: $default-text-color;
+}
+
+.line{
+  position: absolute;
+  height: 4px;
+  border-radius: 5px;
+  width: 24px;
+  background-color: $default-text-color;
+  transition: background-color 300ms ease-out 0ms;
+}
+
+.left-nav-ham.open:hover .x-line {
+  background-color: $accent-cta-color;
+}
+
+.left-nav-ham:hover .line{
+  background-color: $accent-cta-color;
+}
+
+.x-line-1 {
+  rotate: 45deg;
+}
+
+.x-line-2 {
+  rotate: -45deg;
+}
+
+.first-line {
+  top:0;
+  left:0;
+}
+
+.second-line {
+  top:8px;
+  left:0;
+}
+
+.third-line {
+  top: 16px;
+  left:0px;
+}
+
