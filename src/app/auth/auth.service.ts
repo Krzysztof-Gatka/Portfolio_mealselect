@@ -27,6 +27,7 @@ class AuthResponse {
 export class AuthService {
   user: User | undefined | null;
   userAuthentication =  new Subject<string>();
+  private expirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -36,6 +37,7 @@ export class AuthService {
       .subscribe((response) => {
         this.user = this._createUserObject(response);
         this.userAuthentication.next('signIn');
+        this.autologout(this.user.expiresIn * 1000);
         this.router.navigate(['/home']);
       })
   }
@@ -47,6 +49,7 @@ export class AuthService {
         this.user = this._createUserObject(response);
         localStorage.setItem('user', JSON.stringify(this.user));
         this.userAuthentication.next('logIn');
+        this.autologout(this.user.expiresIn * 1000);
         this.router.navigate(['/home']);
       });
   }
@@ -54,15 +57,24 @@ export class AuthService {
   autologin(): void {
     if( localStorage.getItem('user')) {
       const user:User = JSON.parse(localStorage.getItem('user')!);
-      if( new Date(user.lastLogin).getTime() + 10 * 1000 < new Date().getTime()) {
+      if( new Date(user.lastLogin).getTime() + user.expiresIn * 1000 < new Date().getTime()) {
         return
       }
       this.user = new User(user.email, user.lastLogin, user.token, user.expiresIn);
       this.userAuthentication.next('login');
+      const timeout = new Date(user.lastLogin).getTime() + user.expiresIn*1000 - new Date().getTime()
+      console.log(timeout);
+      this.autologout(timeout);
       this.router.navigate(['/home']);
     } else {
       return;
     }
+  }
+
+  autologout(timeout: number): void {
+    this.expirationTimer = setTimeout(() => {
+      this.logOut();
+    }, timeout)
   }
 
   logOut(): void {
@@ -70,6 +82,11 @@ export class AuthService {
     this.userAuthentication.next('logOut');
     localStorage.removeItem('user');
     this.router.navigate(['/welcome']);
+    if(this.expirationTimer) {
+      clearTimeout(this.expirationTimer);
+    }
+
+    this.expirationTimer = null;
   }
 
   private _createRequestBody(userEmail: string, userPassword: string) {
