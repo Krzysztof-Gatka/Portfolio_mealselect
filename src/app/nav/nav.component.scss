@@ -17,6 +17,13 @@
   box-shadow: 0px 1px 3px 1px $accent-cta-color;
 }
 
+.left-nav {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
 .right-nav {
   width: fit-content;
   display: flex;
@@ -48,6 +55,17 @@
   color: $accent-cta-color;
 }
 
+.right-nav-ham {
+  cursor: pointer;
+  width: fit-content;
+  margin-right: 1rem;
+  padding: 0.15rem;
+  background-color: $dominant-color;
+  font-weight: 600;
+  border: none;
+  transition: color 300ms ease-out 0ms, box-shadow 300ms ease-out 0ms;
+}
+
 .logo,
 .hamburger {
   cursor: pointer;
@@ -66,6 +84,7 @@
 }
 
 .logo:hover,
+.right-nav-ham:hover,
 .hamburger:hover {
   box-shadow: 0px 2px 0px 0px $accent-cta-color;
   color: $accent-cta-color;
@@ -73,7 +92,7 @@
 
 .sidenav-container {
   background-color: $dominant-color;
-  box-shadow: 1px 3px 3px 0px $secondary-color;
+  box-shadow: 1px 3px 3px 0px $accent-cta-color;
   position: fixed;
   top: 2.4rem;
   left:0;
@@ -90,28 +109,30 @@
 
 .sidenav-container.open {
   padding: 1rem;
-  width: 20rem;
+  width: 10rem;
 }
 
 .btn-nav {
+  cursor: pointer;
+  background-color: $dominant-color;
+  border: none;
   width: 0;
   overflow: hidden;
-  color: $accent-cta-color;
+  color: $default-text-color;
+  transition: scale 500ms ease 0ms, background-color 500ms ease 0ms, color 500ms ease 0ms;
+  border-radius: 5px;
+  margin-bottom: 0.25rem;
 
 }
 
-.open .btn-nav {
-  cursor: pointer;
-  min-width: 5rem;
-  width: 90%;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  transition: scale 500ms ease 0ms, background-color 500ms ease 0ms, color 500ms ease 0ms;
-  background-color: $dominant-color;
-  border: none;
-  border-radius: 5px;
+.btn-nav.active {
+  color: $accent-cta-color;
   font-weight: 600;
-  box-shadow: 0px 0px 5px 1px $accent-cta-color;
+}
+
+.open .btn-nav {
+  padding:0.25rem 0.5rem;
+  width: 7rem;
 }
 
 .open .btn-nav:hover {
@@ -120,6 +141,7 @@
   background-color: $accent-cta-color;
   color: $accent-color;
 }
+
 .hamburger{
   display: none;
 }
@@ -133,8 +155,26 @@
     display: none;
   }
 
+  .right-nav-ham {
+    display: none;
+  }
+
   .hamburger {
     display: block;
+  }
+
+  .open .btn-nav {
+    cursor: pointer;
+    min-width: 5rem;
+    width: 90%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: scale 500ms ease 0ms, background-color 500ms ease 0ms, color 500ms ease 0ms;
+    background-color: $dominant-color;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    box-shadow: 0px 0px 5px 1px $accent-cta-color;
   }
 }
 
