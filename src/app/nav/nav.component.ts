@@ -12,10 +12,11 @@ export class NavComponent implements OnInit, OnDestroy {
   navbarOpen: boolean = false;
   isUserLoggedIn: boolean = false;
   sub: Subscription | undefined;
+  modalOpened: boolean = false;
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-      this.isUserLoggedIn = this.authService.userLoggedIn();
+      this.isUserLoggedIn = this.authService.isUserLoggedIn();
       this.sub = this.authService.userAuthentication.subscribe((operation) => {
         if(operation === 'logIn' || operation === 'signIn') {
           this.isUserLoggedIn = true;
@@ -34,6 +35,15 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   onLogoutClick(): void {
+    this.modalOpened = true;
+  }
+
+  //MODAL
+  onModalClick(): void {
+    this.modalOpened = false;
+  }
+
+  onYesClick(): void {
     this.authService.logOut();
   }
 }

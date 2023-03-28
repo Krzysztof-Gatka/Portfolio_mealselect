@@ -31,7 +31,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  SignIn(userEmail: string, userPassword: string): void {
+  singIn(userEmail: string, userPassword: string): void {
     const requestBody = this._createRequestBody(userEmail, userPassword);
     this.http.post<AuthResponse>(SignInUrl, requestBody)
       .subscribe((response) => {
@@ -55,19 +55,25 @@ export class AuthService {
   }
 
   autologin(): void {
-    if( localStorage.getItem('user')) {
+
+    if(localStorage.getItem('user')) {
+
       const user:User = JSON.parse(localStorage.getItem('user')!);
-      if( new Date(user.lastLogin).getTime() + user.expiresIn * 1000 < new Date().getTime()) {
-        return
+      const lastAuthTime = new Date(user.lastLogin).getTime();
+      const expirationTime = user.expiresIn * 1000;
+      const currentTime = new Date().getTime();
+
+      if(currentTime < lastAuthTime + expirationTime) {
+
+        this.user = new User(user.email, user.lastLogin, user.token, user.expiresIn);
+        this.userAuthentication.next('login');
+        this.router.navigate(['/home']);
+
+        const timeout = lastAuthTime + expirationTime - currentTime;
+        this.autologout(timeout);
+
       }
-      this.user = new User(user.email, user.lastLogin, user.token, user.expiresIn);
-      this.userAuthentication.next('login');
-      const timeout = new Date(user.lastLogin).getTime() + user.expiresIn*1000 - new Date().getTime()
-      console.log(timeout);
-      this.autologout(timeout);
-      this.router.navigate(['/home']);
-    } else {
-      return;
+
     }
   }
 
@@ -79,13 +85,13 @@ export class AuthService {
 
   logOut(): void {
     this.user = null;
-    this.userAuthentication.next('logOut');
     localStorage.removeItem('user');
     this.router.navigate(['/welcome']);
+    this.userAuthentication.next('logOut');
+
     if(this.expirationTimer) {
       clearTimeout(this.expirationTimer);
     }
-
     this.expirationTimer = null;
   }
 
@@ -111,7 +117,7 @@ export class AuthService {
     return tree;
   }
 
-  userLoggedIn(): boolean {
+  isUserLoggedIn(): boolean {
     return !!this.user;
   }
 

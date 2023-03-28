@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from './auth.service';
@@ -20,7 +21,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   sub: Subscription | undefined;
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -40,10 +42,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     // userEmail and userPassword will be set
     if(this.type === 'login') {
       this.authService.logIn(userEmail!, userPassword!);
+      this.toastr.success('Successfully Logged in!');
     } else {
-      this.authService.SignIn(userEmail!, userPassword!);
+      this.authService.singIn(userEmail!, userPassword!);
+      this.toastr.success('Successfully Signed in!');
     }
-
 
     this.form.reset();
   }
