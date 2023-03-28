@@ -22,5 +22,11 @@
     </nav>
   </div>
 
+  <div *ngIf="modalOpened" class="clear-list-modal" (click)="onModalClick()">
+    <h3 class="header" >Are you sure that you want Log out?</h3>
+    <button (click)="onYesClick()" class="btn btn-yes">Yes</button>
+    <button class="btn btn-cancel">Cancel</button>
+  </div>
+
 </div>
 
