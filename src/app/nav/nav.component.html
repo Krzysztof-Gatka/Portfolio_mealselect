@@ -1,7 +1,13 @@
 <div class="full-width-flex-container">
   <div class="navigation-container">
     <div class="left-nav">
-      <button (click)="onHamburgerClick()" class="right-nav-ham">Ham</button>
+      <button (click)="onHamburgerClick()" class="left-nav-ham" [ngClass]="navbarOpen ? 'open' : ''">
+        <div class="line first-line"></div>
+        <div class="line second-line"></div>
+        <div class="line third-line"></div>
+        <div class="x-line x-line-1"></div>
+        <div class="x-line x-line-2"></div>
+      </button>
       <button [routerLinkActive]="'active'" [routerLink]="['/welcome']" class="logo">mealSelect</button>
     </div>
 
@@ -15,7 +21,13 @@
       <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/login']" class="btn-topnav">Log In</button>
       <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-topnav">Sign In</button>
 
-      <button (click)="onHamburgerClick()" class="hamburger">Ham</button>
+      <button (click)="onHamburgerClick()" class="right-nav-ham" [ngClass]="navbarOpen ? 'open' : ''">
+        <div class="line first-line"></div>
+        <div class="line second-line"></div>
+        <div class="line third-line"></div>
+        <div class="x-line x-line-1"></div>
+        <div class="x-line x-line-2"></div>
+      </button>
     </div>
     <nav (click)="onHamburgerClick()" class="sidenav-container" [ngClass]="navbarOpen ? 'open' : ''">
       <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-nav">Recipes</button>
