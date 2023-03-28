@@ -38,7 +38,7 @@ export class AuthService {
         this.user = this._createUserObject(response);
         this.userAuthentication.next('signIn');
         this.autologout(this.user.expiresIn * 1000);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/recipes']);
       })
   }
 
@@ -50,7 +50,7 @@ export class AuthService {
         localStorage.setItem('user', JSON.stringify(this.user));
         this.userAuthentication.next('logIn');
         this.autologout(this.user.expiresIn * 1000);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/recipes']);
       });
   }
 
@@ -67,7 +67,7 @@ export class AuthService {
 
         this.user = new User(user.email, user.lastLogin, user.token, user.expiresIn);
         this.userAuthentication.next('login');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/recipes']);
 
         const timeout = lastAuthTime + expirationTime - currentTime;
         this.autologout(timeout);
