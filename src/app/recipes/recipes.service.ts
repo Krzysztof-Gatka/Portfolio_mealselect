@@ -1,6 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+import { AuthService } from "../auth/auth.service";
 import { Recipe } from "./recipe/recipe.model";
 
 const Fetch_Recipes_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/recipes.json';
@@ -10,11 +11,12 @@ export class RecipesService {
   recipesFetched = new Subject();
   recipesBase: Recipe[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   fetchRecipesBase(): void {
-    this.http.get<Recipe[]>(Fetch_Recipes_URL).subscribe((response) => {
-      console.log(response);
+    const params = new HttpParams().set('auth', this.authService.user?.token!);
+
+    this.http.get<Recipe[]>(Fetch_Recipes_URL, {params: params}).subscribe((response) => {
       this.recipesBase = response.map((recipe) =>
         new Recipe(
           recipe.id, recipe.name, recipe.ingredients, recipe.prepSteps,
