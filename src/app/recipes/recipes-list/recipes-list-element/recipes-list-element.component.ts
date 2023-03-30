@@ -8,4 +8,5 @@ import { Recipe } from '../../recipe/recipe.model';
 })
 export class RecipesListElementComponent {
   @Input() recipe!: Recipe;
+  @Input() recipesType: string = ''
 }

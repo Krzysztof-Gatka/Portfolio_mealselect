@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
 
-const Recipes_Base = 'recipes-base';
-const My_Recipes = 'my-recipes';
-const Community_Recipes = 'community-recipes';
+export const Recipes_Base = 'recipes-base';
+export const My_Recipes = 'my-recipes';
+export const Community_Recipes = 'community-recipes';
 
 @Component({
   selector: 'app-recipes-list',

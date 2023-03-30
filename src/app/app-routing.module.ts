@@ -26,7 +26,7 @@ const ROUTES: Route[] = [
         path: 'recipes-list/:recipes', component: RecipesListComponent,
       },
       {
-        path: 'recipe/:id', component: RecipeComponent,
+        path: ':recipes/recipe/:id', component: RecipeComponent,
       },
     ],
     canActivate: [canActivateUser]
