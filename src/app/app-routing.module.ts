@@ -6,7 +6,6 @@ import { canActivateUser } from "./auth/auth.service";
 import { RecipeComponent } from "./recipes/recipe/recipe.component";
 import { RecipesListComponent } from "./recipes/recipes-list/recipes-list.component";
 import { RecipesComponent } from "./recipes/recipes.component";
-import { UserRecipesComponent } from "./recipes/user-recipes/user-recipes.component";
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
 
@@ -21,13 +20,10 @@ const ROUTES: Route[] = [
     component: RecipesComponent,
     children: [
       {
-        path: '', redirectTo: 'recipes-list', pathMatch: 'full',
+        path: '', redirectTo: 'recipes-list/my-recipes', pathMatch: 'full',
       },
       {
-        path: 'recipes-list', component: RecipesListComponent,
-      },
-      {
-        path: 'user-recipes', component: UserRecipesComponent,
+        path: 'recipes-list/:recipes', component: RecipesListComponent,
       },
       {
         path: 'recipe/:id', component: RecipeComponent,

@@ -5,19 +5,20 @@ import { AuthService } from "../auth/auth.service";
 import { Recipe } from "./recipe/recipe.model";
 
 const Fetch_Recipes_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/recipes.json';
-const default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/';
+const Default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/';
 
 @Injectable({providedIn: 'root'})
 export class RecipesService {
   recipesFetched = new Subject();
-  userRecipesFetched = new Subject();
+
   recipesBase: Recipe[] = [];
   userRecipes: Recipe[] = [];
+  communityRecipes: Recipe[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   fetchRecipesBase(): void {
-    const params = new HttpParams().set('auth', this.authService.user?.token!);
+    const params = new HttpParams().set('auth', this.authService.user!.token);
 
     this.http.get<Recipe[]>(Fetch_Recipes_URL, {params: params}).subscribe((response) => {
       this.recipesBase = response.map((recipe) =>
@@ -33,10 +34,11 @@ export class RecipesService {
   fetchUserRecipes(): void {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
-    this.http.get<Recipe[]>(default_URL + user.uid + '/recipes.json', {params: params})
+
+    this.http.get<Recipe[]>(Default_URL + user.uid + '/recipes.json', {params: params})
       .subscribe((recipes) => {
         this.userRecipes = recipes.slice();
-        this.userRecipesFetched.next('');
+        this.recipesFetched.next('');
       });
   }
 
@@ -46,7 +48,7 @@ export class RecipesService {
     const recipes = this.userRecipes.slice();
     recipes.push(recipe);
 
-    this.http.put(default_URL + user.uid + '/recipes.json', recipes ,{params: params}).subscribe();
+    this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params}).subscribe();
   }
 
   filter(name: string | null, prepTime: string | null, difficulty: string | null, price: string | null ): Recipe[] {

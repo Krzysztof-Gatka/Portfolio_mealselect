@@ -1,8 +1,23 @@
 <div class="full-width-flex-container">
   <div class="recipes-nav-container">
-    <button class="recipes-nav-btn">My Recipes</button>
-    <button class="recipes-nav-btn">Recipes Base</button>
-    <button class="recipes-nav-btn">Community Recipes</button>
+    <button
+      [routerLink]="['/recipes/recipes-list/my-recipes']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      My Recipes
+    </button>
+    <button
+      [routerLink]="['/recipes/recipes-list/recipes-base']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      Recipes Base
+    </button>
+    <button
+      [routerLink]="['/recipes/recipes-list/community-recipes']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      Community Recipes
+    </button>
   </div>
   <div class="filter-sort-container">
     <div class="filter-container">
