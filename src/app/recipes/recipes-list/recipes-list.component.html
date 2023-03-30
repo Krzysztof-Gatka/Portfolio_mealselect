@@ -77,7 +77,7 @@
     </div>
   </div>
   <div *ngIf="recipesType === 'my-recipes'" class="new-recipe-container">
-    <button class="btn" [routerLink]="['/recipes', 'new-recipe']"> New Recipe</button>
+    <button class="btn" [routerLink]="['/new-recipe']"> New Recipe</button>
   </div>
   <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
   <div *ngIf="!loading" class="recipes-list-container">

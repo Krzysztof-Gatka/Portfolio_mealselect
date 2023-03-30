@@ -16,6 +16,7 @@ const ROUTES: Route[] = [
   { path: 'register', component: AuthComponent },
   { path: 'login', component: AuthComponent },
   { path: 'shopping-list', component: ShoppingListComponent, canActivate: [canActivateUser] },
+  { path: 'new-recipe', component: NewRecipeComponent },
   {
     path: 'recipes',
     component: RecipesComponent,
@@ -29,9 +30,7 @@ const ROUTES: Route[] = [
       {
         path: ':recipes/recipe/:id', component: RecipeComponent,
       },
-      {
-        path: 'new-recipe', component: NewRecipeComponent,
-      },
+
     ],
     canActivate: [canActivateUser]
   },
