@@ -40,7 +40,8 @@ export class RecipeComponent implements OnInit, OnDestroy{
     this.toastr.success('Successfully added ingredients to your Shopping List');
   }
 
-  onAddToMyRecipes() {
-
+  onAddToMyRecipes() :void{
+    this.recipesService.addRecipeToDb(this.recipe!);
+    this.recipesService.userRecipesFetched.next('');
   }
 }

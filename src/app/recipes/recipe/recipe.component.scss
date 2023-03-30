@@ -70,3 +70,9 @@
   color: $accent-color;
   scale: 110%;
 }
+
+.btns-container {
+  display: flex;
+  flex-direction: column;
+
+}

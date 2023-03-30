@@ -40,6 +40,15 @@ export class RecipesService {
       });
   }
 
+  addRecipeToDb(recipe: Recipe): void {
+    const user =  this.authService.user!;
+    const params = new HttpParams().set('auth', user.token);
+    const recipes = this.userRecipes.slice();
+    recipes.push(recipe);
+
+    this.http.put(default_URL + user.uid + '/recipes.json', recipes ,{params: params}).subscribe();
+  }
+
   filter(name: string | null, prepTime: string | null, difficulty: string | null, price: string | null ): Recipe[] {
     let filteredRecipes: Recipe[] = this.recipesBase.slice();
 
