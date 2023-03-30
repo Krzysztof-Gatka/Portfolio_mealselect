@@ -154,3 +154,11 @@
 .recipes-nav-btn.active {
   box-shadow: 0px 3px 0px 0px $secondary-color;
 }
+
+.new-recipe-container {
+  width:100%;
+  max-width: 50rem;
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
