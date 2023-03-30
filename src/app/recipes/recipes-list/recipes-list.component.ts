@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
@@ -9,7 +9,8 @@ import { RecipesService } from '../recipes.service';
   styleUrls: ['./recipes-list.component.scss']
 })
 export class RecipesListComponent implements OnInit{
-  recipes: Recipe[] | undefined;
+  @Input() recipes: Recipe[] | undefined;
+  @Input() usersRecipes: boolean = false;
   sorting: boolean = false;
   filtering: boolean = false;
   loading: boolean = true;
@@ -26,11 +27,15 @@ export class RecipesListComponent implements OnInit{
   constructor(private recipesService: RecipesService) {}
 
   ngOnInit(): void {
-    this.recipesService.fetchRecipes();
-    this.recipesService.recipesFetched.subscribe(() => {
+    if(!this.usersRecipes) {
+      this.recipesService.fetchRecipesBase();
+      this.recipesService.recipesFetched.subscribe(() => {
+        this.loading = false;
+        this.recipes = this.recipesService.recipesBase.slice();
+      })
+    } else {
       this.loading = false;
-      this.recipes = this.recipesService.recipesBase.slice();
-    })
+    }
   }
 
   onSubmit(): void {

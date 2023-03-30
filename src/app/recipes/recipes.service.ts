@@ -12,7 +12,7 @@ export class RecipesService {
 
   constructor(private http: HttpClient) {}
 
-  fetchRecipes(): void {
+  fetchRecipesBase(): void {
     this.http.get<Recipe[]>(Fetch_Recipes_URL).subscribe((response) => {
       console.log(response);
       this.recipesBase = response.map((recipe) =>
@@ -23,6 +23,10 @@ export class RecipesService {
       );
       this.recipesFetched.next('');
     });
+  }
+
+  fetchUserRecipes(): void {
+    this.http.get<Recipe[]>(Fetch_Recipes_URL);
   }
 
   filter(name: string | null, prepTime: string | null, difficulty: string | null, price: string | null ): Recipe[] {

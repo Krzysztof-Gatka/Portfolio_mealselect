@@ -18,7 +18,7 @@ class AuthResponse {
     public kind: string,
     public localId: string,
     public refreshToken: string,
-    public registered: boolean
+    public registered?: boolean
   ) {}
 
 }
@@ -46,6 +46,7 @@ export class AuthService {
     const requestBody = this._createRequestBody(userEmail, userPassword);
     this.http.post<AuthResponse>(LogInUrl, requestBody)
       .subscribe((response) => {
+        console.log(response);
         this.user = this._createUserObject(response);
         localStorage.setItem('user', JSON.stringify(this.user));
         this.userAuthentication.next('logIn');
