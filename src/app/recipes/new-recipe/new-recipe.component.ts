@@ -32,16 +32,9 @@ export class NewRecipeComponent {
     new Date().getTime(),
     'Name',
     [
-      new Product('product Name', 0, 'pc'),
     ],
     [
-      'step 1',
     ],
-    '0 min',
-    'easy',
-    [],
-    4,
-    0
   )
 
   constructor(private recipesService: RecipesService) {}
