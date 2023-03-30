@@ -52,7 +52,7 @@ export class RecipesListComponent implements OnInit{
 
     });
 
-    this.recipesService.recipesFetched.subscribe(() => {
+    this.recipesService.recipesChanged.subscribe(() => {
 
       this.recipes = this._getRecipes();
       this.loading = false;

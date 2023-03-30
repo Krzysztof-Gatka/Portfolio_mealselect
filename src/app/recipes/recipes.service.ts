@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 import { Recipe } from "./recipe/recipe.model";
@@ -10,13 +11,17 @@ export const Default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.f
 
 @Injectable({providedIn: 'root'})
 export class RecipesService {
-  recipesFetched = new Subject<string>();
+  recipesChanged = new Subject<string>();
 
   recipesBase: Recipe[] = [];
   userRecipes: Recipe[] = [];
   communityRecipes: Recipe[] = [];
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {}
 
   fetchRecipesBase(): void {
     const params = new HttpParams().set('auth', this.authService.user!.token);
@@ -24,7 +29,7 @@ export class RecipesService {
     this.http.get<Recipe[]>(Fetch_Recipes_URL, {params: params})
       .subscribe((recipes) => {
         this.recipesBase = recipes.slice();
-        this.recipesFetched.next(Recipes_Base);
+        this.recipesChanged.next(Recipes_Base);
     });
   }
 
@@ -36,17 +41,25 @@ export class RecipesService {
     this.http.get<Recipe[]>(URL, {params: params})
       .subscribe((recipes) => {
         this.userRecipes = recipes.slice();
-        this.recipesFetched.next(My_Recipes);
+        this.recipesChanged.next(My_Recipes);
       });
   }
 
-  addRecipeToDb(recipe: Recipe): void {
+  addRecipe(recipe: Recipe): void {
+    this.userRecipes.push(recipe);
+    this.recipesChanged.next(My_Recipes);
+    this._addRecipeToDb();
+  }
+
+  private _addRecipeToDb(): void {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
     const recipes = this.userRecipes.slice();
-    recipes.push(recipe);
 
-    this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params}).subscribe();
+    this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
+      .subscribe(() => {
+        this.toastr.success('Successfully added Recipe To Your Recipes');
+      });
   }
 
 }

@@ -32,7 +32,7 @@ export class RecipesFilterService {
       })
     }
 
-    return filteredRecipes;
+    return filteredRecipes.slice();
   }
 
   sort(recipes: Recipe[], sortingValue: string): Recipe[] {
@@ -77,6 +77,6 @@ export class RecipesFilterService {
         break;
     }
     sortedRecipes
-    return sortedRecipes;
+    return sortedRecipes.slice();
   }
 }
