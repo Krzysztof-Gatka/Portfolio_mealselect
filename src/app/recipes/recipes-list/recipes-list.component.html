@@ -1,4 +1,24 @@
 <div class="full-width-flex-container">
+  <div class="recipes-nav-container">
+    <button
+      [routerLink]="['/recipes/recipes-list/my-recipes']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      My Recipes
+    </button>
+    <button
+      [routerLink]="['/recipes/recipes-list/recipes-base']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      Recipes Base
+    </button>
+    <button
+      [routerLink]="['/recipes/recipes-list/community-recipes']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      Community Recipes
+    </button>
+  </div>
   <div class="filter-sort-container">
     <div class="filter-container">
       <form [formGroup]="filterForm">
@@ -56,10 +76,15 @@
       </form>
     </div>
   </div>
-  <div class="recipes-list-container">
+  <div *ngIf="recipesType === 'my-recipes'" class="new-recipe-container">
+    <button class="btn" [routerLink]="['/new-recipe']"> New Recipe</button>
+  </div>
+  <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  <div *ngIf="!loading" class="recipes-list-container">
     <app-recipes-list-element
       *ngFor="let recipe of recipes"
       [recipe]="recipe"
+      [recipesType]="recipesType"
     ></app-recipes-list-element>
   </div>
 </div>

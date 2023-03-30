@@ -1,0 +1,80 @@
+<div class="full-width-flex-container">
+  <div class="new-recipe-container">
+
+    <form [formGroup]="recipeForm">
+      <div class="recipe-form-container">
+        <input class="ipt ipt-name" formControlName="name" type="text" [placeholder]="recipe.name" >
+
+        <h3 class="header">
+          Ingredients
+        </h3>
+        <ul>
+          <li class="list-element" *ngFor="let product of recipe.ingredients">{{product.name}} {{product.quantity}} {{ product.unit }}</li>
+          <form [formGroup]="ingredientForm">
+            <div class="ingredients-form-container">
+
+              <div class="ingredients-inputs-container">
+                <input class="ipt ipt-product-name" formControlName="productName" type="text" placeholder="product Name">
+                <input class="ipt ipt-product-qty" formControlName="productQuantity" type="text" placeholder="quantity">
+                <input class="ipt ipt-product-unit" formControlName="productUnit" type="text" placeholder="unit">
+              </div>
+
+              <button class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>
+            </div>
+          </form>
+        </ul>
+
+        <h3 class="header">Preparation</h3>
+        <ul>
+          <li *ngFor="let step of recipe.prepSteps">{{ step }}</li>
+          <form [formGroup]="stepForm">
+            <div class="step-form-container">
+              <input class="ipt" formControlName="step" type="text" placeholder="Preparation Step">
+              <button class="btn btn-add-step" (click)="onAddStep()" >Add Step</button>
+            </div>
+          </form>
+        </ul>
+
+        <h3 class="header">Optional Attributes</h3>
+
+        <div class="opt-attr-container">
+          <input
+            class="ipt"
+            formControlName="prepTime"
+            id="prep-time"
+            type="text"
+            placeholder="Preparation Time"
+          >
+
+          <input
+            class="ipt"
+            formControlName="difficulty"
+            id="difficulty"
+            type="text"
+            placeholder="difficulty"
+          >
+
+          <input
+            class="ipt"
+            formControlName="servings"
+            id="servings"
+            type="text"
+            placeholder="servings"
+          >
+
+          <input
+            class="ipt"
+            formControlName="pricePerServing"
+            id="price-per-serving"
+            type="text"
+            placeholder="Price Per Serving"
+          >
+        </div>
+
+
+
+        <button class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
+      </div>
+    </form>
+  </div>
+</div>

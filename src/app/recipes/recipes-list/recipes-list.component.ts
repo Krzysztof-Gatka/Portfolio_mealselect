@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
+
+export const Recipes_Base = 'recipes-base';
+export const My_Recipes = 'my-recipes';
+export const Community_Recipes = 'community-recipes';
 
 @Component({
   selector: 'app-recipes-list',
@@ -9,9 +14,11 @@ import { RecipesService } from '../recipes.service';
   styleUrls: ['./recipes-list.component.scss']
 })
 export class RecipesListComponent implements OnInit{
-  recipes: Recipe[] | undefined;
+  @Input() recipes: Recipe[] | undefined;
+  recipesType: string = '';
   sorting: boolean = false;
   filtering: boolean = false;
+  loading: boolean = true;
   filterForm = new FormGroup({
     name: new FormControl(''),
     prepTime: new FormControl(''),
@@ -22,14 +29,28 @@ export class RecipesListComponent implements OnInit{
     sort: new FormControl(''),
   });
 
-  constructor(private recipesService: RecipesService) {}
+  constructor(private recipesService: RecipesService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.recipes = this.recipesService.recipesBase.slice();
-  }
+    this.route.params.subscribe((params) => {
 
-  onSubmit(): void {
+      this.loading = true;
+      this.recipesType = params['recipes'];
 
+      if(this.recipesType === Recipes_Base)  this.recipesService.fetchRecipesBase();
+      if(this.recipesType === My_Recipes)  this.recipesService.fetchUserRecipes();
+      // if(this.recipesType === Community_Recipes)  this.recipesService.fetchCommunityRecipes();
+    });
+
+    this.recipesService.recipesFetched.subscribe(() => {
+
+      this.loading = false;
+
+      if(this.recipesType === Recipes_Base) this.recipes = this.recipesService.recipesBase.slice();
+      if(this.recipesType === My_Recipes) this.recipes = this.recipesService.userRecipes.slice();
+
+      // if(this.recipesType === Community_Recipes) this.recipes = this.recipesService.communityRecipes.slice();
+    })
   }
 
   onFilterClick(): void {

@@ -18,7 +18,7 @@ class AuthResponse {
     public kind: string,
     public localId: string,
     public refreshToken: string,
-    public registered: boolean
+    public registered?: boolean
   ) {}
 
 }
@@ -65,7 +65,7 @@ export class AuthService {
 
       if(currentTime < lastAuthTime + expirationTime) {
 
-        this.user = new User(user.email, user.lastLogin, user.token, user.expiresIn);
+        this.user = new User(user.email, user.lastLogin, user.token, user.expiresIn, user.uid);
         this.userAuthentication.next('login');
         this.router.navigate(['/recipes']);
 
@@ -108,7 +108,8 @@ export class AuthService {
     const expiresIn = parseInt(response.expiresIn);
     const lastLogin = new Date();
     const token = response.idToken;
-    return new User(email, lastLogin, token, expiresIn);
+    const uid = response.localId;
+    return new User(email, lastLogin, token, expiresIn, uid);
   }
 
   canActivate(): boolean | UrlTree {
