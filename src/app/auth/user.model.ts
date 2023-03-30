@@ -4,5 +4,6 @@ export class User {
     public lastLogin: Date,
     public token: string,
     public expiresIn: number,
+    public uid: string,
   ) {}
 }
