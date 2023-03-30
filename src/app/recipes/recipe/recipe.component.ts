@@ -39,4 +39,8 @@ export class RecipeComponent implements OnInit, OnDestroy{
     })
     this.toastr.success('Successfully added ingredients to your Shopping List');
   }
+
+  onAddToMyRecipes() {
+
+  }
 }

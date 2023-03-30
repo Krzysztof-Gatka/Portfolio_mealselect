@@ -10,7 +10,9 @@ const default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebase
 @Injectable({providedIn: 'root'})
 export class RecipesService {
   recipesFetched = new Subject();
+  userRecipesFetched = new Subject();
   recipesBase: Recipe[] = [];
+  userRecipes: Recipe[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -28,10 +30,14 @@ export class RecipesService {
     });
   }
 
-  fetchUserRecipes(): Observable<Recipe[]> {
+  fetchUserRecipes(): void {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
-    return this.http.get<Recipe[]>(default_URL + user.uid + '/recipes.json', {params: params});
+    this.http.get<Recipe[]>(default_URL + user.uid + '/recipes.json', {params: params})
+      .subscribe((recipes) => {
+        this.userRecipes = recipes.slice();
+        this.userRecipesFetched.next('');
+      });
   }
 
   filter(name: string | null, prepTime: string | null, difficulty: string | null, price: string | null ): Recipe[] {
