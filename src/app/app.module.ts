@@ -18,6 +18,7 @@ import { RecipesListComponent } from './recipes/recipes-list/recipes-list.compon
 import { RecipesListElementComponent } from './recipes/recipes-list/recipes-list-element/recipes-list-element.component';
 import { NavComponent } from './nav/nav.component';
 import { NewRecipeComponent } from './recipes/new-recipe/new-recipe.component';
+import { PantryComponent } from './pantry/pantry.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { NewRecipeComponent } from './recipes/new-recipe/new-recipe.component';
     RecipesListElementComponent,
     NavComponent,
     NewRecipeComponent,
+    PantryComponent,
   ],
   imports: [
     BrowserModule,
