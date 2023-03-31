@@ -9,18 +9,22 @@
     </div>
 
     <div class="form-container" *ngIf="editMode">
-      <form>
+      <form [formGroup]="form">
         <div class="inputs-container">
           <input
+            formControlName="name"
             class="ipt ipt-name"
             type="text">
           <input
+            formControlName="qty"
             class="ipt ipt-qty"
             type="number">
           <input
+            formControlName="unit"
             class="ipt ipt-unit"
             type="text">
           <input
+            formControlName="date"
             class="ipt ipt-date"
             type="date">
         </div>
