@@ -33,7 +33,10 @@
 
 
     <div class="buttons-container">
-      <button class="btn">delete</button>
+      <button
+        (click)="onDeleteClick()"
+        class="btn">
+        delete</button>
       <button
         *ngIf="!editMode"
         (click)="onEditClick()"

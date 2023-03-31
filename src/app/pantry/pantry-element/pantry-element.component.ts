@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
+import { PantryService } from '../pantry.service';
 
 @Component({
   selector: 'app-pantry-element',
@@ -10,7 +11,6 @@ import { Product } from 'src/app/shopping-list/shopping-list-element/product.mod
 export class PantryElementComponent {
   @Input() product!: Product;
   @Input() index!: number;
-  @Output() prodcutSaved = new EventEmitter<{product: Product, index: number}>();
   editMode: boolean = false;
   form = new FormGroup({
     name: new FormControl(''),
@@ -18,6 +18,12 @@ export class PantryElementComponent {
     unit: new FormControl(''),
     date: new FormControl(new Date()),
   })
+
+  constructor(private pantryService: PantryService) {}
+
+  onDeleteClick(): void {
+    this.pantryService.deleteElement(this.index);
+  }
 
   onEditClick(): void {
     this.form.controls.name.setValue(this.product.name);
@@ -33,7 +39,7 @@ export class PantryElementComponent {
     this.product.unit = this.form.controls.unit.value!;
     // this.product.name = this.form.controls.name.value!;
 
-    this.prodcutSaved.emit({product: this.product, index: this.index});
+    this.pantryService.updateElement(this.product, this.index);
     this.editMode = false;
   }
 }
