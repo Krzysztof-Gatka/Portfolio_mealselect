@@ -13,11 +13,18 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   shoppingListElements: Product[] | undefined;
   deletedProductsAvailable: boolean = false;
   modalOpened: boolean = false;
+  loading: boolean = true;
   sub: Subscription | undefined;
   sub2: Subscription | undefined;
+  fetchSub: Subscription | undefined;
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
+    this.fetchSub = this.shoppingListService.productsFetched.subscribe(()=> {
+      this.loading = false;
+      this.shoppingListElements = this.shoppingListService.getShoppingListElements();
+    })
+    this.shoppingListService.fetchShoppingList();
     this.shoppingListElements = this.shoppingListService.getShoppingListElements();
     this.sub = this.shoppingListService.productsChanged.subscribe(()=> {
       this.shoppingListElements = this.shoppingListService.getShoppingListElements();
@@ -33,7 +40,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe()
+    this.sub?.unsubscribe();
+    this.sub2?.unsubscribe();
+    this.fetchSub?.unsubscribe();
   }
 
   onItemAdded(product: Product): void {
