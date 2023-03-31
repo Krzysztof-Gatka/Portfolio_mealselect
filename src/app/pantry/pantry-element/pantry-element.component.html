@@ -1,1 +1,48 @@
-<p>pantry-element works!</p>
+<div class="full-width-flex-container">
+  <div class="pantry-element-container">
+
+    <div *ngIf="!editMode" class="attr-container">
+      <p>{{ product.name }}</p>
+      <p>{{ product.quantity }}</p>
+      <p>{{ product.unit }}</p>
+      <p>{{ product.expDate | date}}</p>
+    </div>
+
+    <div class="form-container" *ngIf="editMode">
+      <form>
+        <div class="inputs-container">
+          <input
+            class="ipt ipt-name"
+            type="text">
+          <input
+            class="ipt ipt-qty"
+            type="number">
+          <input
+            class="ipt ipt-unit"
+            type="text">
+          <input
+            class="ipt ipt-date"
+            type="date">
+        </div>
+      </form>
+    </div>
+
+
+    <div class="buttons-container">
+      <button class="btn">delete</button>
+      <button
+        *ngIf="!editMode"
+        (click)="onEditClick()"
+        class="btn">
+        edit
+      </button>
+      <button
+        *ngIf="editMode"
+        (click)="onSaveClick()"
+        class="btn">
+        save
+      </button>
+    </div>
+
+  </div>
+</div>
