@@ -15,5 +15,15 @@ export class PantryComponent implements OnInit{
   ngOnInit(): void {
     this.pantry = this.pantryServcie.getPantry();
   }
+
+  onProductSaved(event: {product: Product, index: number}): void {
+    this.pantry = this.pantry.map((prod, i) => {
+      if(i === event.index) {
+        return event.product;
+      } else {
+        return prod;
+      }
+    })
+  }
 }
 

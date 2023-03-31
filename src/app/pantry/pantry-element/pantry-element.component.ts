@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
 
@@ -9,6 +9,8 @@ import { Product } from 'src/app/shopping-list/shopping-list-element/product.mod
 })
 export class PantryElementComponent {
   @Input() product!: Product;
+  @Input() index!: number;
+  @Output() prodcutSaved = new EventEmitter<{product: Product, index: number}>();
   editMode: boolean = false;
   form = new FormGroup({
     name: new FormControl(''),
@@ -30,6 +32,8 @@ export class PantryElementComponent {
     this.product.quantity = this.form.controls.qty.value!;
     this.product.unit = this.form.controls.unit.value!;
     // this.product.name = this.form.controls.name.value!;
+
+    this.prodcutSaved.emit({product: this.product, index: this.index});
     this.editMode = false;
   }
 }
