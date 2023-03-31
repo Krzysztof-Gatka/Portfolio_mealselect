@@ -19,6 +19,7 @@ import { RecipesListElementComponent } from './recipes/recipes-list/recipes-list
 import { NavComponent } from './nav/nav.component';
 import { NewRecipeComponent } from './recipes/new-recipe/new-recipe.component';
 import { PantryComponent } from './pantry/pantry.component';
+import { PantryElementComponent } from './pantry/pantry-element/pantry-element.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PantryComponent } from './pantry/pantry.component';
     NavComponent,
     NewRecipeComponent,
     PantryComponent,
+    PantryElementComponent,
   ],
   imports: [
     BrowserModule,
