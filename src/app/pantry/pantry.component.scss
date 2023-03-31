@@ -1,0 +1,12 @@
+@import '../../scss/variables';
+
+.pantry-container {
+  padding: 1rem;
+  width: 100%;
+  max-width: 60rem;
+  border: 1px solid black;
+}
+
+.header {
+  color: $accent-text-color;
+}

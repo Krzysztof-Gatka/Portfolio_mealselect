@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Product } from '../shopping-list/shopping-list-element/product.model';
 
 @Component({
   selector: 'app-pantry',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./pantry.component.scss']
 })
 export class PantryComponent {
-
+  pantry: Product[] = [];
 }
