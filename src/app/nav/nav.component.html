@@ -14,8 +14,9 @@
     <div class="right-nav">
 
       <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-topnav">Recipes</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/new-recipe']" class="btn-topnav">New Recipe</button>
       <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-topnav">Shopping List</button>
-      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-topnav">Pantry</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/pantry']" class="btn-topnav">Pantry</button>
       <button *ngIf="isUserLoggedIn" class="btn-topnav" (click)="onLogoutClick()">Logout</button>
 
       <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/login']" class="btn-topnav">Log In</button>
