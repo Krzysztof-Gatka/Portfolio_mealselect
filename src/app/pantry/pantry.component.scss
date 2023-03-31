@@ -1,0 +1,33 @@
+@import '../../scss/variables';
+
+.pantry-container {
+  padding: 1rem;
+  width: 100%;
+  max-width: 60rem;
+}
+
+.header {
+  color: $accent-text-color;
+}
+
+.add-element-container {
+  margin-top:2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: row;
+  gap:5px;
+}
+
+
+.form-container {
+  width:80%;
+}
+
+.btn {
+  width:20%;
+}
