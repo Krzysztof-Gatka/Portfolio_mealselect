@@ -12,6 +12,8 @@ import { PantryService } from './pantry.service';
 export class PantryComponent implements OnInit, OnDestroy{
   pantry: Product[] = [];
   pantryChangesSub: Subscription | undefined;
+  pantryFetchedSub: Subscription | undefined;
+  loading: boolean = true;
   form = new FormGroup({
     name: new FormControl(''),
     qty: new FormControl(0),
@@ -22,11 +24,14 @@ export class PantryComponent implements OnInit, OnDestroy{
   constructor(private pantryServcie: PantryService) {}
 
   ngOnInit(): void {
+    this.pantryServcie.fetchPantry();
+    this.pantryFetchedSub = this.pantryServcie.pantryFetched.subscribe(()=> {
+      this.pantry = this.pantryServcie.getPantry();
+      this.loading = false;
+    })
     this.pantryChangesSub = this.pantryServcie.pantryChanged.subscribe(()=>{
       this.pantry = this.pantryServcie.getPantry();
     })
-
-    this.pantry = this.pantryServcie.getPantry();
   }
 
   ngOnDestroy(): void {
