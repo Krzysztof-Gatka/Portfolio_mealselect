@@ -68,7 +68,7 @@ export class NewRecipeComponent {
     this.recipe.servings = +servings;
     this.recipe.pricePerServing = +pricePerServing;
 
-    this.recipesService.addRecipeToDb(this.recipe);
+    this.recipesService.addRecipe(this.recipe);
 
     this.recipeForm.reset();
   }

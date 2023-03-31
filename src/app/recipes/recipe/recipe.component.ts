@@ -45,7 +45,6 @@ export class RecipeComponent implements OnInit, OnDestroy{
   }
 
   onAddToMyRecipes() :void{
-    this.recipesService.addRecipeToDb(this.recipe!);
-    this.toastr.success('Successfully added recipe to Your Recipes!');
+    this.recipesService.addRecipe(this.recipe!);
   }
 }
