@@ -1,5 +1,8 @@
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from 'rxjs'
+import { AuthService } from "../auth/auth.service";
+import { Default_URL } from "../recipes/recipes.service";
 
 import { Product } from "./shopping-list-element/product.model";
 
@@ -7,18 +10,52 @@ import { Product } from "./shopping-list-element/product.model";
 export class ShoppingListService {
   private shoppingListElements: Product[] = [];
 
+  productsFetched = new Subject();
   productsChanged = new Subject();
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
   deletedProducts = new Subject<number>();
   deletedProductsStack: Product[] = [];
 
+  constructor(
+    private http: HttpClient,
+    private authServcie: AuthService,
+  ) {}
+
+  fetchShoppingList(): void {
+    const user = this.authServcie.user!;
+    const params = new HttpParams().set('auth', this.authServcie.user!.token);
+
+    this.http.get<Product[]>(Default_URL + user.uid + '/shopping-list.json', { params: params})
+      .subscribe((products)=> {
+        this.shoppingListElements = products;
+        this.productsFetched.next('');
+      })
+  }
+
+  private _putShoppingList(): void {
+    const user = this.authServcie.user!;
+    const params = new HttpParams().set('auth', this.authServcie.user!.token);
+
+    this.http.put(Default_URL + user.uid + '/shopping-list.json', this.shoppingListElements ,{params: params}).subscribe();
+  }
+
   getShoppingListElements(): Product[] {
-    return this.shoppingListElements.slice();
+    if(this.shoppingListElements !== null){
+      return this.shoppingListElements.slice();
+    }
+
+    return [];
   }
 
   addElement(product: Product): Product[] {
-    this.shoppingListElements.push(product);
+    if(this.shoppingListElements === null) {
+      this.shoppingListElements = [product];
+    } else {
+
+      this.shoppingListElements.push(product);
+    }
+    this._putShoppingList();
     return this.shoppingListElements.slice();
   }
 
@@ -31,6 +68,7 @@ export class ShoppingListService {
     }
     return i !==index
   });
+    this._putShoppingList();
     this.productsChanged.next('');
   }
 
@@ -39,11 +77,13 @@ export class ShoppingListService {
       if (i === index) return product;
       return prod;
     });
+    this._putShoppingList();
     this.productsChanged.next('');
   }
 
   clear() :void {
     this.shoppingListElements = [];
+    this._putShoppingList();
   }
 
   private _getLastDeletedProduct(): Product | undefined {

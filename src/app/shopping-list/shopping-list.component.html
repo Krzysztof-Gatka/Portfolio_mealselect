@@ -1,5 +1,6 @@
 <div class="full-width-flex-container">
   <div class="shopping-list-container">
+    <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
     <app-shopping-list-element
       *ngFor="let element of shoppingListElements; let i = index"
