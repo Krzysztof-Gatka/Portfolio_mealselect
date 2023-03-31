@@ -1,0 +1,40 @@
+<div class="full-width-flex-container">
+  <div class="pantry-container">
+    <h1 class="header" >Pantry</h1>
+    <div class="pantry-elements-container">
+      <app-pantry-element
+        *ngFor="let product of pantry; let i = index"
+        [product]="product"
+        [index]="i"
+        >
+      </app-pantry-element>
+    </div>
+
+    <div class="add-element-container">
+      <div class="form-container">
+        <form [formGroup]="form">
+          <div class="inputs-container">
+            <input
+              formControlName="name"
+              class="ipt ipt-name"
+              type="text">
+            <input
+              formControlName="qty"
+              class="ipt ipt-qty"
+              type="number">
+            <input
+              formControlName="unit"
+              class="ipt ipt-unit"
+              type="text">
+            <input
+              formControlName="date"
+              class="ipt ipt-date"
+              type="date">
+          </div>
+        </form>
+      </div>
+      <button (click)="onAddClick()" class="btn">Add</button>
+    </div>
+
+  </div>
+</div>

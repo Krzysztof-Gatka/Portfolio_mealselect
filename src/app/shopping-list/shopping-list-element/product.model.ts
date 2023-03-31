@@ -3,5 +3,6 @@ export class Product {
     public name: string,
     public quantity: number,
     public unit: string,
+    public expDate?: Date,
   ) {}
 }

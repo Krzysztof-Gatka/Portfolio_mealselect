@@ -3,6 +3,7 @@ import { RouterModule, Route } from "@angular/router";
 import { AuthComponent } from "./auth/auth.component";
 
 import { canActivateUser } from "./auth/auth.service";
+import { PantryComponent } from "./pantry/pantry.component";
 import { NewRecipeComponent } from "./recipes/new-recipe/new-recipe.component";
 import { RecipeComponent } from "./recipes/recipe/recipe.component";
 import { RecipesListComponent } from "./recipes/recipes-list/recipes-list.component";
@@ -17,6 +18,7 @@ const ROUTES: Route[] = [
   { path: 'login', component: AuthComponent },
   { path: 'shopping-list', component: ShoppingListComponent, canActivate: [canActivateUser] },
   { path: 'new-recipe', component: NewRecipeComponent },
+  { path: 'pantry', component: PantryComponent },
   {
     path: 'recipes',
     component: RecipesComponent,

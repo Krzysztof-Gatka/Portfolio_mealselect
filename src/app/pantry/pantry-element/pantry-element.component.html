@@ -1,0 +1,55 @@
+<div class="full-width-flex-container">
+  <div class="pantry-element-container">
+
+    <div *ngIf="!editMode" class="attr-container">
+      <p>{{ product.name }}</p>
+      <p>{{ product.quantity }}</p>
+      <p>{{ product.unit }}</p>
+      <p>{{ product.expDate | date}}</p>
+    </div>
+
+    <div class="form-container" *ngIf="editMode">
+      <form [formGroup]="form">
+        <div class="inputs-container">
+          <input
+            formControlName="name"
+            class="ipt ipt-name"
+            type="text">
+          <input
+            formControlName="qty"
+            class="ipt ipt-qty"
+            type="number">
+          <input
+            formControlName="unit"
+            class="ipt ipt-unit"
+            type="text">
+          <input
+            formControlName="date"
+            class="ipt ipt-date"
+            type="date">
+        </div>
+      </form>
+    </div>
+
+
+    <div class="buttons-container">
+      <button
+        (click)="onDeleteClick()"
+        class="btn">
+        delete</button>
+      <button
+        *ngIf="!editMode"
+        (click)="onEditClick()"
+        class="btn">
+        edit
+      </button>
+      <button
+        *ngIf="editMode"
+        (click)="onSaveClick()"
+        class="btn">
+        save
+      </button>
+    </div>
+
+  </div>
+</div>
