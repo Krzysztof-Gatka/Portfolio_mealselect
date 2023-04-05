@@ -13,7 +13,7 @@
             <p class="ing-attr">{{product.name}} {{product.quantity}} {{ product.unit }}</p>
             <div class="btns-container">
               <button class="btn" (click)="onDeleteIngClick(i)">Delete</button>
-              <button class="btn">Edit</button>
+              <button class="btn" (click)="onEditIngClick(i)">Edit</button>
             </div>
           </li>
 
@@ -29,7 +29,8 @@
                 </datalist>
               </div>
 
-              <button class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>
+              <button *ngIf="editingIngIndex === -1" class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>
+              <button *ngIf="editingIngIndex !== -1" class="btn btn-add-ing" (click)="onSaveChangesClick()" >Save Changes</button>
             </div>
           </form>
         </ul>

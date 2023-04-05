@@ -29,8 +29,8 @@ export class NewRecipeComponent {
     pricePerServing: new FormControl(''),
   })
 
+  editingIngIndex: number = -1;
   units = units;
-
   recipe: Recipe = new Recipe(
     new Date().getTime(),
     'Name',
@@ -78,5 +78,24 @@ export class NewRecipeComponent {
 
   onDeleteIngClick(index: number): void {
     this.recipe.ingredients = this.recipe.ingredients.filter((recipe, i) => i !== index);
+  }
+
+  onEditIngClick(index: number): void {
+    const editedIng = this.recipe.ingredients[index];
+    this.ingredientForm.controls.productName.setValue(editedIng.name);
+    this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity.toString())
+    this.ingredientForm.controls.productUnit.setValue(editedIng.unit);
+
+    this.editingIngIndex = index;
+  }
+
+  onSaveChangesClick(): void {
+    const productName = this.ingredientForm.controls.productName.value!;
+    const productQuantity = +this.ingredientForm.controls.productQuantity.value!;
+    const productUnit = this.ingredientForm.controls.productUnit.value!;
+
+    this.recipe.ingredients[this.editingIngIndex] = new Product(productName, productQuantity, productUnit);
+    this.editingIngIndex = -1;
+    this.ingredientForm.reset();
   }
 }
