@@ -9,14 +9,24 @@
           Ingredients
         </h3>
         <ul>
-          <li class="list-element" *ngFor="let product of recipe.ingredients">{{product.name}} {{product.quantity}} {{ product.unit }}</li>
+          <li class="list-element" *ngFor="let product of recipe.ingredients; let i = index">
+            <p class="ing-attr">{{product.name}} {{product.quantity}} {{ product.unit }}</p>
+            <div class="btns-container">
+              <button class="btn" (click)="onDeleteIngClick(i)">Delete</button>
+              <button class="btn">Edit</button>
+            </div>
+          </li>
+
           <form [formGroup]="ingredientForm">
             <div class="ingredients-form-container">
 
               <div class="ingredients-inputs-container">
                 <input class="ipt ipt-product-name" formControlName="productName" type="text" placeholder="product Name">
                 <input class="ipt ipt-product-qty" formControlName="productQuantity" type="text" placeholder="quantity">
-                <input class="ipt ipt-product-unit" formControlName="productUnit" type="text" placeholder="unit">
+                <input class="ipt ipt-product-unit" formControlName="productUnit" type="text" list="units" placeholder="unit">
+                <datalist id="units">
+                  <option *ngFor="let unit of units">{{ unit }}</option>
+                </datalist>
               </div>
 
               <button class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>

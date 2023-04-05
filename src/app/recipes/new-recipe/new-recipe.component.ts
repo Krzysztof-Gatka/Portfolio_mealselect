@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
+import { units } from '../recipe/recipe.model';
 
 @Component({
   selector: 'app-new-recipe',
@@ -27,6 +28,8 @@ export class NewRecipeComponent {
     servings: new FormControl(''),
     pricePerServing: new FormControl(''),
   })
+
+  units = units;
 
   recipe: Recipe = new Recipe(
     new Date().getTime(),
@@ -71,5 +74,9 @@ export class NewRecipeComponent {
     this.recipesService.addRecipe(this.recipe);
 
     this.recipeForm.reset();
+  }
+
+  onDeleteIngClick(index: number): void {
+    this.recipe.ingredients = this.recipe.ingredients.filter((recipe, i) => i !== index);
   }
 }

@@ -15,3 +15,5 @@ export class Recipe {
     public description?: string,
   ) {}
 }
+
+export const units = ['g', 'kg', 'tbs.', 'pc', 'pcs', 'tsp.', 'cup'];
