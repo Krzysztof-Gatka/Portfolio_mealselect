@@ -3,7 +3,7 @@
 
     <form [formGroup]="recipeForm">
       <div class="recipe-form-container">
-        <input class="ipt ipt-name" formControlName="name" type="text" [placeholder]="recipe.name" >
+        <input autofocus class="ipt ipt-name" formControlName="name" type="text" [placeholder]="recipe.name" >
 
         <h3 class="header">
           Ingredients
@@ -21,7 +21,7 @@
             <div class="ingredients-form-container">
 
               <div class="ingredients-inputs-container">
-                <input class="ipt ipt-product-name" formControlName="productName" type="text" placeholder="product Name">
+                <input #ing_name_input class="ipt ipt-product-name" formControlName="productName" type="text" placeholder="product Name">
                 <input class="ipt ipt-product-qty" formControlName="productQuantity" type="text" placeholder="quantity">
                 <input class="ipt ipt-product-unit" formControlName="productUnit" type="text" list="units" placeholder="unit">
                 <datalist id="units">
@@ -46,7 +46,7 @@
           </li>
           <form [formGroup]="stepForm">
             <div class="step-form-container">
-              <input class="ipt" formControlName="step" type="text" placeholder="Preparation Step">
+              <input #step_input class="ipt" formControlName="step" type="text" placeholder="Preparation Step">
               <button [ngClass]="!stepForm.valid ? 'invalid' : ''" *ngIf="editingStepIndex === -1" class="btn btn-add-step" (click)="onAddStep()" >Add Step</button>
              <button  [ngClass]="!stepForm.valid ? 'invalid' : ''" *ngIf="editingStepIndex !== -1"class="btn btn-add-step" (click)="onSaveStepChangesClick()" >Save Changes</button>
             </div>
@@ -87,11 +87,19 @@
             type="text"
             placeholder="Price Per Serving"
           >
+
+          <input
+            class="ipt description"
+            formControlName="description"
+            id="description"
+            type="text"
+            placeholder="description"
+          >
         </div>
 
 
 
-        <button class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
+        <button type="button" class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
       </div>
     </form>
   </div>

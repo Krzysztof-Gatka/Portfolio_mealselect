@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
 import { Recipe } from '../recipe/recipe.model';
@@ -27,8 +27,11 @@ export class NewRecipeComponent {
     difficulty: new FormControl(''),
     servings: new FormControl(''),
     pricePerServing: new FormControl(''),
+    description: new FormControl(''),
   })
 
+  @ViewChild('ing_name_input') ingNameInpt?: ElementRef<HTMLInputElement>;
+  @ViewChild('step_input') stepInput?: ElementRef<HTMLInputElement>;
   editingIngIndex: number = -1;
   editingStepIndex: number = -1;
   units = units;
@@ -50,6 +53,7 @@ export class NewRecipeComponent {
 
     this.recipe.ingredients.push(new Product(productName, productQuantity, productUnit))
     this.ingredientForm.reset();
+    this.ingNameInpt?.nativeElement.focus();
   }
 
   onAddStep(): void {
@@ -57,6 +61,8 @@ export class NewRecipeComponent {
 
     this.recipe.prepSteps.push(step);
     this.stepForm.reset();
+
+    this.stepInput?.nativeElement.focus();
   }
 
   onAddRecipe(): void {
@@ -65,12 +71,14 @@ export class NewRecipeComponent {
     const difficulty = this.recipeForm.controls.difficulty.value!;
     const servings = this.recipeForm.controls.servings.value!;
     const pricePerServing = this.recipeForm.controls.pricePerServing.value!;
+    const description = this.recipeForm.controls.description.value!;
 
     this.recipe.name = name;
     this.recipe.prepTime = prepTime;
     this.recipe.difficulty = difficulty;
     this.recipe.servings = +servings;
     this.recipe.pricePerServing = +pricePerServing;
+    this.recipe.description = description;
 
     this.recipesService.addRecipe(this.recipe);
 
@@ -92,6 +100,7 @@ export class NewRecipeComponent {
     this.ingredientForm.controls.productUnit.setValue(editedIng.unit);
 
     this.editingIngIndex = index;
+    this.ingNameInpt?.nativeElement.focus();
   }
 
   onEditStepClick(index: number): void {
@@ -100,6 +109,7 @@ export class NewRecipeComponent {
     this.stepForm.controls.step.setValue(editedStep);
 
     this.editingStepIndex = index;
+    this.stepInput?.nativeElement.focus();
   }
 
   onSaveChangesClick(): void {
@@ -110,6 +120,7 @@ export class NewRecipeComponent {
     this.recipe.ingredients[this.editingIngIndex] = new Product(productName, productQuantity, productUnit);
     this.editingIngIndex = -1;
     this.ingredientForm.reset();
+    this.ingNameInpt?.nativeElement.focus();
   }
 
   onSaveStepChangesClick(): void {
@@ -117,5 +128,6 @@ export class NewRecipeComponent {
     this.recipe.prepSteps[this.editingStepIndex] = step;
     this.editingStepIndex = -1;
     this.stepForm.reset();
+    this.stepInput?.nativeElement.focus();
   }
 }
