@@ -12,5 +12,6 @@ export class Recipe {
     public servings: number = -1,
     public pricePerServing: number = -1,
     public lastPrepDate: Date | number = -1,
+    public description?: string,
   ) {}
 }
