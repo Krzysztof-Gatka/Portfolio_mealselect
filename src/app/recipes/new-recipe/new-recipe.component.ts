@@ -1,16 +1,18 @@
-import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
 import { units } from '../recipe/recipe.model';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-recipe',
   templateUrl: './new-recipe.component.html',
   styleUrls: ['./new-recipe.component.scss']
 })
-export class NewRecipeComponent {
+export class NewRecipeComponent implements OnInit{
   ingredientForm =  new FormGroup({
     productName: new FormControl('', Validators.required),
     productQuantity: new FormControl(''),
@@ -32,6 +34,8 @@ export class NewRecipeComponent {
 
   @ViewChild('ing_name_input') ingNameInpt?: ElementRef<HTMLInputElement>;
   @ViewChild('step_input') stepInput?: ElementRef<HTMLInputElement>;
+  paramsSub: Subscription | undefined;
+  editMode: boolean = false;
   editingIngIndex: number = -1;
   editingStepIndex: number = -1;
   units = units;
@@ -44,7 +48,17 @@ export class NewRecipeComponent {
     ],
   )
 
-  constructor(private recipesService: RecipesService) {}
+  constructor(private recipesService: RecipesService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.paramsSub = this.route.params.subscribe((params) => {
+      if(params['id']) {
+        this.editMode = true;
+        const recipe = this.recipesService.userRecipes.filter((recipe) => params['id'] == recipe.id);
+        this.recipe = recipe[0];
+      }
+    })
+  }
 
   onAddIngredient(): void {
     const productName = this.ingredientForm.controls.productName.value!;
@@ -129,5 +143,9 @@ export class NewRecipeComponent {
     this.editingStepIndex = -1;
     this.stepForm.reset();
     this.stepInput?.nativeElement.focus();
+  }
+
+  onSaveChanges(recipe: Recipe): void {
+    this.recipesService.updateRecipe(recipe);
   }
 }

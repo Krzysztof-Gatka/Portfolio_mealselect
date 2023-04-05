@@ -69,4 +69,10 @@ export class RecipesService {
     this.recipesChanged.next(My_Recipes);
     this._addRecipeToDb();
   }
+
+  updateRecipe(updatedRecipe: Recipe): void {
+    this.userRecipes.map(rec => rec.id === updatedRecipe.id ? updatedRecipe : rec);
+    this.recipesChanged.next(My_Recipes);
+    this._addRecipeToDb();
+  }
 }

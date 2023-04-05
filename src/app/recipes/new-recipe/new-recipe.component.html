@@ -97,9 +97,9 @@
           >
         </div>
 
+        <button *ngIf="!editMode" type="button" class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
+        <button *ngIf="editMode" type="button" class="btn btn-add-recipe" (click)="onSaveChanges(recipe)">Save Changes</button>
 
-
-        <button type="button" class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
       </div>
     </form>
   </div>

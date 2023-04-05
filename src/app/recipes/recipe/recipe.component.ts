@@ -51,4 +51,8 @@ export class RecipeComponent implements OnInit, OnDestroy{
   onDeleteRecipeClick(id: number): void {
     this.recipesService.deleteRecipe(id);
   }
+
+  onEditRecipeClick(id: number) :void{
+
+  }
 }
