@@ -5,6 +5,7 @@ import { Subject } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 import { Recipe } from "./recipe/recipe.model";
 import { My_Recipes, Recipes_Base } from "./recipes-list/recipes-list.component";
+import { Router } from "@angular/router";
 
 export const Fetch_Recipes_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/recipes.json';
 export const Default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -20,7 +21,8 @@ export class RecipesService {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
   ) {}
 
   fetchRecipesBase(): void {
@@ -55,11 +57,16 @@ export class RecipesService {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
     const recipes = this.userRecipes.slice();
-
     this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
       .subscribe(() => {
-        this.toastr.success('Successfully added Recipe To Your Recipes');
+        this.toastr.success('Successfully updated Your Recipes');
+        this.router.navigate(['/recipes']);
       });
   }
 
+  deleteRecipe(id: number): void {
+    this.userRecipes = this.userRecipes.filter((recipe) => recipe.id !== id);
+    this.recipesChanged.next(My_Recipes);
+    this._addRecipeToDb();
+  }
 }

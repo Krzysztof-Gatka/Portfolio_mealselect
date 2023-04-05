@@ -47,4 +47,8 @@ export class RecipeComponent implements OnInit, OnDestroy{
   onAddToMyRecipes() :void{
     this.recipesService.addRecipe(this.recipe!);
   }
+
+  onDeleteRecipeClick(id: number): void {
+    this.recipesService.deleteRecipe(id);
+  }
 }

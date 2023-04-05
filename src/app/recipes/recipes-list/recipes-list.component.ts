@@ -40,23 +40,19 @@ export class RecipesListComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.recipesService.recipesChanged.subscribe(() => {
+      this.recipes = this._getRecipes();
+      this.loading = false;
+    })
 
     this.route.params.subscribe((params) => {
-
       this.loading = true;
       this.recipesType = params['recipes'];
       this._fetchRecipes();
-
       this.filtering = false;
       this.sorting = false;
 
     });
-
-    this.recipesService.recipesChanged.subscribe(() => {
-
-      this.recipes = this._getRecipes();
-      this.loading = false;
-    })
   }
 
   onFilterClick(): void {
