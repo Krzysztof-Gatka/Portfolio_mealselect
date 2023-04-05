@@ -37,11 +37,18 @@
 
         <h3 class="header">Preparation</h3>
         <ul>
-          <li *ngFor="let step of recipe.prepSteps">{{ step }}</li>
+          <li class="list-element" *ngFor="let step of recipe.prepSteps; let i = index">
+            <p class="step">{{ step }}</p>
+            <div class="btns-container">
+              <button class="btn" (click)="onDeleteStepClick(i)">Delete</button>
+              <button class="btn" (click)="onEditStepClick(i)">Edit</button>
+            </div>
+          </li>
           <form [formGroup]="stepForm">
             <div class="step-form-container">
               <input class="ipt" formControlName="step" type="text" placeholder="Preparation Step">
-              <button class="btn btn-add-step" (click)="onAddStep()" >Add Step</button>
+              <button [ngClass]="!stepForm.valid ? 'invalid' : ''" *ngIf="editingStepIndex === -1" class="btn btn-add-step" (click)="onAddStep()" >Add Step</button>
+             <button  [ngClass]="!stepForm.valid ? 'invalid' : ''" *ngIf="editingStepIndex !== -1"class="btn btn-add-step" (click)="onSaveStepChangesClick()" >Save Changes</button>
             </div>
           </form>
         </ul>

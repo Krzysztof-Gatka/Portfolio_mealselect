@@ -18,7 +18,7 @@ export class NewRecipeComponent {
   });
 
   stepForm =  new FormGroup({
-    step: new FormControl(''),
+    step: new FormControl('', Validators.required),
   });
 
   recipeForm = new FormGroup({
@@ -30,6 +30,7 @@ export class NewRecipeComponent {
   })
 
   editingIngIndex: number = -1;
+  editingStepIndex: number = -1;
   units = units;
   recipe: Recipe = new Recipe(
     new Date().getTime(),
@@ -80,6 +81,10 @@ export class NewRecipeComponent {
     this.recipe.ingredients = this.recipe.ingredients.filter((recipe, i) => i !== index);
   }
 
+  onDeleteStepClick(index: number): void {
+    this.recipe.prepSteps = this.recipe.prepSteps.filter((recipe, i) => i !== index);
+  }
+
   onEditIngClick(index: number): void {
     const editedIng = this.recipe.ingredients[index];
     this.ingredientForm.controls.productName.setValue(editedIng.name);
@@ -87,6 +92,14 @@ export class NewRecipeComponent {
     this.ingredientForm.controls.productUnit.setValue(editedIng.unit);
 
     this.editingIngIndex = index;
+  }
+
+  onEditStepClick(index: number): void {
+    const editedStep = this.recipe.prepSteps[index];
+
+    this.stepForm.controls.step.setValue(editedStep);
+
+    this.editingStepIndex = index;
   }
 
   onSaveChangesClick(): void {
@@ -97,5 +110,12 @@ export class NewRecipeComponent {
     this.recipe.ingredients[this.editingIngIndex] = new Product(productName, productQuantity, productUnit);
     this.editingIngIndex = -1;
     this.ingredientForm.reset();
+  }
+
+  onSaveStepChangesClick(): void {
+    const step = this.stepForm.controls.step.value!;
+    this.recipe.prepSteps[this.editingStepIndex] = step;
+    this.editingStepIndex = -1;
+    this.stepForm.reset();
   }
 }
