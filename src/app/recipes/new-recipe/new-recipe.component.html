@@ -10,7 +10,7 @@
         </h3>
         <ul>
           <li class="list-element" *ngFor="let product of recipe.ingredients; let i = index">
-            <p class="ing-attr">{{product.name}} {{product.quantity}} {{ product.unit }}</p>
+            <p class="ing-attr">{{product.name}} {{(product.quantity === 0) ? '' : product.quantity}} {{ product.unit }}</p>
             <div class="btns-container">
               <button class="btn" (click)="onDeleteIngClick(i)">Delete</button>
               <button class="btn" (click)="onEditIngClick(i)">Edit</button>
@@ -29,8 +29,8 @@
                 </datalist>
               </div>
 
-              <button *ngIf="editingIngIndex === -1" class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>
-              <button *ngIf="editingIngIndex !== -1" class="btn btn-add-ing" (click)="onSaveChangesClick()" >Save Changes</button>
+              <button [ngClass]="!ingredientForm.valid ? 'invalid' : ''" *ngIf="editingIngIndex === -1" class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>
+              <button [ngClass]="!ingredientForm.valid ? 'invalid' : ''" *ngIf="editingIngIndex !== -1" class="btn btn-add-ing" (click)="onSaveChangesClick()" >Save Changes</button>
             </div>
           </form>
         </ul>

@@ -104,6 +104,14 @@
   margin-top: 1rem;
 }
 
+.btn-add-ing.invalid {
+  pointer-events: none;
+  background-color: $dominant-color;
+  box-shadow: 0px 0px 3px 0px gray;
+  color: $default-text-color;
+}
+
+
 .header {
   margin-bottom: 0.25rem;
   margin-top: 1.5rem;

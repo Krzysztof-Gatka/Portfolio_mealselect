@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
@@ -12,7 +12,7 @@ import { units } from '../recipe/recipe.model';
 })
 export class NewRecipeComponent {
   ingredientForm =  new FormGroup({
-    productName: new FormControl(''),
+    productName: new FormControl('', Validators.required),
     productQuantity: new FormControl(''),
     productUnit: new FormControl(''),
   });
