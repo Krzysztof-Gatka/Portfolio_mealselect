@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Product } from '../shopping-list/shopping-list-element/product.model';
 import { PantryService } from './pantry.service';
@@ -15,7 +15,7 @@ export class PantryComponent implements OnInit, OnDestroy{
   pantryFetchedSub: Subscription | undefined;
   loading: boolean = true;
   form = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', Validators.required),
     qty: new FormControl(null),
     unit: new FormControl(''),
     date: new FormControl(null),

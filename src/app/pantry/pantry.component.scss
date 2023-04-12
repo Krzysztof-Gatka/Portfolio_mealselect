@@ -30,4 +30,10 @@
 
 .btn {
   width:20%;
+  transition: opacity 500ms ease-in-out 0ms;
+}
+
+.btn.invalid {
+  pointer-events: none;
+  opacity: 0.5;
 }
