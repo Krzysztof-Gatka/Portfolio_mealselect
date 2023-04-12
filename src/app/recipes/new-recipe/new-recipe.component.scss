@@ -35,6 +35,29 @@
 
 .list-element {
   list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.ing-attr,
+.step {
+  width:30%;
+}
+
+.btns-container {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.btns-container .btn {
+  width: fit-content;
+  padding: 0.25rem;
+}
+
+.btns-container {
+  width:30%;
 }
 
 .ipt {
@@ -81,6 +104,17 @@
 .btn-add-ing {
   margin-top: 1rem;
 }
+
+.btn-add-step.invalid,
+.btn-add-ing.invalid {
+  pointer-events: none;
+  background-color: $dominant-color;
+  box-shadow: 0px 0px 3px 0px gray;
+  color: $default-text-color;
+}
+
+
+
 
 .header {
   margin-bottom: 0.25rem;

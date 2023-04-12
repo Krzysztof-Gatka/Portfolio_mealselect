@@ -3,34 +3,52 @@
 
     <form [formGroup]="recipeForm">
       <div class="recipe-form-container">
-        <input class="ipt ipt-name" formControlName="name" type="text" [placeholder]="recipe.name" >
+        <input autofocus class="ipt ipt-name" formControlName="name" type="text" [placeholder]="recipe.name" >
 
         <h3 class="header">
           Ingredients
         </h3>
         <ul>
-          <li class="list-element" *ngFor="let product of recipe.ingredients">{{product.name}} {{product.quantity}} {{ product.unit }}</li>
+          <li class="list-element" *ngFor="let product of recipe.ingredients; let i = index">
+            <p class="ing-attr">{{product.name}} {{(product.quantity === 0) ? '' : product.quantity}} {{ product.unit }}</p>
+            <div class="btns-container">
+              <button class="btn" (click)="onDeleteIngClick(i)">Delete</button>
+              <button class="btn" (click)="onEditIngClick(i)">Edit</button>
+            </div>
+          </li>
+
           <form [formGroup]="ingredientForm">
             <div class="ingredients-form-container">
 
               <div class="ingredients-inputs-container">
-                <input class="ipt ipt-product-name" formControlName="productName" type="text" placeholder="product Name">
+                <input #ing_name_input class="ipt ipt-product-name" formControlName="productName" type="text" placeholder="product Name">
                 <input class="ipt ipt-product-qty" formControlName="productQuantity" type="text" placeholder="quantity">
-                <input class="ipt ipt-product-unit" formControlName="productUnit" type="text" placeholder="unit">
+                <input class="ipt ipt-product-unit" formControlName="productUnit" type="text" list="units" placeholder="unit">
+                <datalist id="units">
+                  <option *ngFor="let unit of units">{{ unit }}</option>
+                </datalist>
               </div>
 
-              <button class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>
+              <button [ngClass]="!ingredientForm.valid ? 'invalid' : ''" *ngIf="editingIngIndex === -1" class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>
+              <button [ngClass]="!ingredientForm.valid ? 'invalid' : ''" *ngIf="editingIngIndex !== -1" class="btn btn-add-ing" (click)="onSaveChangesClick()" >Save Changes</button>
             </div>
           </form>
         </ul>
 
         <h3 class="header">Preparation</h3>
         <ul>
-          <li *ngFor="let step of recipe.prepSteps">{{ step }}</li>
+          <li class="list-element" *ngFor="let step of recipe.prepSteps; let i = index">
+            <p class="step">{{ step }}</p>
+            <div class="btns-container">
+              <button class="btn" (click)="onDeleteStepClick(i)">Delete</button>
+              <button class="btn" (click)="onEditStepClick(i)">Edit</button>
+            </div>
+          </li>
           <form [formGroup]="stepForm">
             <div class="step-form-container">
-              <input class="ipt" formControlName="step" type="text" placeholder="Preparation Step">
-              <button class="btn btn-add-step" (click)="onAddStep()" >Add Step</button>
+              <input #step_input class="ipt" formControlName="step" type="text" placeholder="Preparation Step">
+              <button [ngClass]="!stepForm.valid ? 'invalid' : ''" *ngIf="editingStepIndex === -1" class="btn btn-add-step" (click)="onAddStep()" >Add Step</button>
+             <button  [ngClass]="!stepForm.valid ? 'invalid' : ''" *ngIf="editingStepIndex !== -1"class="btn btn-add-step" (click)="onSaveStepChangesClick()" >Save Changes</button>
             </div>
           </form>
         </ul>
@@ -69,11 +87,19 @@
             type="text"
             placeholder="Price Per Serving"
           >
+
+          <input
+            class="ipt description"
+            formControlName="description"
+            id="description"
+            type="text"
+            placeholder="description"
+          >
         </div>
 
+        <button *ngIf="!editMode" type="button" class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
+        <button *ngIf="editMode" type="button" class="btn btn-add-recipe" (click)="onSaveChanges(recipe)">Save Changes</button>
 
-
-        <button class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
       </div>
     </form>
   </div>
