@@ -29,7 +29,7 @@ export class PantryElementComponent {
     this.form.controls.name.setValue(this.product.name);
     this.form.controls.qty.setValue(this.product.quantity);
     this.form.controls.unit.setValue(this.product.unit);
-    // this.form.controls.date.setValue((this.product.expDate) ? this.product.expDate : null);
+    this.form.controls.date.setValue((this.product.expDate) ? this.product.expDate : null);
     this.editMode = true;
   }
 
@@ -37,7 +37,7 @@ export class PantryElementComponent {
     this.product.name = this.form.controls.name.value!;
     this.product.quantity = this.form.controls.qty.value!;
     this.product.unit = this.form.controls.unit.value!;
-    // this.product.name = this.form.controls.name.value!;
+    this.product.expDate = this.form.controls.date.value!;
 
     this.pantryService.updateElement(this.product, this.index);
     this.editMode = false;
