@@ -4,5 +4,6 @@ export class Product {
     public quantity: number,
     public unit: string,
     public expDate?: Date,
+    public bought?: boolean,
   ) {}
 }
