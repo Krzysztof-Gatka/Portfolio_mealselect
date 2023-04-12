@@ -31,3 +31,11 @@
   gap:5px;
 }
 
+.btn.invalid {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.btn {
+  transition: opacity 500ms ease-in-out 0ms;
+}

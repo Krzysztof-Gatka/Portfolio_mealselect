@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Product } from '../shopping-list/shopping-list-element/product.model';
 import { PantryService } from './pantry.service';
@@ -15,10 +15,10 @@ export class PantryComponent implements OnInit, OnDestroy{
   pantryFetchedSub: Subscription | undefined;
   loading: boolean = true;
   form = new FormGroup({
-    name: new FormControl(''),
-    qty: new FormControl(0),
+    name: new FormControl('', Validators.required),
+    qty: new FormControl(null),
     unit: new FormControl(''),
-    date: new FormControl(new Date()),
+    date: new FormControl(null),
   })
 
   constructor(private pantryServcie: PantryService) {}
@@ -42,9 +42,17 @@ export class PantryComponent implements OnInit, OnDestroy{
     const name = this.form.controls.name.value!;
     const qty = this.form.controls.qty.value!;
     const unit = this.form.controls.unit.value!;
-    const newProduct = new Product(name, qty, unit);
+    let newProduct: Product;
+
+    if (this.form.controls.date.value!) {
+      const expDate = new Date(this.form.controls.date.value!);
+      newProduct = new Product(name, qty, unit, expDate);
+    } else {
+      newProduct = new Product(name, qty, unit);
+    }
 
     this.pantryServcie.addElement(newProduct);
+    this.form.reset();
   }
 }
 
