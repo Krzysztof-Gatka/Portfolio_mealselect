@@ -13,6 +13,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   shoppingListElements: Product[] | undefined;
   deletedProductsAvailable: boolean = false;
   modalOpened: boolean = false;
+  boughtElements: boolean = false;
   loading: boolean = true;
   sub: Subscription | undefined;
   sub2: Subscription | undefined;
@@ -23,11 +24,15 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.fetchSub = this.shoppingListService.productsFetched.subscribe(()=> {
       this.loading = false;
       this.shoppingListElements = this.shoppingListService.getShoppingListElements();
+      this.boughtElements = this.shoppingListService.getShoppingListElements().some(product => product.bought)
     })
+
     this.shoppingListService.fetchShoppingList();
     this.shoppingListElements = this.shoppingListService.getShoppingListElements();
+
     this.sub = this.shoppingListService.productsChanged.subscribe(()=> {
       this.shoppingListElements = this.shoppingListService.getShoppingListElements();
+      this.boughtElements = this.shoppingListService.getShoppingListElements().some(product => product.bought)
     })
     this.sub2 = this.shoppingListService.deletedProducts.subscribe((code) => {
       if(code === -1) {
@@ -55,6 +60,13 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   onClearList(): void {
     this.modalOpened = true;
+  }
+
+  onClearBoughtElements():void {
+    this.shoppingListElements = this.shoppingListElements?.filter((product) => !product.bought);
+    this.shoppingListService.shoppingListElements = this.shoppingListElements!;
+    this.shoppingListService._putShoppingList();
+    this.shoppingListService.productsChanged.next('');
   }
 
   //MODAL

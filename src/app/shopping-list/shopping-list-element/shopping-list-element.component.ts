@@ -13,7 +13,6 @@ import { Subscription } from 'rxjs';
 export class ShoppingListElementComponent implements OnInit, OnDestroy {
   @Input() product: Product | undefined;
   @Input() productIndex: number | undefined;
-  isActive: boolean = true;
   editMode: boolean = false;
   editButtonDisabled: boolean = false;
   sub: Subscription | undefined;
@@ -46,7 +45,14 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
   }
 
   onProductClick(): void {
-    this.isActive = !this.isActive;
+    if (this.product?.bought !== undefined) {
+      this.product.bought = !this.product.bought;
+    } else {
+      this.product!.bought = true;
+    }
+
+    this.shoppingListService.productsChanged.next('');
+    this.shoppingListService._putShoppingList();
   }
 
   onDeleteButtonClick(): void {

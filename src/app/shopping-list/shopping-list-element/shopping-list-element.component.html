@@ -2,11 +2,11 @@
   <div class="shopping-list-element-container">
 
     <div
-      [ngClass]="isActive ? '' : 'non-active'"
+      [ngClass]="product.bought ? 'non-active' : ''"
       *ngIf="product && !editMode"
       class="list-element"
       (click)="onProductClick()"
-      [class.non-active]="!isActive">
+     >
 
       <div class="field field-first">
         <p>{{ product.name }}</p>

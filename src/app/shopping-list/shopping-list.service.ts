@@ -8,7 +8,7 @@ import { Product } from "./shopping-list-element/product.model";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
-  private shoppingListElements: Product[] = [];
+  shoppingListElements: Product[] = [];
 
   productsFetched = new Subject();
   productsChanged = new Subject();
@@ -33,7 +33,7 @@ export class ShoppingListService {
       })
   }
 
-  private _putShoppingList(): void {
+  _putShoppingList(): void {
     const user = this.authServcie.user!;
     const params = new HttpParams().set('auth', this.authServcie.user!.token);
 
