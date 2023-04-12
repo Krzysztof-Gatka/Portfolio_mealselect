@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ShoppingListService } from './shopping-list.service';
 import { Product } from './shopping-list-element/product.model';
 import { Subscription } from 'rxjs';
+import { PantryService } from '../pantry/pantry.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -18,7 +19,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   sub: Subscription | undefined;
   sub2: Subscription | undefined;
   fetchSub: Subscription | undefined;
-  constructor(private shoppingListService: ShoppingListService) {}
+  constructor(private shoppingListService: ShoppingListService, private pantryServcie: PantryService) {}
 
   ngOnInit(): void {
     this.fetchSub = this.shoppingListService.productsFetched.subscribe(()=> {
@@ -67,6 +68,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingListService.shoppingListElements = this.shoppingListElements!;
     this.shoppingListService._putShoppingList();
     this.shoppingListService.productsChanged.next('');
+  }
+
+  onAddBoughtElementsToPantry(): void {
+    this.shoppingListElements?.filter((product) => product.bought).map((product) => this.pantryServcie.addElement(product));
+    this.onClearBoughtElements();
   }
 
   //MODAL
