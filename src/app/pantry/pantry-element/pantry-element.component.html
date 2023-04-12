@@ -44,6 +44,7 @@
         edit
       </button>
       <button
+        [ngClass]="form.valid ? '' : 'invalid'"
         *ngIf="editMode"
         (click)="onSaveClick()"
         class="btn">

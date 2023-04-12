@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
 import { PantryService } from '../pantry.service';
 
@@ -13,7 +13,7 @@ export class PantryElementComponent {
   @Input() index!: number;
   editMode: boolean = false;
   form = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', Validators.required),
     qty: new FormControl(0),
     unit: new FormControl(''),
     date: new FormControl(new Date()),
