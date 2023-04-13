@@ -1,21 +1,21 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from 'rxjs'
+
 import { AuthService } from "../auth/auth.service";
 import { Default_URL } from "../recipes/recipes.service";
-
 import { Product } from "./shopping-list-element/product.model";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
-  shoppingListElements: Product[] = [];
+  private shoppingListElements: Product[] = [];
+  private deletedProductsStack: Product[] = [];
 
-  productsFetched = new Subject();
   productsChanged = new Subject();
+  deletedProducts = new Subject<number>();
+
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
-  deletedProducts = new Subject<number>();
-  deletedProductsStack: Product[] = [];
 
   constructor(
     private http: HttpClient,
@@ -29,39 +29,46 @@ export class ShoppingListService {
     this.http.get<Product[]>(Default_URL + user.uid + '/shopping-list.json', { params: params})
       .subscribe((products)=> {
         this.shoppingListElements = products;
-        this.productsFetched.next('');
+        this.productsChanged.next('');
       })
   }
 
-  _putShoppingList(): void {
-    const user = this.authServcie.user!;
-    const params = new HttpParams().set('auth', this.authServcie.user!.token);
-
-    this.http.put(Default_URL + user.uid + '/shopping-list.json', this.shoppingListElements ,{params: params}).subscribe();
+  clearBoughtProducts(): void {
+    this.shoppingListElements = this.shoppingListElements?.filter((product) => !product.bought);
+    this._putShoppingList();
+    this.productsChanged.next('');
   }
 
-  getShoppingListElements(): Product[] {
+  toggleBought(index: number): void {
+    if(this.shoppingListElements[index].bought !== undefined) {
+      this.shoppingListElements[index].bought = !this.shoppingListElements[index].bought;
+    } else {
+      this.shoppingListElements[index].bought = true;
+    }
+    this._putShoppingList();
+    this.productsChanged.next('');
+  }
+
+  getShoppingList(): Product[] {
     if(this.shoppingListElements !== null){
       return this.shoppingListElements.slice();
     }
-
     return [];
   }
 
-  addElement(product: Product): Product[] {
+  addProduct(product: Product): Product[] {
     if(this.shoppingListElements === null) {
       this.shoppingListElements = [product];
     } else {
-
       this.shoppingListElements.push(product);
     }
     this._putShoppingList();
     return this.shoppingListElements.slice();
   }
 
-  deleteElement(index: number): void {
+  deleteProduct(index: number): void {
     this.shoppingListElements = this.shoppingListElements.filter((element, i) =>{ if(i === index){
-        this.deletedProductsStack.push(element);
+      this.deletedProductsStack.push(element);
         if(this.deletedProductsStack.length === 1) {
           this.deletedProducts.next(1);
         }
@@ -72,7 +79,7 @@ export class ShoppingListService {
     this.productsChanged.next('');
   }
 
-  updateElement(index: number, product: Product): void {
+  updateProduct(index: number, product: Product): void {
     this.shoppingListElements = this.shoppingListElements.map((prod, i)=> {
       if (i === index) return product;
       return prod;
@@ -86,14 +93,21 @@ export class ShoppingListService {
     this._putShoppingList();
   }
 
-  private _getLastDeletedProduct(): Product | undefined {
-    return this.deletedProductsStack.pop()
-  }
-
   reviveLastProduct(): Product[] {
     const deletedProduct = this._getLastDeletedProduct()
     if(this.deletedProductsStack.length === 0) this.deletedProducts.next(-1);
     if(!deletedProduct) return this.shoppingListElements;
-    return this.addElement(deletedProduct);
+    return this.addProduct(deletedProduct);
+  }
+
+  private _putShoppingList(): void {
+    const user = this.authServcie.user!;
+    const params = new HttpParams().set('auth', this.authServcie.user!.token);
+
+    this.http.put(Default_URL + user.uid + '/shopping-list.json', this.shoppingListElements ,{params: params}).subscribe();
+  }
+
+  private _getLastDeletedProduct(): Product | undefined {
+    return this.deletedProductsStack.pop()
   }
 }
