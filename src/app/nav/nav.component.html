@@ -32,7 +32,7 @@
     </div>
     <nav (click)="onHamburgerClick()" class="sidenav-container" [ngClass]="navbarOpen ? 'open' : ''">
       <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/recipes']" class="btn-nav">Recipes</button>
-      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/newRecipe']" class="btn-nav">New Recipe</button>
+      <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/new-recipe']" class="btn-nav">New Recipe</button>
       <button *ngIf="isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/shopping-list']" class="btn-nav">ShoppingList</button>
       <button *ngIf="isUserLoggedIn"  [routerLinkActive]="'active'" [routerLink]="['/pantry']" class="btn-nav">Pantry</button>
       <button *ngIf="isUserLoggedIn" class="btn-nav" (click)="onLogoutClick()">Logout</button>
