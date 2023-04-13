@@ -179,3 +179,32 @@
   left:0;
   color: $accent-text-color;
 }
+
+.list-header {
+  margin-top: 1rem;
+  max-width: 56rem;
+  width: 90%;
+  padding:0.5rem;
+
+  color: $default-text-color;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.header-pantry {
+  text-align: right;
+}
+
+.header-prep-time,
+.header-difficulty {
+  text-align: center;
+}
+
+.header-title {
+  width:25%;
+}
+
+.placeholder {
+  width: 8%;
+}

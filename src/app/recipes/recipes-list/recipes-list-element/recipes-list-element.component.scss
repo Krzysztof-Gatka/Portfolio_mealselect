@@ -1,8 +1,17 @@
 @import '../../../../scss/variables';
 
+.full-width-flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-more {
+  width:5%;
+}
+
 .recipes-list-element-container {
   padding:0.5rem;
-  width: 95%;
+  width: 90%;
 }
 
 .recipes-list-element-container p {
@@ -30,4 +39,21 @@
 .recipe-attr:hover {
   scale: 110%;
   box-shadow: 0px 0px 8px 0px $secondary-color;
+}
+
+.rec-prep-time,
+.rec-difficulty {
+  text-align: center;
+}
+
+.recipe-attr p {
+  width:25%;
+}
+
+.rec-name {
+  text-align: left;
+}
+
+.rec-pantry {
+  text-align: right;
 }

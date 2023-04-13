@@ -79,6 +79,13 @@
   <div *ngIf="recipesType === 'user-recipes'" class="new-recipe-container">
     <button class="btn" [routerLink]="['/new-recipe']"> New Recipe</button>
   </div>
+  <div class="list-header">
+    <p class="header-name header-title">Name</p>
+    <p class="header-prep-time header-title">Prep. Time</p>
+    <p class="header-difficulty header-title">Difficulty</p>
+    <p class="header-pantry header-title">Pantry</p>
+    <p class="placeholder"></p>
+  </div>
   <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
   <div *ngIf="!loading" class="recipes-list-container">
     <app-recipes-list-element
