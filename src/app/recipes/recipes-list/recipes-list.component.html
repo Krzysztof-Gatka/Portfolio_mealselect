@@ -1,7 +1,7 @@
 <div class="full-width-flex-container">
   <div class="recipes-nav-container">
     <button
-      [routerLink]="['/recipes/recipes-list/my-recipes']"
+      [routerLink]="['/recipes/recipes-list/user-recipes']"
       [routerLinkActive]="'active'"
       class="recipes-nav-btn">
       My Recipes
@@ -76,7 +76,7 @@
       </form>
     </div>
   </div>
-  <div *ngIf="recipesType === 'my-recipes'" class="new-recipe-container">
+  <div *ngIf="recipesType === 'user-recipes'" class="new-recipe-container">
     <button class="btn" [routerLink]="['/new-recipe']"> New Recipe</button>
   </div>
   <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>

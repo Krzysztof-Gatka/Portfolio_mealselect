@@ -25,7 +25,7 @@ const ROUTES: Route[] = [
     component: RecipesComponent,
     children: [
       {
-        path: '', redirectTo: 'recipes-list/my-recipes', pathMatch: 'full',
+        path: '', redirectTo: 'recipes-list/user-recipes', pathMatch: 'full',
       },
       {
         path: 'recipes-list/:recipes', component: RecipesListComponent,

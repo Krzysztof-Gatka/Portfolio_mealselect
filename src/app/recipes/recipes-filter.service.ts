@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Recipe } from "./recipe/recipe.model";
-import { My_Recipes, Recipes_Base } from "./recipes-list/recipes-list.component";
+import { User_Recipes, Recipes_Base } from "./recipes-list/recipes-list.component";
 import { RecipesService } from "./recipes.service";
 
 @Injectable({providedIn: 'root'})
@@ -11,8 +11,9 @@ export class RecipesFilterService {
   filter(recipesType: string, name: string | null, prepTime: string | null, difficulty: string | null, price: string | null ): Recipe[] {
     let filteredRecipes: Recipe[] = [];
 
-    if(recipesType === Recipes_Base) filteredRecipes = this.recipesService.recipesBase.slice();
-    if(recipesType === My_Recipes) filteredRecipes = this.recipesService.userRecipes.slice();
+    filteredRecipes = this.recipesService.getRecipes(recipesType);
+    // if(recipesType === Recipes_Base) filteredRecipes = this.recipesService.recipesBase.slice();
+    // if(recipesType === User_Recipes) filteredRecipes = this.recipesService.userRecipes.slice();
 
     if(name !== null) {
       filteredRecipes = filteredRecipes.filter(recipe => {

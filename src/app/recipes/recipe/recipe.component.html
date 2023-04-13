@@ -26,8 +26,8 @@
     <div class="btns-container">
       <button class="btn" (click)="onAddToMyRecipes()">Add Recipe to My Recipes</button>
       <button class="btn" (click)="onAddToShoppingListClick()">Add Ingredients to shopping List</button>
-      <button *ngIf="recipesType === 'my-recipes'" class="btn" [routerLink]="['/edit-recipe', recipe!.id]">Edit Recipe</button>
-      <button *ngIf="recipesType === 'my-recipes'" class="btn" (click)="onDeleteRecipeClick(recipe!.id)">Delete Recipe</button>
+      <button *ngIf="recipesType === 'user-recipes'" class="btn" [routerLink]="['/edit-recipe', recipe!.id]">Edit Recipe</button>
+      <button *ngIf="recipesType === 'user-recipes'" class="btn" (click)="onDeleteRecipeClick(recipe!.id)">Delete Recipe</button>
     </div>
   </div>
 

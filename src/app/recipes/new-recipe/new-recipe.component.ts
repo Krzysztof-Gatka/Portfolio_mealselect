@@ -6,6 +6,7 @@ import { RecipesService } from '../recipes.service';
 import { units } from '../recipe/recipe.model';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { User_Recipes } from '../recipes-list/recipes-list.component';
 
 @Component({
   selector: 'app-new-recipe',
@@ -54,7 +55,7 @@ export class NewRecipeComponent implements OnInit{
     this.paramsSub = this.route.params.subscribe((params) => {
       if(params['id']) {
         this.editMode = true;
-        const recipe = this.recipesService.userRecipes.filter((recipe) => params['id'] == recipe.id);
+        const recipe = this.recipesService.getRecipes(User_Recipes).filter((recipe) => params['id'] == recipe.id);
         this.recipe = recipe[0];
       }
     })

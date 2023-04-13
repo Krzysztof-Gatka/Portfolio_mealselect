@@ -6,7 +6,7 @@ import { RecipesFilterService } from '../recipes-filter.service';
 import { RecipesService } from '../recipes.service';
 
 export const Recipes_Base = 'recipes-base';
-export const My_Recipes = 'my-recipes';
+export const User_Recipes = 'user-recipes';
 export const Community_Recipes = 'community-recipes';
 
 @Component({
@@ -41,14 +41,14 @@ export class RecipesListComponent implements OnInit{
 
   ngOnInit(): void {
     this.recipesService.recipesChanged.subscribe(() => {
-      this.recipes = this._getRecipes();
+      this.recipes = this.recipesService.getRecipes(this.recipesType);
       this.loading = false;
     })
 
     this.route.params.subscribe((params) => {
       this.loading = true;
       this.recipesType = params['recipes'];
-      this._fetchRecipes();
+      this.recipesService.fetchRecipes(this.recipesType);
       this.filtering = false;
       this.sorting = false;
 
@@ -81,22 +81,8 @@ export class RecipesListComponent implements OnInit{
     if(this.filtering) {
       this.onFilterClick();
     } else {
-      this.recipes = this._getRecipes();
+      this.recipes = this.recipesService.getRecipes(this.recipesType);
     }
     this.sorting = false;
-  }
-
-  private _getRecipes(): Recipe[] {
-    let recipes: Recipe[] = [];
-    if(this.recipesType === Recipes_Base) recipes = this.recipesService.recipesBase.slice();
-    if(this.recipesType === My_Recipes) recipes = this.recipesService.userRecipes.slice();
-    if(this.recipesType === Community_Recipes) recipes = this.recipesService.communityRecipes.slice();
-    return recipes;
-  }
-
-  private _fetchRecipes(): void {
-    if(this.recipesType === Recipes_Base)  this.recipesService.fetchRecipesBase();
-    if(this.recipesType === My_Recipes)  this.recipesService.fetchUserRecipes();
-    // if(this.recipesType === Community_Recipes)  this.recipesService.fetchCommunityRecipes();
   }
 }
