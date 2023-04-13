@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Subject } from 'rxjs'
 
 import { AuthService } from "../auth/auth.service";
+import { PantryService } from "../pantry/pantry.service";
 import { Default_URL } from "../recipes/recipes.service";
 import { Product } from "./shopping-list-element/product.model";
 
@@ -20,6 +21,7 @@ export class ShoppingListService {
   constructor(
     private http: HttpClient,
     private authServcie: AuthService,
+    private pantryService: PantryService,
   ) {}
 
   fetchShoppingList(): void {
@@ -98,6 +100,12 @@ export class ShoppingListService {
     if(this.deletedProductsStack.length === 0) this.deletedProducts.next(-1);
     if(!deletedProduct) return this.shoppingListElements;
     return this.addProduct(deletedProduct);
+  }
+
+  addBoughtElementsToPantry():void {
+    this.shoppingListElements
+      .filter(product => product.bought)
+      .map(product => this.pantryService.addElement(product));
   }
 
   private _putShoppingList(): void {
