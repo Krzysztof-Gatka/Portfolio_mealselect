@@ -3,11 +3,11 @@
     <button
       class="recipe-attr"
       [routerLink]="['/recipes', recipesType, 'recipe', recipe.id.toString()]">
-      <p> {{ recipe.name }} </p>
-      <p> {{ recipe.prepTime }} </p>
-      <p> {{ recipe.difficulty }} </p>
-      <p> {{ recipe.servings * recipe.pricePerServing}}</p>
-      <p> {{ingsInPantry}}/{{ recipe.ingredients.length }}</p>
+      <p class="rec-name"> {{ recipe.name }} </p>
+      <p class="rec-prep-time"> {{ recipe.prepTime }} </p>
+      <p class="rec-difficulty"> {{ recipe.difficulty }} </p>
+      <!-- <p> {{ recipe.servings * recipe.pricePerServing}}</p> -->
+      <p class="rec-pantry"> {{ingsInPantry}}/{{ recipe.ingredients.length }}</p>
     </button>
   </div>
 </div>

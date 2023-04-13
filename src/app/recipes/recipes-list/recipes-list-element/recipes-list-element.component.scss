@@ -31,3 +31,20 @@
   scale: 110%;
   box-shadow: 0px 0px 8px 0px $secondary-color;
 }
+
+.rec-prep-time,
+.rec-difficulty {
+  text-align: center;
+}
+
+.recipe-attr p {
+  width:25%;
+}
+
+.rec-name {
+  text-align: left;
+}
+
+.rec-pantry {
+  text-align: right;
+}
