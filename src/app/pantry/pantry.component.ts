@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
 import { Product } from '../shopping-list/shopping-list-element/product.model';
 import { PantryService } from './pantry.service';
 
@@ -11,8 +12,9 @@ import { PantryService } from './pantry.service';
 })
 export class PantryComponent implements OnInit, OnDestroy{
   pantry: Product[] = [];
+
   pantryChangesSub: Subscription | undefined;
-  pantryFetchedSub: Subscription | undefined;
+
   loading: boolean = true;
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -24,14 +26,11 @@ export class PantryComponent implements OnInit, OnDestroy{
   constructor(private pantryServcie: PantryService) {}
 
   ngOnInit(): void {
-    this.pantryServcie.fetchPantry();
-    this.pantryFetchedSub = this.pantryServcie.pantryFetched.subscribe(()=> {
-      this.pantry = this.pantryServcie.getPantry();
-      this.loading = false;
-    })
     this.pantryChangesSub = this.pantryServcie.pantryChanged.subscribe(()=>{
       this.pantry = this.pantryServcie.getPantry();
-    })
+      this.loading = false;
+    });
+    this.pantryServcie.fetchPantry();
   }
 
   ngOnDestroy(): void {

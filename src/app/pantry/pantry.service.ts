@@ -1,15 +1,16 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+
 import { AuthService } from "../auth/auth.service";
-import { Default_URL } from "../recipes/recipes.service";
 import { Product } from "../shopping-list/shopping-list-element/product.model";
+import { Default_URL } from "../recipes/recipes.service";
 
 @Injectable({providedIn: 'root'})
 export class PantryService {
-  pantryFetched = new Subject();
+  private pantry: Product[] = [];
+
   pantryChanged = new Subject();
-  pantry: Product[] = [];
 
   constructor(
     private authService:AuthService,
@@ -24,7 +25,7 @@ export class PantryService {
     this.http.get<Product[]>(Default_URL + user.uid + '/pantry.json', { params: params})
       .subscribe((products)=> {
         this.pantry = products;
-        this.pantryFetched.next('');
+        this.pantryChanged.next('');
       })
   }
 
