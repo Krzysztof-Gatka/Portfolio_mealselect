@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
     this.authService.autologin();
     this.authService.userAuthentication.subscribe(operation => {
       if(operation === 'logOut') {
-        this.recipesService.userRecipes = [];
+        this.recipesService.clearUserRecipes();
       }
     })
   }
