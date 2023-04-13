@@ -10,7 +10,9 @@ import { PantryService } from 'src/app/pantry/pantry.service';
 export class RecipesListElementComponent implements OnInit{
   @Input() recipe!: Recipe;
   @Input() recipesType: string = ''
+
   ingsInPantry: number = 0;
+  details: boolean = false;
 
   constructor(private pantryService: PantryService) {}
 
@@ -22,5 +24,9 @@ export class RecipesListElementComponent implements OnInit{
         this.ingsInPantry++;
       }
     })
+  }
+
+  onMoreBtnClick():void {
+    this.details = !this.details;
   }
 }

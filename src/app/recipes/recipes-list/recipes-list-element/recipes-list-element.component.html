@@ -9,5 +9,10 @@
       <!-- <p> {{ recipe.servings * recipe.pricePerServing}}</p> -->
       <p class="rec-pantry"> {{ingsInPantry}}/{{ recipe.ingredients.length }}</p>
     </button>
+    <div *ngIf="details">
+      <p>{{recipe.description}}</p>
+      <p *ngFor="let tag of recipe.tags"> {{ tag }} </p>
+    </div>
   </div>
+  <button (click)="onMoreBtnClick()" class="btn-more">...</button>
 </div>
