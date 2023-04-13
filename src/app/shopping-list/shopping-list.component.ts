@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { ShoppingListService } from './shopping-list.service';
 import { Product } from './shopping-list-element/product.model';
-import { Subscription } from 'rxjs';
-import { PantryService } from '../pantry/pantry.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -12,23 +11,25 @@ import { PantryService } from '../pantry/pantry.service';
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   shoppingListElements: Product[] | undefined;
+
   deletedProductsAvailable: boolean = false;
   modalOpened: boolean = false;
   boughtElements: boolean = false;
   loading: boolean = true;
-  sub: Subscription | undefined;
-  sub2: Subscription | undefined;
-  fetchSub: Subscription | undefined;
-  constructor(private shoppingListService: ShoppingListService, private pantryServcie: PantryService) {}
+
+  changeSub: Subscription | undefined;
+  deleteSub: Subscription | undefined;
+
+  constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
-    this.sub = this.shoppingListService.productsChanged.subscribe(()=> {
+    this.changeSub = this.shoppingListService.productsChanged.subscribe(()=> {
       this.loading = false;
       this.shoppingListElements = this.shoppingListService.getShoppingList();
       this.boughtElements = this.shoppingListService.getShoppingList().some(product => product.bought)
     });
 
-    this.sub2 = this.shoppingListService.deletedProducts.subscribe((code) => {
+    this.deleteSub = this.shoppingListService.deletedProducts.subscribe((code) => {
       if(code === -1) {
         this.deletedProductsAvailable = false;
       } else {
@@ -37,13 +38,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     });
 
     this.shoppingListService.fetchShoppingList();
-    this.shoppingListElements = this.shoppingListService.getShoppingList();
-
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-    this.sub2?.unsubscribe();
+    this.changeSub?.unsubscribe();
+    this.deleteSub?.unsubscribe();
   }
 
   onItemAdded(product: Product): void {
@@ -54,20 +53,19 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingListElements = this.shoppingListService.reviveLastProduct();
   }
 
-  onClearList(): void {
-    this.modalOpened = true;
-  }
-
   onClearBoughtElements():void {
     this.shoppingListService.clearBoughtProducts();
   }
 
   onAddBoughtElementsToPantry(): void {
-    this.shoppingListElements?.filter((product) => product.bought).map((product) => this.pantryServcie.addElement(product));
+    this.shoppingListService.addBoughtElementsToPantry();
     this.onClearBoughtElements();
   }
 
-  //MODAL
+  onClearList(): void {
+    this.modalOpened = true;
+  }
+
   onModalClick(): void {
     this.modalOpened = false;
   }
@@ -76,5 +74,4 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingListElements = [];
     this.shoppingListService.clear();
   }
-
 }
