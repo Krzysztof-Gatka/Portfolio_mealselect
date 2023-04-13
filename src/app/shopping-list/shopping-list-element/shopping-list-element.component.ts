@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { ShoppingListService } from '../shopping-list.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { ShoppingListService } from '../shopping-list.service';
 import { Product } from './product.model';
 import { Subscription } from 'rxjs';
 
@@ -13,10 +13,13 @@ import { Subscription } from 'rxjs';
 export class ShoppingListElementComponent implements OnInit, OnDestroy {
   @Input() product: Product | undefined;
   @Input() productIndex: number | undefined;
+
   editMode: boolean = false;
   editButtonDisabled: boolean = false;
-  sub: Subscription | undefined;
-  sub2: Subscription | undefined;
+
+  editSub: Subscription | undefined;
+  saveSub: Subscription | undefined;
+
   form = new FormGroup({
     productName: new FormControl('', Validators.required),
     productQuantity: new FormControl('', Validators.required),
@@ -26,7 +29,7 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
-    this.sub = this.shoppingListService.productBeingEdited.subscribe((id)=>{
+    this.editSub = this.shoppingListService.productBeingEdited.subscribe((id)=>{
       if(id === -1) {
         this.editButtonDisabled = false;
       } else {
@@ -34,29 +37,22 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.sub2 = this.shoppingListService.productSaved.subscribe(() => {
+    this.saveSub = this.shoppingListService.productSaved.subscribe(() => {
       this.editButtonDisabled = false;
     })
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-    this.sub2?.unsubscribe();
+    this.editSub?.unsubscribe();
+    this.saveSub?.unsubscribe();
   }
 
   onProductClick(): void {
-    if (this.product?.bought !== undefined) {
-      this.product.bought = !this.product.bought;
-    } else {
-      this.product!.bought = true;
-    }
-
-    this.shoppingListService.productsChanged.next('');
-    this.shoppingListService._putShoppingList();
+    this.shoppingListService.toggleBought(this.productIndex!);
   }
 
   onDeleteButtonClick(): void {
-    this.shoppingListService.deleteElement(this.productIndex!);
+    this.shoppingListService.deleteProduct(this.productIndex!);
     this.shoppingListService.productBeingEdited.next(-1);
   }
 
@@ -72,6 +68,6 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
 
   onSavebuttonClikced(product: Product): void {
     this.product = product;
-    this.shoppingListService.updateElement(this.productIndex!, this.product);
+    this.shoppingListService.updateProduct(this.productIndex!, this.product);
   }
 }

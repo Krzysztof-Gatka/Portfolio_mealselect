@@ -39,7 +39,7 @@ export class RecipeComponent implements OnInit, OnDestroy{
 
   onAddToShoppingListClick(): void {
     this.recipe?.ingredients.map((product) => {
-      this.shoppingListService.addElement(product);
+      this.shoppingListService.addProduct(product);
     })
     this.toastr.success('Successfully added ingredients to your Shopping List');
   }

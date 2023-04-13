@@ -22,37 +22,32 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   constructor(private shoppingListService: ShoppingListService, private pantryServcie: PantryService) {}
 
   ngOnInit(): void {
-    this.fetchSub = this.shoppingListService.productsFetched.subscribe(()=> {
-      this.loading = false;
-      this.shoppingListElements = this.shoppingListService.getShoppingListElements();
-      this.boughtElements = this.shoppingListService.getShoppingListElements().some(product => product.bought)
-    })
-
-    this.shoppingListService.fetchShoppingList();
-    this.shoppingListElements = this.shoppingListService.getShoppingListElements();
-
     this.sub = this.shoppingListService.productsChanged.subscribe(()=> {
-      this.shoppingListElements = this.shoppingListService.getShoppingListElements();
-      this.boughtElements = this.shoppingListService.getShoppingListElements().some(product => product.bought)
-    })
+      this.loading = false;
+      this.shoppingListElements = this.shoppingListService.getShoppingList();
+      this.boughtElements = this.shoppingListService.getShoppingList().some(product => product.bought)
+    });
+
     this.sub2 = this.shoppingListService.deletedProducts.subscribe((code) => {
       if(code === -1) {
         this.deletedProductsAvailable = false;
       } else {
         this.deletedProductsAvailable = true;
-
       }
-    })
+    });
+
+    this.shoppingListService.fetchShoppingList();
+    this.shoppingListElements = this.shoppingListService.getShoppingList();
+
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
     this.sub2?.unsubscribe();
-    this.fetchSub?.unsubscribe();
   }
 
   onItemAdded(product: Product): void {
-    this.shoppingListElements = this.shoppingListService.addElement(product);
+    this.shoppingListElements = this.shoppingListService.addProduct(product);
   }
 
   onReviveLastProduct(): void {
@@ -64,10 +59,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   onClearBoughtElements():void {
-    this.shoppingListElements = this.shoppingListElements?.filter((product) => !product.bought);
-    this.shoppingListService.shoppingListElements = this.shoppingListElements!;
-    this.shoppingListService._putShoppingList();
-    this.shoppingListService.productsChanged.next('');
+    this.shoppingListService.clearBoughtProducts();
   }
 
   onAddBoughtElementsToPantry(): void {
