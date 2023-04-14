@@ -40,8 +40,15 @@
           </div>
 
           <div class="input-container">
-            <label for="price">price</label>
-            <input formControlName="price" id="price "type="number">
+            <label for="tags">tags</label>
+            <input formControlName="tags" id="tags "type="text">
+            <button (click)="onAddTagClick()" class="btn-tags">+</button>
+          </div>
+          <div class="tags-container">
+            <div class="tag-container" *ngFor="let tag of tags; let i = index">
+              <p class="tag"> {{ tag }} </p>
+              <button (click)="onXClick(i)" class="btn-x">x</button>
+            </div>
           </div>
 
         </div>

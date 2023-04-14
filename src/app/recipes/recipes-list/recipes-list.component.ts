@@ -16,6 +16,7 @@ export const Community_Recipes = 'community-recipes';
 })
 export class RecipesListComponent implements OnInit{
   recipes: Recipe[] | undefined;
+  tags: string[] = [];
 
   recipesType: string = '';
   sorting: boolean = false;
@@ -27,6 +28,7 @@ export class RecipesListComponent implements OnInit{
     prepTime: new FormControl(''),
     difficulty: new FormControl(''),
     price: new FormControl(''),
+    tags: new FormControl(''),
   });
 
   sortForm = new FormGroup({
@@ -61,12 +63,13 @@ export class RecipesListComponent implements OnInit{
     const difficulty = this.filterForm.controls.difficulty.value;
     const price = this.filterForm.controls.price.value;
 
-    this.recipes = this.recipesFilterService.filter(this.recipesType, name, prepTime, difficulty, price);
+    this.recipes = this.recipesFilterService.filter(this.recipesType, name, prepTime, difficulty, this.tags);
     this.filtering = true;
   }
 
   onClearFiltersClick(): void {
     this.filterForm.reset();
+    this.tags = [];
     this.onFilterClick();
     this.filtering = false;
   }
@@ -84,5 +87,19 @@ export class RecipesListComponent implements OnInit{
       this.recipes = this.recipesService.getRecipes(this.recipesType);
     }
     this.sorting = false;
+  }
+
+  onAddTagClick(): void {
+    if(this.tags) {
+      this.tags.push(this.filterForm.controls.tags.value!)
+    } else {
+      this.tags = [this.filterForm.controls.tags.value!];
+    }
+    this.filterForm.controls.tags.reset();
+  }
+
+  onXClick(index: number):void {
+    this.tags = this.tags!.filter((tag, i) => index !== i);
+    this.onFilterClick();
   }
 }
