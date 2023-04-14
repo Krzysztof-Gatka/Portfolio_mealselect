@@ -71,16 +71,6 @@ export class RecipesFilterService {
           return diffSortHelp[b.difficulty as keyof typeof diffSortHelp] - diffSortHelp[a.difficulty as keyof typeof diffSortHelp];
         });
         break;
-      case 'priceAscending':
-        sortedRecipes.sort((a, b) => {
-          return (a.pricePerServing * a.servings) - (b.pricePerServing * b.servings);
-        });
-        break;
-      case 'priceDescending':
-        sortedRecipes.sort((a, b) => {
-          return (b.pricePerServing * b.servings) - (a.pricePerServing * a.servings);
-        });
-        break;
     }
     sortedRecipes
     return sortedRecipes.slice();
