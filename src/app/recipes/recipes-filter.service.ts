@@ -7,7 +7,7 @@ export class RecipesFilterService {
 
   constructor(private recipesService: RecipesService) {}
 
-  filter(recipesType: string, name: string | null, prepTime: string | null, difficulty: string | null, tags: string[]): Recipe[] {
+  filter(recipesType: string, name: string | null, prepTime: number | null, difficulty: string | null, tags: string[]): Recipe[] {
     let filteredRecipes: Recipe[] = [];
 
     filteredRecipes = this.recipesService.getRecipes(recipesType);
@@ -20,7 +20,7 @@ export class RecipesFilterService {
 
     if(prepTime !== null){
       filteredRecipes = filteredRecipes.filter(recipe => {
-        return recipe.prepTime.toLowerCase().indexOf(prepTime.toLowerCase()) !== -1;
+        return recipe.prepTime <= prepTime;
       })
     }
 
@@ -53,12 +53,12 @@ export class RecipesFilterService {
     switch(sortingValue){
       case 'prepTimeAscending':
         sortedRecipes.sort((a, b) => {
-          return parseInt(a.prepTime.split(' ')[0]) - parseInt(b.prepTime.split(' ')[0])
+          return a.prepTime - b.prepTime;
         });
         break;
       case 'prepTimeDescending':
         sortedRecipes.sort((a, b) => {
-          return parseInt(b.prepTime.split(' ')[0]) - parseInt(a.prepTime.split(' ')[0])
+          return b.prepTime - a.prepTime;
         });
         break;
       case 'difficultyAscending':

@@ -25,7 +25,7 @@ export class RecipesListComponent implements OnInit{
 
   filterForm = new FormGroup({
     name: new FormControl(''),
-    prepTime: new FormControl(''),
+    prepTime: new FormControl(null),
     difficulty: new FormControl(''),
     price: new FormControl(''),
     tags: new FormControl(''),
@@ -61,7 +61,6 @@ export class RecipesListComponent implements OnInit{
     const name = this.filterForm.controls.name.value;
     const prepTime = this.filterForm.controls.prepTime.value;
     const difficulty = this.filterForm.controls.difficulty.value;
-    const price = this.filterForm.controls.price.value;
 
     this.recipes = this.recipesFilterService.filter(this.recipesType, name, prepTime, difficulty, this.tags);
     this.filtering = true;

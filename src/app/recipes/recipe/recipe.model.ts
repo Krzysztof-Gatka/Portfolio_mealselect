@@ -6,7 +6,7 @@ export class Recipe {
     public name: string,
     public ingredients: Product[],
     public prepSteps: string[],
-    public prepTime: string = '',
+    public prepTime: number = 0,
     public difficulty: string = '',
     public tags: string[] = [],
     public servings: number = -1,
