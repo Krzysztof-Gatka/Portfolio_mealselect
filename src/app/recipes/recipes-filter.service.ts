@@ -33,6 +33,7 @@ export class RecipesFilterService {
     if(tags.length !== 0) {
       filteredRecipes = filteredRecipes.filter(recipe => {
         const recipeTags = recipe.tags;
+        if (!recipeTags) return false;
         return recipeTags.some((recipeTag) => tags.some((tag) => tag===recipeTag))
       })
     }
