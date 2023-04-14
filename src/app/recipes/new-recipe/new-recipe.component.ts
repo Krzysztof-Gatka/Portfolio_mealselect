@@ -31,6 +31,7 @@ export class NewRecipeComponent implements OnInit{
     servings: new FormControl(''),
     pricePerServing: new FormControl(''),
     description: new FormControl(''),
+    tags: new FormControl(''),
   })
 
   @ViewChild('ing_name_input') ingNameInpt?: ElementRef<HTMLInputElement>;
@@ -148,5 +149,15 @@ export class NewRecipeComponent implements OnInit{
 
   onSaveChanges(recipe: Recipe): void {
     this.recipesService.updateRecipe(recipe);
+  }
+
+  onAddTagClick(): void {
+    const tag = this.recipeForm.controls.tags.value!;
+    this.recipeForm.controls.tags.reset();
+    if (this.recipe.tags) {
+      this.recipe.tags.push(tag);
+    } else {
+      this.recipe.tags = [tag];
+    }
   }
 }

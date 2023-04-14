@@ -136,3 +136,15 @@
   width:20rem;
   margin-top: 3rem;
 }
+
+
+.tags-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-tags {
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 5px;
+}

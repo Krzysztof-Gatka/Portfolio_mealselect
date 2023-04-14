@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Recipe } from "./recipe/recipe.model";
-import { User_Recipes, Recipes_Base } from "./recipes-list/recipes-list.component";
 import { RecipesService } from "./recipes.service";
 
 @Injectable({providedIn: 'root'})
@@ -8,12 +7,10 @@ export class RecipesFilterService {
 
   constructor(private recipesService: RecipesService) {}
 
-  filter(recipesType: string, name: string | null, prepTime: string | null, difficulty: string | null, price: string | null ): Recipe[] {
+  filter(recipesType: string, name: string | null, prepTime: string | null, difficulty: string | null, tags: string[]): Recipe[] {
     let filteredRecipes: Recipe[] = [];
 
     filteredRecipes = this.recipesService.getRecipes(recipesType);
-    // if(recipesType === Recipes_Base) filteredRecipes = this.recipesService.recipesBase.slice();
-    // if(recipesType === User_Recipes) filteredRecipes = this.recipesService.userRecipes.slice();
 
     if(name !== null) {
       filteredRecipes = filteredRecipes.filter(recipe => {
@@ -30,6 +27,13 @@ export class RecipesFilterService {
     if(difficulty !== null) {
       filteredRecipes = filteredRecipes.filter(recipe => {
         return recipe.difficulty.toLowerCase().indexOf(difficulty.toLowerCase()) !== -1;
+      })
+    }
+
+    if(tags.length !== 0) {
+      filteredRecipes = filteredRecipes.filter(recipe => {
+        const recipeTags = recipe.tags;
+        return recipeTags.some((recipeTag) => tags.some((tag) => tag===recipeTag))
       })
     }
 

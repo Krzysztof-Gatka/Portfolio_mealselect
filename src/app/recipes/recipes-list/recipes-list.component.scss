@@ -208,3 +208,26 @@
 .placeholder {
   width: 8%;
 }
+
+.btn-tags {
+  width: 3rem;
+  cursor: pointer;
+}
+
+.tags-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-x {
+  width:3rem;
+}
+
+.tag-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.tag {
+  width:fit-content;
+}
