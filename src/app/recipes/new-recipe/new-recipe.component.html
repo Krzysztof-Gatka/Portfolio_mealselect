@@ -64,13 +64,18 @@
             placeholder="Preparation Time"
           >
 
-          <input
+          <select
             class="ipt"
             formControlName="difficulty"
             id="difficulty"
-            type="text"
             placeholder="difficulty"
+
           >
+            <option value="" disabled selected>difficulty</option>
+            <option value="easy">easy</option>
+            <option value="medium">medium</option>
+            <option value="hard">hard</option>
+          </select>
 
           <input
             class="ipt"

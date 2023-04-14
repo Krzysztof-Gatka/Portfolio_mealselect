@@ -17,3 +17,4 @@ export class Recipe {
 }
 
 export const units = ['g', 'kg', 'tbs.', 'pc', 'pcs', 'tsp.', 'cup'];
+export const difficulty = ['easy', 'medium', 'hard'];
