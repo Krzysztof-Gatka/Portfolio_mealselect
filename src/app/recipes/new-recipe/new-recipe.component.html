@@ -95,6 +95,20 @@
             type="text"
             placeholder="description"
           >
+
+          <div class="tags-container">
+            <input
+            class="ipt tags"
+            formControlName="tags"
+            id="tags"
+            type="text"
+            placeholder="tag"
+            >
+            <button class="btn-tags" (click)="onAddTagClick()">+</button>
+            <p>tags:</p>
+            <p *ngFor="let tag of recipe.tags"> {{ tag }} </p>
+          </div>
+
         </div>
 
         <button *ngIf="!editMode" type="button" class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
