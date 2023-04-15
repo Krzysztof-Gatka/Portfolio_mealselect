@@ -13,9 +13,12 @@ export const Default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.f
 
 @Injectable({providedIn: 'root'})
 export class RecipesService {
-  private recipesBase: Recipe[] = [];
-  private userRecipes: Recipe[] = [];
+  private recipesBase: Recipe[] | undefined;
+  private userRecipes: Recipe[] | undefined;
   private communityRecipes: Recipe[] = [];
+
+  recipesBaseFetched: boolean = false;
+  userRecipesFetched: boolean = false;
 
   recipesChanged = new Subject<string>();
 
@@ -27,12 +30,15 @@ export class RecipesService {
   ) {}
 
   fetchRecipes(recipesType: string) {
+    console.log('fetching recipes');
     if(recipesType === Recipes_Base) {
       this._fetchRecipesBase();
+      this.recipesBaseFetched = true;
     }
 
     if(recipesType === User_Recipes) {
       this._fetchUserRecipes();
+      this.userRecipesFetched = true;
     }
   }
 
@@ -41,25 +47,34 @@ export class RecipesService {
 
     switch(recipesType) {
       case Community_Recipes:
-        recipes = this.communityRecipes;
+        if(this.communityRecipes === null || this.communityRecipes === undefined) {
+          recipes = [];
+        } else {
+          recipes = this.communityRecipes;
+        }
         break;
       case User_Recipes:
-        recipes = this.userRecipes;
+        if(this.userRecipes === null || this.userRecipes === undefined) {
+          recipes = []
+        } else {
+          recipes = this.userRecipes;
+        }
         break;
       default:
-        recipes = this.recipesBase;
+        if(this.recipesBase === null || this.recipesBase === undefined) {
+          recipes = [];
+        } else {
+          recipes = this.recipesBase;
+        }
     }
 
-    if(recipes.length > 0) {
-      return recipes.slice();
-    }
-    return [];
+    return recipes;
   }
 
   private _putRecipes(): void {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
-    const recipes = this.userRecipes.slice();
+    const recipes = this.userRecipes!.slice();
     this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
       .subscribe(() => {
         this.toastr.success('Successfully updated Your Recipes');
@@ -68,19 +83,23 @@ export class RecipesService {
   }
 
   addRecipe(recipe: Recipe): void {
-    this.userRecipes.push(recipe);
+    if(this.userRecipes === null || this.userRecipes === undefined) {
+      this.userRecipes = [recipe];
+    } else {
+      this.userRecipes.push(recipe);
+    }
     this.recipesChanged.next(User_Recipes);
     this._putRecipes();
   }
 
   deleteRecipe(id: number): void {
-    this.userRecipes = this.userRecipes.filter((recipe) => recipe.id !== id);
+    this.userRecipes = this.userRecipes!.filter((recipe) => recipe.id !== id);
     this.recipesChanged.next(User_Recipes);
     this._putRecipes();
   }
 
   updateRecipe(updatedRecipe: Recipe): void {
-    this.userRecipes.map(rec => rec.id === updatedRecipe.id ? updatedRecipe : rec);
+    this.userRecipes!.map(rec => rec.id === updatedRecipe.id ? updatedRecipe : rec);
     this.recipesChanged.next(User_Recipes);
     this._putRecipes();
   }
