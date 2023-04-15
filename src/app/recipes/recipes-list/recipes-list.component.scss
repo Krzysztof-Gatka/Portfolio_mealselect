@@ -24,10 +24,29 @@
   flex-direction: column;
 }
 
+.diff-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
 .input-container {
   display: flex;
   flex-direction: row;
-  padding: 0.5rem
+  padding: 0.5rem;
+  justify-content: space-between;
+}
+
+.ipt-prep-time {
+  max-width: 3rem;
+}
+
+.ipt-difficulty {
+  max-width: 6rem;
+}
+
+.ipt-tags {
+  max-width: 10rem;
 }
 
 .input-container label {
@@ -85,7 +104,7 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: $secondary-color;
+  background: $accent-cta-color;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .lds-ellipsis div:nth-child(1) {
