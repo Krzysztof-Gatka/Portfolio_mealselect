@@ -104,10 +104,6 @@ export class RecipesService {
     this._putRecipes();
   }
 
-  clearUserRecipes(): void {
-    this.userRecipes = [];
-  }
-
   private _fetchRecipesBase(): void {
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
