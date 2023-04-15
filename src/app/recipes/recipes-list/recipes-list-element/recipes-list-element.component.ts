@@ -17,6 +17,9 @@ export class RecipesListElementComponent implements OnInit{
   constructor(private pantryService: PantryService) {}
 
   ngOnInit(): void {
+    if(!this.pantryService.pantryFetched) {
+      this.pantryService.fetchPantry();
+    }
     const pantry = this.pantryService.getPantry();
     this.recipe.ingredients.map((ingredient) => {
       const ingInPantry = pantry.find(product => product.name === ingredient.name)
