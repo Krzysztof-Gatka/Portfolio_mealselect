@@ -34,3 +34,26 @@
 .toast-container.toast-top-right .toast-success{
   background-color: $secondary-color;
 }
+
+.btn {
+  cursor: pointer;
+  width: 10rem;
+
+  padding: 0.25rem 0.5rem;
+  box-shadow: 0px 0px 5px 0px $accent-cta-color;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: $accent-cta-color;
+  transition: color 500ms ease-out 0ms, scale 500ms ease-out 0ms;
+}
+
+.btn:hover {
+  color: $accent-color;
+  box-shadow: 0px 0px 7px 1px $accent-cta-color;
+  scale: 110%;
+}
+
+.list-element {
+
+}
