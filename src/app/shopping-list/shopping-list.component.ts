@@ -37,7 +37,13 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.shoppingListService.fetchShoppingList();
+    if(!this.shoppingListService.productsFetched) {
+      this.shoppingListService.fetchShoppingList();
+    } else {
+      this.shoppingListElements = this.shoppingListService.getShoppingList();
+      this.loading = false;
+    }
+
   }
 
   ngOnDestroy(): void {

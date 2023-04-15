@@ -9,8 +9,10 @@ import { Product } from "./shopping-list-element/product.model";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
-  private shoppingListElements: Product[] = [];
+  private shoppingListElements: Product[] | undefined;
   private deletedProductsStack: Product[] = [];
+
+  productsFetched: boolean = false;
 
   productsChanged = new Subject();
   deletedProducts = new Subject<number>();
@@ -31,6 +33,7 @@ export class ShoppingListService {
     this.http.get<Product[]>(Default_URL + user.uid + '/shopping-list.json', { params: params})
       .subscribe((products)=> {
         this.shoppingListElements = products;
+        this.productsFetched = true;
         this.productsChanged.next('');
       })
   }
@@ -42,24 +45,24 @@ export class ShoppingListService {
   }
 
   toggleBought(index: number): void {
-    if(this.shoppingListElements[index].bought !== undefined) {
-      this.shoppingListElements[index].bought = !this.shoppingListElements[index].bought;
+    if(this.shoppingListElements![index].bought !== undefined) {
+      this.shoppingListElements![index].bought = !this.shoppingListElements![index].bought;
     } else {
-      this.shoppingListElements[index].bought = true;
+      this.shoppingListElements![index].bought = true;
     }
     this._putShoppingList();
     this.productsChanged.next('');
   }
 
   getShoppingList(): Product[] {
-    if(this.shoppingListElements !== null){
-      return this.shoppingListElements.slice();
+    if(this.shoppingListElements !== undefined && this.shoppingListElements !== null){
+      return this.shoppingListElements!.slice();
     }
     return [];
   }
 
   addProduct(product: Product): Product[] {
-    if(this.shoppingListElements === null) {
+    if(this.shoppingListElements === undefined || this.shoppingListElements === null) {
       this.shoppingListElements = [product];
     } else {
       this.shoppingListElements.push(product);
@@ -69,7 +72,7 @@ export class ShoppingListService {
   }
 
   deleteProduct(index: number): void {
-    this.shoppingListElements = this.shoppingListElements.filter((element, i) =>{ if(i === index){
+    this.shoppingListElements = this.shoppingListElements!.filter((element, i) =>{ if(i === index){
       this.deletedProductsStack.push(element);
         if(this.deletedProductsStack.length === 1) {
           this.deletedProducts.next(1);
@@ -82,7 +85,7 @@ export class ShoppingListService {
   }
 
   updateProduct(index: number, product: Product): void {
-    this.shoppingListElements = this.shoppingListElements.map((prod, i)=> {
+    this.shoppingListElements = this.shoppingListElements!.map((prod, i)=> {
       if (i === index) return product;
       return prod;
     });
@@ -98,12 +101,12 @@ export class ShoppingListService {
   reviveLastProduct(): Product[] {
     const deletedProduct = this._getLastDeletedProduct()
     if(this.deletedProductsStack.length === 0) this.deletedProducts.next(-1);
-    if(!deletedProduct) return this.shoppingListElements;
+    if(!deletedProduct) return this.shoppingListElements!;
     return this.addProduct(deletedProduct);
   }
 
   addBoughtElementsToPantry():void {
-    this.shoppingListElements
+    this.shoppingListElements!
       .filter(product => product.bought)
       .map(product => this.pantryService.addElement(product));
   }
