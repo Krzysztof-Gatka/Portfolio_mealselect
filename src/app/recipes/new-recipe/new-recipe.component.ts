@@ -26,7 +26,7 @@ export class NewRecipeComponent implements OnInit{
 
   recipeForm = new FormGroup({
     name: new FormControl(''),
-    prepTime: new FormControl(''),
+    prepTime: new FormControl(null),
     difficulty: new FormControl(''),
     servings: new FormControl(''),
     pricePerServing: new FormControl(''),
@@ -86,14 +86,12 @@ export class NewRecipeComponent implements OnInit{
     const prepTime = this.recipeForm.controls.prepTime.value!;
     const difficulty = this.recipeForm.controls.difficulty.value!;
     const servings = this.recipeForm.controls.servings.value!;
-    const pricePerServing = this.recipeForm.controls.pricePerServing.value!;
     const description = this.recipeForm.controls.description.value!;
 
     this.recipe.name = name;
     this.recipe.prepTime = prepTime;
     this.recipe.difficulty = difficulty;
     this.recipe.servings = +servings;
-    this.recipe.pricePerServing = +pricePerServing;
     this.recipe.description = description;
 
     this.recipesService.addRecipe(this.recipe);
