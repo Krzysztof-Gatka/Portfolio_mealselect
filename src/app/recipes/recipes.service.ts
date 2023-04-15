@@ -125,7 +125,11 @@ export class RecipesService {
 
     this.http.get<Recipe[]>(URL, {params: params})
       .subscribe((recipes) => {
-        this.userRecipes = recipes.slice();
+        if (recipes === null) {
+          this.userRecipes = [];
+        } else {
+          this.userRecipes = recipes.slice();
+        }
         this.recipesChanged.next(User_Recipes);
       });
   }

@@ -102,5 +102,11 @@
       [recipe]="recipe"
       [recipesType]="recipesType"
     ></app-recipes-list-element>
+
+    <p *ngIf="recipes!.length === 0 && !loading">
+      You didn't add recipe to your recipes.
+      Add a recipe from our Recipe Base, or create your own recipe.
+    </p>
+
   </div>
 </div>
