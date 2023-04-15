@@ -5,5 +5,6 @@ export class Product {
     public unit: string,
     public expDate?: Date,
     public bought?: boolean,
+    public inPantry?: boolean,
   ) {}
 }
