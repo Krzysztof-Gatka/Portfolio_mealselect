@@ -50,7 +50,12 @@ export class RecipesListComponent implements OnInit{
     this.route.params.subscribe((params) => {
       this.loading = true;
       this.recipesType = params['recipes'];
-      this.recipesService.fetchRecipes(this.recipesType);
+      if((this.recipesType === User_Recipes && this.recipesService.userRecipesFetched) || (this.recipesType === Recipes_Base && this.recipesService.recipesBaseFetched)) {
+        this.recipes = this.recipesService.getRecipes(this.recipesType);
+        this.loading = false;
+      } else {
+        this.recipesService.fetchRecipes(this.recipesType);
+      }
       this.filtering = false;
       this.sorting = false;
 
