@@ -8,7 +8,9 @@ import { Default_URL } from "../recipes/recipes.service";
 
 @Injectable({providedIn: 'root'})
 export class PantryService {
-  private pantry: Product[] = [];
+  private pantry: Product[] | undefined;
+
+  pantryFetched: boolean = false;
 
   pantryChanged = new Subject();
 
@@ -19,12 +21,14 @@ export class PantryService {
 
 
   fetchPantry(): void {
+    console.log('fetching pantry');
     const user = this.authService.user!;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
     this.http.get<Product[]>(Default_URL + user.uid + '/pantry.json', { params: params})
       .subscribe((products)=> {
         this.pantry = products;
+        this.pantryFetched = true;
         this.pantryChanged.next('');
       })
   }
@@ -45,13 +49,13 @@ export class PantryService {
   }
 
   deleteElement(index: number): void {
-    this.pantry = this.pantry.filter((product, i) => i !== index);
+    this.pantry = this.pantry!.filter((product, i) => i !== index);
     this._putPantry();
     this.pantryChanged.next('');
   }
 
   updateElement(product: Product, index: number): void {
-    this.pantry = this.pantry.map((prod, i) => (i === index) ? product : prod);
+    this.pantry = this.pantry!.map((prod, i) => (i === index) ? product : prod);
     this._putPantry();
     this.pantryChanged.next('');
   }
