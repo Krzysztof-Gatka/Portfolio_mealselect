@@ -1,27 +1,34 @@
 <div class="full-width-flex-container">
   <div class="recipes-nav-container">
+
     <button
       [routerLink]="['/recipes/recipes-list/user-recipes']"
       [routerLinkActive]="'active'"
       class="recipes-nav-btn">
       My Recipes
     </button>
+
     <button
       [routerLink]="['/recipes/recipes-list/recipes-base']"
       [routerLinkActive]="'active'"
       class="recipes-nav-btn">
       Recipes Base
     </button>
+
     <button
       [routerLink]="['/recipes/recipes-list/community-recipes']"
       [routerLinkActive]="'active'"
       class="recipes-nav-btn comm-rec">
       Community Recipes
     </button>
+
   </div>
+
   <div class="filter-sort-container">
     <div class="filter-container">
+
       <form [formGroup]="filterForm">
+
         <div class="inputs-container">
 
           <div class="input-container">
@@ -51,20 +58,23 @@
             <div>
               <label for="tags">Tags</label>
               <input class="ipt-tags" formControlName="tags" id="tags "type="text">
-              <button (click)="onAddTagClick()" class="btn btn-tags">+</button>
+              <button (click)="onAddTagClick()" class="btn-default">+</button>
             </div>
           </div>
           <div class="tags-container">
             <div class="tag-container" *ngFor="let tag of tags; let i = index">
               <p class="tag"> {{ tag }} </p>
-              <button (click)="onXClick(i)" class="btn-x">x</button>
+              <button (click)="onXClick(i)" class="btn-default">x</button>
             </div>
           </div>
 
         </div>
+
         <div class="btns-container">
-          <button [ngClass]="filtering ? 'active' : ''" class="btn" (click)="onFilterClick()">Filter</button>
-          <button class="btn" (click)="onClearFiltersClick()">Clear Filters</button>
+
+          <button [ngClass]="filtering ? 'active' : ''" class="btn-default" (click)="onFilterClick()">Filter</button>
+          <button class="btn-default" (click)="onClearFiltersClick()">Clear Filters</button>
+
         </div>
 
       </form>
@@ -84,15 +94,15 @@
           </div>
         </div>
         <div class="btns-container">
-          <button [ngClass]="sorting ? 'active' : ''" class="btn" (click)="onSortClick()">Sort</button>
-          <button class="btn"f (click)="onClearSortClick()">Clear Sorting</button>
+          <button [ngClass]="sorting ? 'active' : ''" class="btn-default" (click)="onSortClick()">Sort</button>
+          <button class="btn-default" (click)="onClearSortClick()">Clear Sorting</button>
         </div>
 
       </form>
     </div>
   </div>
   <div *ngIf="recipesType === 'user-recipes'" class="new-recipe-container">
-    <button class="btn" [routerLink]="['/new-recipe']"> New Recipe</button>
+    <button class="btn-default" [routerLink]="['/new-recipe']"> New Recipe</button>
   </div>
   <div class="list-header">
     <p class="header-name header-title">Name</p>

@@ -70,28 +70,6 @@
   justify-content: space-evenly;
 }
 
-// .btn {
-//   cursor:pointer;
-//   font-weight: 600;
-//   padding: 0.5rem 0.25rem;
-//   width: 40%;
-//   border:none;
-//   border-radius: 5px;
-//   color: $accent-cta-color;
-//   background-color: $accent-color;
-//   box-shadow: 0px 0px 5px 0px $accent-cta-color;
-//   transition: scale 500ms ease-out 0ms, color 500ms ease-out 0ms, background-color 500ms ease-out 0ms;
-// }
-
-// .btn:hover {
-
-.btn.active {
-  scale: 110%;
-  background-color: $accent-cta-color;
-  color: $accent-color;
-}
-
-
 .lds-ellipsis {
   display: inline-block;
   position: relative;

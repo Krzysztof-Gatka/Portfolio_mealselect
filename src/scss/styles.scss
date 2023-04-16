@@ -48,13 +48,10 @@
   border: none;
   border-radius: 5px;
 
-  transition: color 500ms ease-out 0ms, scale 500ms ease-out 0ms;
 }
 
 .btn-default:hover {
-  color: $accent-color;
   box-shadow: 0px 0px 7px 1px $accent-cta-color;
-  scale: 105%;
 }
 
 .list-element {

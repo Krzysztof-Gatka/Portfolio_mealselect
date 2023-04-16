@@ -14,10 +14,10 @@
     ></app-shopping-list-input>
 
     <div class="btns-container">
-      <button *ngIf="deletedProductsAvailable" class="btn" (click)="onReviveLastProduct()">Revive Product</button>
-      <button *ngIf="shoppingListElements?.length !== 0" class="btn" (click)="onClearList()">Clear list</button>
-      <button *ngIf="boughtElements" class="btn" (click)="onClearBoughtElements()">Clear Bought Elements</button>
-      <button *ngIf="boughtElements" class="btn" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
+      <button *ngIf="deletedProductsAvailable" class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
+      <button *ngIf="shoppingListElements?.length !== 0" class="btn-default" (click)="onClearList()">Clear list</button>
+      <button *ngIf="boughtElements" class="btn-default" (click)="onClearBoughtElements()">Clear Bought Elements</button>
+      <button *ngIf="boughtElements" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
     </div>
 
     <div *ngIf="modalOpened" class="clear-list-modal" (click)="onModalClick()">

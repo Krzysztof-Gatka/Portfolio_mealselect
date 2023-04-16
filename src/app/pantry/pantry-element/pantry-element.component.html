@@ -35,19 +35,19 @@
     <div class="buttons-container">
       <button
         (click)="onDeleteClick()"
-        class="btn">
+        class="btn-default">
         delete</button>
       <button
         *ngIf="!editMode"
         (click)="onEditClick()"
-        class="btn">
+        class="btn-default">
         edit
       </button>
       <button
         [ngClass]="form.valid ? '' : 'invalid'"
         *ngIf="editMode"
         (click)="onSaveClick()"
-        class="btn">
+        class="btn-default">
         save
       </button>
     </div>
