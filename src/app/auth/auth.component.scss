@@ -8,13 +8,25 @@ $button-color: #2fc124;
   justify-content: center;
   align-items: center;
 
-  width: 70%;
+  width: 95%;
   max-width: 25rem;
   margin-top: 3rem;
   padding: 1rem;
   border-radius: 5px;
 
-  box-shadow: 0px 0px 5px 0px $accent-text-color;
+}
+
+@media screen and (min-width: 420px) {
+  .auth-container {
+    box-shadow: 0px 0px 5px 0px $accent-text-color;
+  }
+}
+
+.btn-default {
+}
+
+.lbl-default {
+  font-size: 0.70rem;
 }
 
 .form-container {
@@ -32,24 +44,6 @@ $button-color: #2fc124;
   flex-direction: column;
   justify-content: center;
   padding: 2px;
-}
-
-.label {
-  font-size: 75%;
-  padding: 5px;
-  color: $accent-text-color;
-}
-
-.input {
-  border: none;
-  box-shadow: 0px 0px 5px 0px $accent-text-color;
-  padding:0.25rem 0.5rem;
-  background-color: $accent-color;
-  color: $accent-text-color;
-}
-
-.form.ng-invalid .btn {
-  pointer-events: none;
 }
 
 .header {

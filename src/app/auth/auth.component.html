@@ -10,22 +10,22 @@
       <form class="form" [formGroup]="form">
 
         <div class="login-container input-container">
-          <label class="label" for="email">Email</label>
-          <input formControlName="email" class="input" id="email" type="email">
+          <label class="lbl-default" for="email">Email</label>
+          <input formControlName="email" class="ipt-default" id="email" type="email">
         </div>
 
         <div class="password-container input-container">
-          <label class="label" for="password">Password</label>
-          <input formControlName="password" class="input" id="password" type="password">
+          <label class="lbl-default" for="password">Password</label>
+          <input formControlName="password" class="ipt-default" id="password" type="password">
         </div>
 
         <button class="btn-default" [disabled]="form.invalid">
           {{ type === 'login' ? 'Log in' : 'Sign in'}}
         </button>
 
+        <button *ngIf="type==='login'" class="btn-default" (click)="onTestUserClick()">Test User</button>
       </form>
 
-      <button *ngIf="type==='login'" class="btn-default" (click)="onTestUserClick()">Test User</button>
 
     </div>
 

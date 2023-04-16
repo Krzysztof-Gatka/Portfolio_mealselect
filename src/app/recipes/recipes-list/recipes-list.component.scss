@@ -37,32 +37,6 @@
   justify-content: space-between;
 }
 
-.ipt-prep-time {
-  max-width: 3rem;
-}
-
-.ipt-difficulty {
-  max-width: 6rem;
-}
-
-.ipt-tags {
-  max-width: 10rem;
-}
-
-.input-container label {
-  width: 6rem;
-  color: $accent-text-color;
-}
-
-.input-container select,
-.input-container input {
-  background-color: $accent-color;
-  border: none;
-  box-shadow: 0px 0px 3px 0px $accent-text-color;
-  border-radius: 5px;
-  padding: 0.2rem 0.5rem;
-}
-
 .btns-container{
   margin-top: 1rem;
   display: flex;

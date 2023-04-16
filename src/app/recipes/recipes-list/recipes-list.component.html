@@ -32,20 +32,20 @@
         <div class="inputs-container">
 
           <div class="input-container">
-            <label for="name">Name</label>
-            <input class="ipt-name" formControlName="name" id="name" type="text">
+            <label class="lbl-default" for="name">Name</label>
+            <input class="ipt-default" formControlName="name" id="name" type="text">
           </div>
 
           <div class="input-container">
 
             <div>
-              <label for="prepTime">PrepTime</label>
-              <input class="ipt-prep-time" formControlName="prepTime" id="prepTime" type="text">
+              <label class="lbl-default" for="prepTime">PrepTime</label>
+              <input class="ipt-default" formControlName="prepTime" id="prepTime" type="text">
             </div>
 
             <div class="diff-container">
-              <label for="difficulty">Difficulty</label>
-              <select class="ipt-difficulty" formControlName="difficulty" id="difficulty">
+              <label class="lbl-default" for="difficulty">Difficulty</label>
+              <select class="ipt-default" formControlName="difficulty" id="difficulty">
                 <option value="easy">easy</option>
                 <option value="medium">medium</option>
                 <option value="hard">hard</option>
@@ -56,8 +56,8 @@
 
           <div class="input-container">
             <div>
-              <label for="tags">Tags</label>
-              <input class="ipt-tags" formControlName="tags" id="tags "type="text">
+              <label class="lbl-default" for="tags">Tags</label>
+              <input class="ipt-default" formControlName="tags" id="tags "type="text">
               <button (click)="onAddTagClick()" class="btn-default">+</button>
             </div>
           </div>
@@ -84,8 +84,8 @@
         <div class="inputs-container">
 
           <div class="input-container">
-            <label for="sort">sort</label>
-            <select formControlName="sort" id="sort">
+            <label class="lbl-default" for="sort">sort</label>
+            <select class="ipt-default" formControlName="sort" id="sort">
               <option value="prepTimeAscending">preparation time ascending</option>
               <option value="prepTimeDescending">preparation time descending</option>
               <option value="difficultyAscending">difficulty ascending</option>
