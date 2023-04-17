@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { ActivatedRoute, ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Subject } from "rxjs";
+import { catchError, Subject } from "rxjs";
 import { User } from "./user.model";
+import { ToastrService } from "ngx-toastr";
 
 
 const WebAPIKey = 'AIzaSyA-qhl-Xy0a_-sxbwrPPeU_dLycYdAOTBo';
@@ -27,9 +28,13 @@ class AuthResponse {
 export class AuthService {
   user: User | undefined | null;
   userAuthentication =  new Subject<string>();
+  errorType: string = '';
   private expirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   singIn(userEmail: string, userPassword: string): void {
     const requestBody = this._createRequestBody(userEmail, userPassword);
@@ -45,6 +50,13 @@ export class AuthService {
   logIn(userEmail: string, userPassword: string): void {
     const requestBody = this._createRequestBody(userEmail, userPassword);
     this.http.post<AuthResponse>(LogInUrl, requestBody)
+      .pipe(
+        catchError((error) => {
+          this.errorType = error.error.error.message;
+          this.userAuthentication.next('logInError');
+          throw new Error('Login Error');
+        })
+      )
       .subscribe((response) => {
         this.user = this._createUserObject(response);
         localStorage.setItem('user', JSON.stringify(this.user));
@@ -52,6 +64,7 @@ export class AuthService {
         this.autologout(this.user.expiresIn * 1000);
         this.router.navigate(['/recipes']);
       });
+
   }
 
   autologin(): void {

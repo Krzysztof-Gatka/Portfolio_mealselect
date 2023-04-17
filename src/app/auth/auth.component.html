@@ -24,6 +24,11 @@
 
         <button type="button" *ngIf="type==='login'" class="btn-default" (click)="onTestUserClick()">Test User</button>
 
+        <div class="spinner-container">
+          <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+        </div>
+        <p class="error-message" *ngIf="errorMessage"> {{ errorMessage }} </p>
+
       </form>
     </div>
 

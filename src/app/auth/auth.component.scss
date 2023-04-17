@@ -55,3 +55,16 @@ $button-color: #2fc124;
   color: $accent-cta-color;
   font-weight: 700;
 }
+
+.spinner-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message {
+  font-size: 0.75rem;
+  color: $default-text-color;
+}
