@@ -8,21 +8,26 @@ $button-color: #2fc124;
   justify-content: center;
   align-items: center;
 
-  width: 95%;
   max-width: 25rem;
-  margin-top: 3rem;
   padding: 1rem;
   border-radius: 5px;
 
 }
 
 @media screen and (min-width: 420px) {
-  .auth-container {
-    box-shadow: 0px 0px 5px 0px $accent-text-color;
-  }
 }
 
 .btn-default {
+  margin-top: 1rem;
+  padding: 0.5rem 0.5rem;
+
+  font-weight: bolder;
+  transition: opacity 500ms ease-in-out 0ms;
+}
+
+.btn-default:disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .lbl-default {
@@ -49,4 +54,25 @@ $button-color: #2fc124;
 .header {
   color: $accent-cta-color;
   font-weight: 700;
+}
+
+.spinner-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message {
+  font-size: 0.75rem;
+  color: $default-text-color;
+}
+
+.ipt-default.ng-touched.ng-invalid {
+  outline: 2px solid $error-color;
+}
+
+.lbl-default {
+  margin-bottom: 5px;
 }
