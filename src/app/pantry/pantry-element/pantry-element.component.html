@@ -1,12 +1,34 @@
 <div class="full-width-flex-container">
   <div class="pantry-element-container">
 
-    <div *ngIf="!editMode" class="attr-container">
-      <p>{{ product.name }}</p>
-      <p>{{ product.quantity }}</p>
-      <p>{{ product.unit }}</p>
-      <p>{{ product.expDate | date}}</p>
-    </div>
+    <button (click)="expandPantryEl = !expandPantryEl" *ngIf="!editMode" class="list-el-default">
+      <div class="basic-attr-container">
+        <p class="attr-name">{{ product.name }}</p>
+        <p class="attr-qty">{{ product.quantity }}</p>
+        <p class="attr-unit">{{ product.unit }}</p>
+      </div>
+      <p class="attr-exp-date">{{ product.expDate | date}}</p>
+      <div *ngIf="expandPantryEl">
+        <button
+        (click)="onDeleteClick()"
+        class="btn-default">
+        delete</button>
+      <button
+        *ngIf="!editMode"
+        (click)="onEditClick()"
+        class="btn-default">
+        edit
+      </button>
+      <button
+        [ngClass]="form.valid ? '' : 'invalid'"
+        *ngIf="editMode"
+        (click)="onSaveClick()"
+        class="btn-default">
+        save
+      </button>
+      </div>
+
+    </button>
 
     <div class="form-container" *ngIf="editMode">
       <form [formGroup]="form">
@@ -32,25 +54,9 @@
     </div>
 
 
-    <div class="buttons-container">
-      <button
-        (click)="onDeleteClick()"
-        class="btn-default">
-        delete</button>
-      <button
-        *ngIf="!editMode"
-        (click)="onEditClick()"
-        class="btn-default">
-        edit
-      </button>
-      <button
-        [ngClass]="form.valid ? '' : 'invalid'"
-        *ngIf="editMode"
-        (click)="onSaveClick()"
-        class="btn-default">
-        save
-      </button>
-    </div>
+    <!-- <div class="buttons-container">
+
+    </div> -->
 
   </div>
 </div>

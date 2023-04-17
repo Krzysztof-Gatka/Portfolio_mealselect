@@ -12,6 +12,7 @@ export class PantryElementComponent {
   @Input() product!: Product;
   @Input() index!: number;
   editMode: boolean = false;
+  expandPantryEl: boolean = false;
   form = new FormGroup({
     name: new FormControl('', Validators.required),
     qty: new FormControl(0),

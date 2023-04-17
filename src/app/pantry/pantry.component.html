@@ -1,6 +1,8 @@
 <div class="full-width-flex-container">
   <div class="pantry-container">
+
     <h1 class="header" >Pantry</h1>
+
     <div class="pantry-elements-container">
       <app-pantry-element
         *ngFor="let product of pantry; let i = index"
@@ -14,28 +16,42 @@
       <div class="form-container">
         <form [formGroup]="form">
           <div class="inputs-container">
-            <input
+
+            <div class="name-container">
+              <input
               placeholder="Name"
               formControlName="name"
-              class="ipt ipt-name"
+              class="ipt-default"
               type="text">
-            <input
+            </div>
+
+            <div class="qty-container">
+              <input
               placeholder="Qty"
               formControlName="qty"
-              class="ipt ipt-qty"
+              class="ipt-default"
               type="number">
-            <input
+            </div>
+
+            <div class="unit-container">
+              <input
               placeholder="Unit"
               formControlName="unit"
-              class="ipt ipt-unit"
+              class="ipt-default ipt-unit"
               type="text">
-            <input
+            </div>
+
+            <div class="date-container">
+              <input
               formControlName="date"
-              class="ipt ipt-date"
+              class="ipt-default ipt-date"
               type="date">
+            </div>
+
           </div>
         </form>
       </div>
+
       <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" class="btn-default">Add</button>
     </div>
 

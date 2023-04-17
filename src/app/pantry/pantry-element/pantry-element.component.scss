@@ -1,16 +1,32 @@
 @import '../../../scss/variables';
 
 .pantry-element-container {
-  width: 100%;
   display: flex;
   flex-direction: row;
 }
 
-.attr-container {
-  width: 80%;
+.basic-attr-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  gap: 3px;
+  max-width: 15rem;
+}
+
+.attr-name {
+  text-align: left;
+  width: fit-content;
+  margin-right: 0.5rem;
+}
+
+.attr-exp-date {
+  text-align: right;
+  width: fit-content;
+}
+
+.attr-unit,
+.attr-qty {
+  width:fit-content;
+  text-align: left;
 }
 
 .form-container {

@@ -1,29 +1,50 @@
 @import '../../scss/variables';
 
 .pantry-container {
-  padding: 1rem;
-  width: 100%;
+  padding: 0.25rem;
   max-width: 60rem;
+}
+
+.pantry-elements-container{
+  padding:0.5rem;
 }
 
 .header {
   color: $accent-text-color;
+  margin-bottom: 1rem;
 }
 
 .add-element-container {
+  padding: 0.25rem;
   margin-top:2rem;
-  width: 100%;
   display: flex;
   flex-direction: row;
+  gap: 5px;
 }
 
 .inputs-container {
   display: flex;
   flex-direction: row;
+  width: 95%;
   gap:5px;
 }
 
+.btn-default {
+  max-width: 3rem;
+}
 
-.form-container {
-  width:80%;
+.date-container {
+  width: 32%;
+}
+
+.qty-container {
+  width:18%;
+}
+
+.unit-container {
+  width: 18%;
+}
+
+.name-container {
+  width: 32%;
 }

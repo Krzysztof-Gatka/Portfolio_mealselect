@@ -37,6 +37,24 @@
 
 // default classes
 
+// list element
+.list-el-default {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 0.2rem;
+  background-color: $accent-color;
+  color: $default-text-color;
+  box-shadow: 0px 0px 5px 0px $accent-text-color;
+  border: 1px solid $accent-text-color;
+
+  margin-bottom: 0.25rem;
+}
+
 // button
 .btn-default {
   cursor: pointer;
