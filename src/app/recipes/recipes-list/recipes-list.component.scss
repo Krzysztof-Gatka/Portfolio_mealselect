@@ -24,24 +24,17 @@
   flex-direction: column;
 }
 
+.diff-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
 .input-container {
   display: flex;
   flex-direction: row;
-  padding: 0.5rem
-}
-
-.input-container label {
-  width: 6rem;
-  color: $accent-text-color;
-}
-
-.input-container select,
-.input-container input {
-  background-color: $accent-color;
-  border: none;
-  box-shadow: 0px 0px 3px 0px $accent-text-color;
-  border-radius: 5px;
-  padding: 0.2rem 0.5rem;
+  padding: 0.5rem;
+  justify-content: space-between;
 }
 
 .btns-container{
@@ -50,27 +43,6 @@
   flex-direction: row;
   justify-content: space-evenly;
 }
-
-.btn {
-  cursor:pointer;
-  font-weight: 600;
-  padding: 0.5rem 0.25rem;
-  width: 40%;
-  border:none;
-  border-radius: 5px;
-  color: $accent-cta-color;
-  background-color: $accent-color;
-  box-shadow: 0px 0px 5px 0px $accent-cta-color;
-  transition: scale 500ms ease-out 0ms, color 500ms ease-out 0ms, background-color 500ms ease-out 0ms;
-}
-
-.btn.active,
-.btn:hover {
-  scale: 110%;
-  background-color: $accent-cta-color;
-  color: $accent-color;
-}
-
 
 .lds-ellipsis {
   display: inline-block;
@@ -84,7 +56,7 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: $secondary-color;
+  background: $accent-cta-color;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .lds-ellipsis div:nth-child(1) {
@@ -142,17 +114,15 @@
   padding: 0.5rem 1rem;
   border: none;
   background-color: $dominant-color;
-  color: $secondary-text-color;
+  color: $default-text-color;
   font-weight: 600;
   transition: box-shadow 500ms ease-out 0ms;
 }
 
+.recipes-nav-btn.active,
 .recipes-nav-btn:hover {
-  box-shadow: 0px 3px 0px 0px $secondary-color;
-}
-
-.recipes-nav-btn.active {
-  box-shadow: 0px 3px 0px 0px $secondary-color;
+  color: $accent-cta-color;
+  box-shadow: 0px 3px 0px 0px $accent-cta-color;
 }
 
 .new-recipe-container {

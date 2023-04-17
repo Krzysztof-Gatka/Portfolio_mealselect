@@ -5,10 +5,6 @@
   flex-direction: row;
 }
 
-.btn-more {
-  width:5%;
-}
-
 .recipes-list-element-container {
   padding:0.5rem;
   width: 90%;
@@ -28,17 +24,17 @@
 
   border: none;
   border-radius: 5px;
-  background-color: $secondary-color;
-  color: $accent-color;
-  box-shadow: 0px 0px 5px 0px $secondary-color;
-  border: 2px solid $accent-color;
+  background-color: $accent-color;
+  color: $default-text-color;
+  box-shadow: 0px 0px 5px 0px $accent-text-color;
+  border: 1px solid $accent-text-color;
 
   transition: scale 400ms ease 0ms;
 }
 
 .recipe-attr:hover {
   scale: 110%;
-  box-shadow: 0px 0px 8px 0px $secondary-color;
+  box-shadow: 0px 0px 8px 0px $accent-text-color;
 }
 
 .rec-prep-time,

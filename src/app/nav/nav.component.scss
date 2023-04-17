@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: $dominant-color;
+  background-color: $accent-color;
   box-shadow: 0px 1px 3px 1px $accent-cta-color;
 }
 
@@ -43,7 +43,7 @@
   width: fit-content;
   padding: 0px 0.5rem;
   cursor: pointer;
-  background-color: $dominant-color;
+  background-color: $accent-color;
   border: none;
   transition: color 300ms ease-out 0ms, box-shadow 300ms ease-out 0ms;
   margin-right: 10px;
@@ -61,7 +61,7 @@
   width: fit-content;
   margin-right: 1rem;
   padding: 0.15rem;
-  background-color: $dominant-color;
+  background-color: $accent-color;
   font-weight: 600;
   border: none;
   transition: color 300ms ease-out 0ms, box-shadow 300ms ease-out 0ms;
@@ -73,7 +73,7 @@
   cursor: pointer;
   width: fit-content;
   padding: 0.15rem;
-  background-color: $dominant-color;
+  background-color: $accent-color;
   font-weight: 600;
   border: none;
   transition: color 300ms ease-out 0ms, box-shadow 300ms ease-out 0ms;
@@ -92,7 +92,7 @@
 }
 
 .sidenav-container {
-  background-color: $dominant-color;
+  background-color: $accent-color;
   box-shadow: 1px 3px 3px 0px $accent-cta-color;
   position: fixed;
   top: 2.4rem;
@@ -115,7 +115,7 @@
 
 .btn-nav {
   cursor: pointer;
-  background-color: $dominant-color;
+  background-color: $accent-color;
   border: none;
   width: 0;
   overflow: hidden;
@@ -239,7 +239,7 @@
 
 .header {
   font-weight: bolder;
-  color: $secondary-text-color;
+  color: $accent-cta-color;
   margin-bottom: 2rem;
   padding: 0.5rem;
 

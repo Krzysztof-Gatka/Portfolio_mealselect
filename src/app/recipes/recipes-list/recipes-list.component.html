@@ -1,64 +1,80 @@
 <div class="full-width-flex-container">
   <div class="recipes-nav-container">
+
     <button
       [routerLink]="['/recipes/recipes-list/user-recipes']"
       [routerLinkActive]="'active'"
       class="recipes-nav-btn">
       My Recipes
     </button>
+
     <button
       [routerLink]="['/recipes/recipes-list/recipes-base']"
       [routerLinkActive]="'active'"
       class="recipes-nav-btn">
       Recipes Base
     </button>
+
     <button
       [routerLink]="['/recipes/recipes-list/community-recipes']"
       [routerLinkActive]="'active'"
       class="recipes-nav-btn comm-rec">
       Community Recipes
     </button>
+
   </div>
+
   <div class="filter-sort-container">
     <div class="filter-container">
+
       <form [formGroup]="filterForm">
+
         <div class="inputs-container">
 
           <div class="input-container">
-            <label for="name">Name</label>
-            <input formControlName="name" id="name" type="text">
+            <label class="lbl-default" for="name">Name</label>
+            <input class="ipt-default" formControlName="name" id="name" type="text">
           </div>
 
           <div class="input-container">
-            <label for="prepTime">PrepTime</label>
-            <input formControlName="prepTime" id="prepTime" type="text">
+
+            <div>
+              <label class="lbl-default" for="prepTime">PrepTime</label>
+              <input class="ipt-default" formControlName="prepTime" id="prepTime" type="text">
+            </div>
+
+            <div class="diff-container">
+              <label class="lbl-default" for="difficulty">Difficulty</label>
+              <select class="ipt-default" formControlName="difficulty" id="difficulty">
+                <option value="easy">easy</option>
+                <option value="medium">medium</option>
+                <option value="hard">hard</option>
+              </select>
+            </div>
+
           </div>
 
           <div class="input-container">
-            <label for="difficulty">Difficulty</label>
-            <select formControlName="difficulty" id="difficulty">
-              <option value="easy">easy</option>
-              <option value="medium">medium</option>
-              <option value="hard">hard</option>
-            </select>
-          </div>
-
-          <div class="input-container">
-            <label for="tags">Tags</label>
-            <input formControlName="tags" id="tags "type="text">
-            <button (click)="onAddTagClick()" class="btn-tags">+</button>
+            <div>
+              <label class="lbl-default" for="tags">Tags</label>
+              <input class="ipt-default" formControlName="tags" id="tags "type="text">
+              <button (click)="onAddTagClick()" class="btn-default">+</button>
+            </div>
           </div>
           <div class="tags-container">
             <div class="tag-container" *ngFor="let tag of tags; let i = index">
               <p class="tag"> {{ tag }} </p>
-              <button (click)="onXClick(i)" class="btn-x">x</button>
+              <button (click)="onXClick(i)" class="btn-default">x</button>
             </div>
           </div>
 
         </div>
+
         <div class="btns-container">
-          <button [ngClass]="filtering ? 'active' : ''" class="btn" (click)="onFilterClick()">Filter</button>
-          <button class="btn" (click)="onClearFiltersClick()">Clear Filters</button>
+
+          <button [ngClass]="filtering ? 'active' : ''" class="btn-default" (click)="onFilterClick()">Filter</button>
+          <button class="btn-default" (click)="onClearFiltersClick()">Clear Filters</button>
+
         </div>
 
       </form>
@@ -68,8 +84,8 @@
         <div class="inputs-container">
 
           <div class="input-container">
-            <label for="sort">sort</label>
-            <select formControlName="sort" id="sort">
+            <label class="lbl-default" for="sort">sort</label>
+            <select class="ipt-default" formControlName="sort" id="sort">
               <option value="prepTimeAscending">preparation time ascending</option>
               <option value="prepTimeDescending">preparation time descending</option>
               <option value="difficultyAscending">difficulty ascending</option>
@@ -78,15 +94,15 @@
           </div>
         </div>
         <div class="btns-container">
-          <button [ngClass]="sorting ? 'active' : ''" class="btn" (click)="onSortClick()">Sort</button>
-          <button class="btn"f (click)="onClearSortClick()">Clear Sorting</button>
+          <button [ngClass]="sorting ? 'active' : ''" class="btn-default" (click)="onSortClick()">Sort</button>
+          <button class="btn-default" (click)="onClearSortClick()">Clear Sorting</button>
         </div>
 
       </form>
     </div>
   </div>
   <div *ngIf="recipesType === 'user-recipes'" class="new-recipe-container">
-    <button class="btn" [routerLink]="['/new-recipe']"> New Recipe</button>
+    <button class="btn-default" [routerLink]="['/new-recipe']"> New Recipe</button>
   </div>
   <div class="list-header">
     <p class="header-name header-title">Name</p>
