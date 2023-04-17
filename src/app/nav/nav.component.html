@@ -20,7 +20,7 @@
       <button *ngIf="isUserLoggedIn" class="btn-topnav" (click)="onLogoutClick()">Logout</button>
 
       <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/login']" class="btn-topnav">Log In</button>
-      <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-topnav">Sign In</button>
+      <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-topnav">Sign Up</button>
 
       <button (click)="onHamburgerClick()" class="right-nav-ham" [ngClass]="navbarOpen ? 'open' : ''">
         <div class="line first-line"></div>
@@ -38,7 +38,7 @@
       <button *ngIf="isUserLoggedIn" class="btn-nav" (click)="onLogoutClick()">Logout</button>
 
       <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/login']" class="btn-nav">Log In</button>
-      <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-nav">Sign In</button>
+      <button *ngIf="!isUserLoggedIn" [routerLinkActive]="'active'" [routerLink]="['/register']" class="btn-nav">Sign Up</button>
     </nav>
   </div>
 

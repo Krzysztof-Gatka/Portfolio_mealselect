@@ -51,9 +51,18 @@
 
 }
 
-.btn-default:hover {
-  box-shadow: 0px 0px 7px 1px $accent-cta-color;
+.btn-default:focus {
+  outline: 2px solid $accent-dark-color;
+  box-shadow: 0px 0px 10px 1px $accent-cta-color;
 }
+
+@media screen and (min-width: 420px) {
+  .btn-default:hover {
+    box-shadow: 0px 0px 10px 1px $accent-cta-color;
+    outline: 2px solid $accent-dark-color;
+  }
+}
+
 
 // input
 .ipt-default {
@@ -62,6 +71,12 @@
   box-shadow: 0px 0px 3px 0px $accent-text-color;
   border-radius: 5px;
   padding: 0.2rem 0.5rem;
+}
+
+.ipt-default:focus,
+.ipt-default:active {
+  border: none;
+  outline: 1.5px solid $accent-cta-color;
 }
 
 // label
