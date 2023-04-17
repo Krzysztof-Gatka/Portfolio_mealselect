@@ -28,7 +28,8 @@
           <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
         </div>
         <p class="error-message" *ngIf="errorMessage"> {{ errorMessage }} </p>
-
+        <p class="error-message" *ngIf="form.controls.email.touched && form.controls.email.invalid"> {{ emailInvalidMsg }}</p>
+        <p class="error-message" *ngIf="form.controls.password.touched && form.controls.password.invalid"> {{ passwordInvalidMsg }} </p>
       </form>
     </div>
 

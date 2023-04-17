@@ -7,7 +7,8 @@ import { AuthService } from './auth.service';
 
 const Errors_Map = {
   'INVALID_PASSWORD': 'Your password is incorrect. Please try again.',
-  'EMAIL_NOT_FOUND': 'Account associated with this email does not exist. Please try again.'
+  'EMAIL_NOT_FOUND': 'Account associated with this email does not exist. Please try again.',
+  'EMAIL_EXISTS': 'Account associated with this email already exists. Please try different one.',
 }
 
 @Component({
@@ -30,6 +31,9 @@ export class AuthComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   inputEmail: string | undefined;
 
+  emailInvalidMsg = 'Your email is invalid.';
+  passwordInvalidMsg = 'Your password is invalid. Password has to be minimum 8 characters long.';
+
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -48,6 +52,9 @@ export class AuthComponent implements OnInit, OnDestroy {
         if(this.authService.errorType === 'INVALID_PASSWORD') {
           this.form.controls.email.setValue(this.inputEmail!);
         }
+      } else if (option = 'SignUpError') {
+        this.errorMessage = Errors_Map[this.authService.errorType as keyof typeof Errors_Map];
+        this.loading = false;
       }
     });
   }
@@ -61,9 +68,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     const userEmail = this.form.controls.email.value;
     const userPassword = this.form.controls.password.value;
 
+    this.errorMessage = null;
+    this.loading = true;
+
     if(this.type === 'login') {
-      this.errorMessage = null;
-      this.loading = true;
       this.inputEmail = userEmail!;
       this.authService.logIn(userEmail!, userPassword!);
     } else {

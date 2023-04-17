@@ -1,9 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { catchError, Subject } from "rxjs";
 import { User } from "./user.model";
-import { ToastrService } from "ngx-toastr";
 
 
 const WebAPIKey = 'AIzaSyA-qhl-Xy0a_-sxbwrPPeU_dLycYdAOTBo';
@@ -39,6 +38,13 @@ export class AuthService {
   singIn(userEmail: string, userPassword: string): void {
     const requestBody = this._createRequestBody(userEmail, userPassword);
     this.http.post<AuthResponse>(SignInUrl, requestBody)
+      .pipe(
+        catchError((error) => {
+          this.errorType = error.error.error.message;
+          this.userAuthentication.next('SignUpError');
+          throw new Error('SignUp Error');
+        })
+      )
       .subscribe((response) => {
         this.user = this._createUserObject(response);
         this.userAuthentication.next('signIn');
