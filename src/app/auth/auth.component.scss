@@ -68,3 +68,11 @@ $button-color: #2fc124;
   font-size: 0.75rem;
   color: $default-text-color;
 }
+
+.ipt-default.ng-touched.ng-invalid {
+  outline: 2px solid $error-color;
+}
+
+.lbl-default {
+  margin-bottom: 5px;
+}
