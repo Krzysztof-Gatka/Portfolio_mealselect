@@ -13,14 +13,9 @@
 .inputs-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 
-  padding: 1rem;
-
-  border-radius: 5px;
-
-  box-shadow: 0px 0px 6px 0px $accent-cta-color;
-  background-color: $accent-color;
+  gap: 5px;
+  padding: 0.25rem;
 }
 
 .buttons-container {
@@ -46,20 +41,8 @@
   opacity:0.5;
 }
 
-.ipt {
-  border: none;
-  border-radius: 1rem;
-  box-shadow: 0px 0px 6px 0px $accent-cta-color;
-  padding: 2.5px;
-  padding-left: 0.25rem;
-  background-color: rgba($accent-color, 0.75);
-  color:black;
-}
 
-.ipt:focus {
-  box-shadow: 0px 0px 6px 2px $accent-cta-color;
-  outline: none;
-}
+
 
 .name-input {
   width: 40%;
@@ -78,39 +61,8 @@
   max-width: 5rem;
 }
 
-.btn {
-  background-color: $dominant-color;
-  cursor: pointer;
 
-  width: 2.5rem;
-  height: 2.75rem;
-
-  rotate: 45deg;
-  border-radius: 50%;
-  border:none;
-
-  transition: transform 500ms ease-in-out 0ms, opacity 500ms ease-in-out 0ms;
-
-  transition: background-color 500ms ease-out 0ms, opacity 500ms ease-out 0ms;
-
-}
-
-.btn:hover {
-  background-color: $accent-cta-color;
-  box-shadow: 0px 0px 10px 0px $accent-cta-color;
-}
-
-
-
-
-.clear-img,
-.add-img {
-  width: 2rem;
-  rotate: -45deg;
-  filter: invert(75%) sepia(21%) saturate(6337%) hue-rotate(340deg) brightness(100%) contrast(84%);
-}
-
-.btn:hover .clear-img,
-.btn:hover .add-img {
-  filter: invert(99%) sepia(71%) saturate(305%) hue-rotate(13deg) brightness(105%) contrast(92%);
+.btn-default {
+  max-width: 3rem;
+  transition: opacity 500ms ease-in-out 0ms;
 }
