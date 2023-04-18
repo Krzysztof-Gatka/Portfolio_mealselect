@@ -23,7 +23,7 @@ export class RecipesListElementComponent implements OnInit{
     const pantry = this.pantryService.getPantry();
     this.recipe.ingredients.map((ingredient) => {
       const ingInPantry = pantry.find(product => product.name === ingredient.name)
-      if (ingInPantry?.quantity! >= ingredient.quantity) {
+      if (ingInPantry?.quantity! >= ingredient.quantity!) {
         this.ingsInPantry++;
       }
     })

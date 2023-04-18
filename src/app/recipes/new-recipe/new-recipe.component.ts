@@ -110,8 +110,8 @@ export class NewRecipeComponent implements OnInit{
   onEditIngClick(index: number): void {
     const editedIng = this.recipe.ingredients[index];
     this.ingredientForm.controls.productName.setValue(editedIng.name);
-    this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity.toString())
-    this.ingredientForm.controls.productUnit.setValue(editedIng.unit);
+    this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity!.toString())
+    this.ingredientForm.controls.productUnit.setValue(editedIng.unit!);
 
     this.editingIngIndex = index;
     this.ingNameInpt?.nativeElement.focus();
