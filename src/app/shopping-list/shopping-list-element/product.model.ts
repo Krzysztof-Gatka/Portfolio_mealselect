@@ -3,7 +3,7 @@ export class Product {
     public name: string,
     public quantity?: number | null,
     public unit?: string | null,
-    public expDate?: Date,
+    public expDate?: Date | string | null,
     public bought?: boolean,
     public inPantry?: boolean,
   ) {}
