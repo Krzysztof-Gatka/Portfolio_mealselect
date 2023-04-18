@@ -14,8 +14,8 @@ export class ShoppingListInputComponent implements OnInit, OnDestroy {
 
   form = new FormGroup({
     productName: new FormControl('', Validators.required),
-    productQuantity: new FormControl('', Validators.pattern(/^[1-9][0-9]*/)),
-    productUnit: new FormControl('',)
+    productQuantity: new FormControl<number | null | undefined>(0, Validators.pattern(/^[1-9][0-9]*/)),
+    productUnit: new FormControl<string | null | undefined>('')
   })
 
   @Output() itemAdded = new EventEmitter<Product>();
@@ -30,8 +30,8 @@ export class ShoppingListInputComponent implements OnInit, OnDestroy {
     if(this.product) {
       this.form = new FormGroup({
         productName: new FormControl(this.product.name, Validators.required),
-        productQuantity: new FormControl(this.product.quantity.toString(), Validators.pattern(/^[1-9][0-9]*/)),
-        productUnit: new FormControl(this.product.unit,)
+        productQuantity: new FormControl(this.product.quantity, Validators.pattern(/^[1-9][0-9]*/)),
+        productUnit: new FormControl<string | null | undefined>(this.product.unit)
       })
     }
     this.sub = this.shoppingListService.productSaved.subscribe(()=> {
