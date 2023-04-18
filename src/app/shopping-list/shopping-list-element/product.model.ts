@@ -1,8 +1,8 @@
 export class Product {
   constructor(
     public name: string,
-    public quantity: number,
-    public unit: string,
+    public quantity?: number | null,
+    public unit?: string | null,
     public expDate?: Date,
     public bought?: boolean,
     public inPantry?: boolean,

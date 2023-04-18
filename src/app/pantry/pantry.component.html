@@ -52,7 +52,8 @@
         </form>
       </div>
 
-      <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" class="btn-default">Add</button>
+      <button *ngIf="!elementEditing" [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" class="btn-default">Add</button>
+      <button *ngIf="elementEditing" [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" class="btn-default">Save</button>
     </div>
 
   </div>

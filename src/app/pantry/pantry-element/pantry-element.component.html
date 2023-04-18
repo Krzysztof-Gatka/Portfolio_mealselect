@@ -1,62 +1,26 @@
 <div class="full-width-flex-container">
   <div class="pantry-element-container">
 
-    <button (click)="expandPantryEl = !expandPantryEl" *ngIf="!editMode" class="list-el-default">
+    <button (click)="expandPantryEl = !expandPantryEl" class="list-el-default">
       <div class="basic-attr-container">
         <p class="attr-name">{{ product.name }}</p>
         <p class="attr-qty">{{ product.quantity }}</p>
         <p class="attr-unit">{{ product.unit }}</p>
       </div>
       <p class="attr-exp-date">{{ product.expDate | date}}</p>
-      <div *ngIf="expandPantryEl">
+      <div class="btns-container" *ngIf="expandPantryEl">
         <button
         (click)="onDeleteClick()"
         class="btn-default">
         delete</button>
       <button
-        *ngIf="!editMode"
         (click)="onEditClick()"
         class="btn-default">
         edit
       </button>
-      <button
-        [ngClass]="form.valid ? '' : 'invalid'"
-        *ngIf="editMode"
-        (click)="onSaveClick()"
-        class="btn-default">
-        save
-      </button>
       </div>
 
     </button>
-
-    <div class="form-container" *ngIf="editMode">
-      <form [formGroup]="form">
-        <div class="inputs-container">
-          <input
-            formControlName="name"
-            class="ipt ipt-name"
-            type="text">
-          <input
-            formControlName="qty"
-            class="ipt ipt-qty"
-            type="number">
-          <input
-            formControlName="unit"
-            class="ipt ipt-unit"
-            type="text">
-          <input
-            formControlName="date"
-            class="ipt ipt-date"
-            type="date">
-        </div>
-      </form>
-    </div>
-
-
-    <!-- <div class="buttons-container">
-
-    </div> -->
 
   </div>
 </div>

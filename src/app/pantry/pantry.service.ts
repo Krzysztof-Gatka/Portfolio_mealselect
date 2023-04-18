@@ -13,6 +13,7 @@ export class PantryService {
   pantryFetched: boolean = false;
 
   pantryChanged = new Subject();
+  pantryElementEdit = new Subject<number>();
 
   constructor(
     private authService:AuthService,
