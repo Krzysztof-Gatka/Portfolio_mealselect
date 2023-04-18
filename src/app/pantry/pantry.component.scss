@@ -31,6 +31,12 @@
 
 .btn-default {
   max-width: 3rem;
+  transition: opacity 500ms ease-in-out 0ms;
+}
+
+.btn-default.invalid {
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 .date-container {
