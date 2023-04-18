@@ -14,8 +14,8 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
   @Input() product: Product | undefined;
   @Input() productIndex: number | undefined;
 
-  editMode: boolean = false;
   editButtonDisabled: boolean = false;
+  openMoreMenu: boolean = false;
 
   editSub: Subscription | undefined;
   saveSub: Subscription | undefined;
@@ -51,23 +51,28 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
     this.shoppingListService.toggleBought(this.productIndex!);
   }
 
-  onDeleteButtonClick(): void {
-    this.shoppingListService.deleteProduct(this.productIndex!);
-    this.shoppingListService.productBeingEdited.next(-1);
-  }
 
-  onEditButtonClick(): void {
-    this.editMode = true;
-    this.shoppingListService.productBeingEdited.next(this.productIndex!);
-  }
+
+
 
   onSaveButtonClick(): void {
-    this.editMode = false;
     this.shoppingListService.productSaved.next(this.productIndex!);
   }
 
   onSavebuttonClikced(product: Product): void {
     this.product = product;
     this.shoppingListService.updateProduct(this.productIndex!, this.product);
+  }
+
+  onMoreClick(): void {
+    this.openMoreMenu = !this.openMoreMenu;
+  }
+
+  onDeleteButtonClick(): void {
+    this.shoppingListService.deleteProduct(this.productIndex!);
+  }
+
+  onEditButtonClick(): void {
+    this.shoppingListService.productBeingEdited.next(this.productIndex!);
   }
 }

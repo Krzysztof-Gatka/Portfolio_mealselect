@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { ShoppingListService } from './shopping-list.service';
 import { Product } from './shopping-list-element/product.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-list',
@@ -16,9 +17,18 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   modalOpened: boolean = false;
   boughtElements: boolean = false;
   loading: boolean = true;
+  editMode: boolean = false;
+  editedProductIndex: number | undefined;
 
   changeSub: Subscription | undefined;
   deleteSub: Subscription | undefined;
+  editSub: Subscription | undefined;
+
+  form = new FormGroup({
+    productName: new FormControl('', Validators.required),
+    productQuantity: new FormControl<number | null | undefined>(null, Validators.pattern(/^[1-9][0-9]*/)),
+    productUnit: new FormControl<string | null | undefined>(null)
+  })
 
   constructor(private shoppingListService: ShoppingListService) {}
 
@@ -36,6 +46,14 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         this.deletedProductsAvailable = true;
       }
     });
+
+    this.editSub = this.shoppingListService.productBeingEdited.subscribe((id) => {
+      this.editMode = true;
+      this.editedProductIndex = id;
+      this.form.controls.productName.setValue(this.shoppingListElements![id].name);
+      this.form.controls.productQuantity.setValue(this.shoppingListElements![id].quantity);
+      this.form.controls.productUnit.setValue(this.shoppingListElements![id].unit);
+    })
 
     if(!this.shoppingListService.productsFetched) {
       this.shoppingListService.fetchShoppingList();
@@ -79,5 +97,24 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   onYesClick(): void {
     this.shoppingListElements = [];
     this.shoppingListService.clear();
+  }
+
+  onAddClick(): void {
+    this.shoppingListService.addProduct(this._createProduct());
+    this.form.reset();
+  }
+
+  private _createProduct(): Product {
+    const name = this.form.controls.productName.value!;
+    const quantity = +this.form.controls.productQuantity.value!;
+    const unit = this.form.controls.productUnit.value!;
+    return new Product(name, quantity, unit);
+  }
+
+  onSaveClick(): void {
+    const updateProduct = this._createProduct();
+    this.shoppingListService.updateProduct(this.editedProductIndex!, updateProduct);
+    this.form.reset();
+    this.editMode = false;
   }
 }

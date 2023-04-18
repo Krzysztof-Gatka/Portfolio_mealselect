@@ -3,40 +3,29 @@
 
     <div
       [ngClass]="product.bought ? 'non-active' : ''"
-      *ngIf="product && !editMode"
-      class="list-element"
+      *ngIf="product"
+      class="list-el-default"
       (click)="onProductClick()"
      >
-
-      <div class="field field-first">
-        <p>{{ product.name }}</p>
+      <div class="product-container">
+        <div class="product-attr-container">
+          <p class="attr-name">{{ product.name }}</p>
+          <p class="attr-qty">{{ product.quantity }}</p>
+          <p class="attr-unit">{{ product.unit }}</p>
+        </div>
       </div>
 
-      <div class="field field-second">
-        <p>{{ product.quantity}} {{product.unit}}</p>
-      </div>
 
       <div class="green-window"></div>
       <div class="tick">Got it!</div>
     </div>
-
-    <app-shopping-list-input *ngIf="editMode" [editing]="editMode" [product]="product" (saveButtonClicked)="onSavebuttonClikced($event)"></app-shopping-list-input>
-
-    <div class="buttons-container" >
-
-      <button  class="btn btn-delete" (click)="onDeleteButtonClick()">
-        <img class="delete-img" src="../../../assets/delete-svgrepo-com.svg">
-      </button>
-
-      <button *ngIf="!editMode" class="btn btn-edit" (click)="onEditButtonClick()" [tabindex]="editButtonDisabled ? -1 : ''" [ngClass]="editButtonDisabled ? 'btn-disabled' : ''">
-        <img class="edit-img" src="../../../assets/edit-1-svgrepo-com.svg">
-      </button>
-
-      <button *ngIf="editMode" class="btn btn-save" (click)="onSaveButtonClick()">
-      <img class="save-img" src="../../../assets/tick-svgrepo-com.svg">
-      </button>
-
-    </div>
+    <button (click)="onMoreClick()" class="btn-more">
+      <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+      <div *ngIf="openMoreMenu" class="more-menu">
+        <button (click)="onEditButtonClick()" class="btn-default">edit</button>
+        <button (click)="onDeleteButtonClick()" class="btn-default">delete</button>
+      </div>
+    </button>
 
   </div>
 </div>

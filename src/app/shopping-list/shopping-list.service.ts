@@ -68,6 +68,7 @@ export class ShoppingListService {
       this.shoppingListElements.push(product);
     }
     this._putShoppingList();
+    this.productsChanged.next('');
     return this.shoppingListElements.slice();
   }
 

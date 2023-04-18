@@ -8,19 +8,19 @@
 
       <input
         type="text"
-        class="name-input ipt"
+        class="ipt-default"
         placeholder="Name"
         formControlName="productName"
       >
       <input
         type="number"
-        class="quantity-input ipt"
+        class="ipt-default"
         placeholder="Qty"
         formControlName="productQuantity"
       >
       <input
         type="text"
-        class="unit-input ipt"
+        class="ipt-default"
         placeholder="Unit"
         formControlName="productUnit"
       >
@@ -34,16 +34,10 @@
       <button
         [ngClass]="!form.valid ? 'disabled' : ''"
         (click)="onAddButtonClick()"
-        class="btn btn-add"
+        class="btn-default"
         [tabIndex]="!form.valid ? -1 : ''"
       >
-        <img class="add-img" src="../../../assets/add-svgrepo-com.svg">
-      </button>
-      <button
-        (click)="onClearButtonClick()"
-        class="btn btn-clear"
-      >
-        <img class="clear-img" src="../../../assets/clear-svgrepo-com.svg">
+        Add
       </button>
 
     </div>

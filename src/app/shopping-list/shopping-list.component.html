@@ -1,17 +1,45 @@
 <div class="full-width-flex-container">
   <div class="shopping-list-container">
+    <h1 class="header" >Shopping List</h1>
+
     <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
-    <app-shopping-list-element
+    <div class="shopping-list-elements-container">
+      <app-shopping-list-element
       *ngFor="let element of shoppingListElements; let i = index"
       [product]="element"
       [productIndex]="i"
-    ></app-shopping-list-element>
+      ></app-shopping-list-element>
+    </div>
 
-    <app-shopping-list-input
-      (itemAdded)="onItemAdded($event)"
-      [editing]="false"
-    ></app-shopping-list-input>
+      <div
+      class="inputs-container"
+      [formGroup]="form"
+    >
+
+      <input
+        type="text"
+        class="ipt-default"
+        placeholder="Name"
+        formControlName="productName"
+      >
+      <input
+        type="number"
+        class="ipt-default"
+        placeholder="Qty"
+        formControlName="productQuantity"
+      >
+      <input
+        type="text"
+        class="ipt-default"
+        placeholder="Unit"
+        formControlName="productUnit"
+      >
+
+      <button (click)="onAddClick()" *ngIf="!editMode" class="btn-default">Add</button>
+      <button (click)="onSaveClick()" *ngIf="editMode" class="btn-default">Save</button>
+
+    </div>
 
     <div class="btns-container">
       <button *ngIf="deletedProductsAvailable" class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>

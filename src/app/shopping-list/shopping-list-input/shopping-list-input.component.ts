@@ -14,8 +14,8 @@ export class ShoppingListInputComponent implements OnInit, OnDestroy {
 
   form = new FormGroup({
     productName: new FormControl('', Validators.required),
-    productQuantity: new FormControl<number | null | undefined>(0, Validators.pattern(/^[1-9][0-9]*/)),
-    productUnit: new FormControl<string | null | undefined>('')
+    productQuantity: new FormControl<number | null | undefined>(null, Validators.pattern(/^[1-9][0-9]*/)),
+    productUnit: new FormControl<string | null | undefined>(null)
   })
 
   @Output() itemAdded = new EventEmitter<Product>();
@@ -42,15 +42,15 @@ export class ShoppingListInputComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
       this.sub?.unsubscribe();
   }
+  onClearButtonClick(): void {
+    this.form.reset();
+  }
 
   onAddButtonClick(): void {
     this.itemAdded.emit(this._createProduct());
     this.form.reset();
   }
 
-  onClearButtonClick(): void {
-    this.form.reset();
-  }
 
   private _createProduct(): Product {
     const name = this.form.controls.productName.value!;
