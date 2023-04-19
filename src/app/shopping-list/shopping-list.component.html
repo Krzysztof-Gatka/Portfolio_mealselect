@@ -1,5 +1,5 @@
 <div class="full-width-flex-container">
-  <div class="shopping-list-container">
+  <div class="shopping-list-container" (click)="onClickOutsideElementMenu($event)">
     <h1 class="header" >Shopping List</h1>
 
     <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>

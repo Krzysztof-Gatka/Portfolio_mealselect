@@ -19,7 +19,7 @@
       <div class="green-window"></div>
       <div class="tick">Got it!</div>
     </div>
-    <button (click)="onMoreClick()" class="btn-more">
+    <button (click)="onMoreClick()" class="btn-more" #btnMore>
       <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
       <div *ngIf="openMoreMenu" class="more-menu">
         <button (click)="onEditButtonClick()" class="btn-default">edit</button>

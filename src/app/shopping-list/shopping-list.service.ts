@@ -19,6 +19,7 @@ export class ShoppingListService {
 
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
+  clickOutsideMoreMenu = new Subject<MouseEvent>();
 
   constructor(
     private http: HttpClient,
