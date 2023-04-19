@@ -1,25 +1,22 @@
 <div class="full-width-flex-container">
   <div class="pantry-element-container">
 
-    <button (click)="expandPantryEl = !expandPantryEl" class="list-el-default">
+    <button class="list-el-default">
       <div class="basic-attr-container">
         <p class="attr-name">{{ product.name }}</p>
         <p class="attr-qty">{{ product.quantity }}</p>
         <p class="attr-unit">{{ product.unit }}</p>
       </div>
       <p class="attr-exp-date">{{ product.expDate | date}}</p>
-      <div class="btns-container" *ngIf="expandPantryEl">
-        <button
-        (click)="onDeleteClick()"
-        class="btn-default">
-        delete</button>
-      <button
-        (click)="onEditClick()"
-        class="btn-default">
-        edit
-      </button>
-      </div>
 
+
+    </button>
+    <button (click)="onMoreClick()" class="btn-more" #btnMore>
+      <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+      <div *ngIf="openMoreMenu" class="more-menu">
+        <button (click)="onEditClick()" class="btn-default">edit</button>
+        <button (click)="onDeleteClick()" class="btn-default">delete</button>
+      </div>
     </button>
 
   </div>

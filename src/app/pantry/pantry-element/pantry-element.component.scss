@@ -9,13 +9,42 @@
   display: flex;
   flex-direction: row;
   gap: 3px;
-  max-width: 15rem;
+  max-width: 12rem;
+}
+
+.btn-more img {
+  filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
+}
+
+.more-menu {
+  position:absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  top:0px;
+  left:-10rem;
+  width: 10rem;
+  z-index: 50;
+  background-color: $accent-color;
+  outline: 2px solid $accent-cta-color;
+  border-radius: 5px;
+  padding:0.85rem;
 }
 
 .attr-name {
   text-align: left;
   width: fit-content;
   margin-right: 0.5rem;
+}
+
+.btn-more {
+  position: relative;
+  cursor: pointer;
+
+  width: 2rem;
+  border: none;
+  font-weight: bolder;
+  background-color: $dominant-color;
 }
 
 .attr-exp-date {
@@ -38,9 +67,7 @@
   padding: 0.25rem;
 }
 
-.btn-default {
-  width: 20%;
-}
+
 
 .form-container {
   width:80%;
