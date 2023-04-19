@@ -14,6 +14,7 @@ export class PantryService {
 
   pantryChanged = new Subject();
   pantryElementEdit = new Subject<number>();
+  clickOutsideMoreMenu = new Subject<MouseEvent>();
 
   constructor(
     private authService:AuthService,

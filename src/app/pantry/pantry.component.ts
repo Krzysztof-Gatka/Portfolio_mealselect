@@ -33,6 +33,8 @@ export class PantryComponent implements OnInit, OnDestroy{
     this.pantryChangesSub = this.pantryService.pantryChanged.subscribe(()=>{
       this.pantry = this.pantryService.getPantry();
       this.loading = false;
+      this.elementEditing = false;
+      this.form.reset();
     });
 
     this.pantryElementEditSub = this.pantryService.pantryElementEdit.subscribe((id) => {
@@ -81,6 +83,10 @@ export class PantryComponent implements OnInit, OnDestroy{
     const newProduct = new Product(name, qty, unit, expDate);
 
     return newProduct;
+  }
+
+  onClickOutsideElementMenu(event: MouseEvent) {
+    this.pantryService.clickOutsideMoreMenu.next(event);
   }
 }
 
