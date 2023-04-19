@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, catchError, of } from "rxjs";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
@@ -19,6 +19,7 @@ export class RecipesService {
 
   recipesBaseFetched: boolean = false;
   userRecipesFetched: boolean = false;
+  error: boolean = false;
 
   recipesChanged = new Subject<string>();
 
@@ -30,15 +31,12 @@ export class RecipesService {
   ) {}
 
   fetchRecipes(recipesType: string) {
-    console.log('fetching recipes');
     if(recipesType === Recipes_Base) {
       this._fetchRecipesBase();
-      this.recipesBaseFetched = true;
     }
 
     if(recipesType === User_Recipes) {
       this._fetchUserRecipes();
-      this.userRecipesFetched = true;
     }
   }
 
@@ -108,9 +106,18 @@ export class RecipesService {
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
     this.http.get<Recipe[]>(Fetch_Recipes_URL, {params: params})
+      .pipe(
+        catchError((error) => {
+          console.warn(error);
+          this.toastr.error('Error: Downloading of recipes base from sever failed.');
+          this.error = true;
+          return of([]);
+        })
+      )
       .subscribe((recipes) => {
         this.recipesBase = recipes.slice();
         this.recipesChanged.next(Recipes_Base);
+        if(!this.error) this.recipesBaseFetched;
     });
   }
 
@@ -120,6 +127,14 @@ export class RecipesService {
     const URL = Default_URL + user.uid + '/recipes.json';
 
     this.http.get<Recipe[]>(URL, {params: params})
+      .pipe(
+        catchError((error) => {
+          console.warn(error);
+          this.toastr.error('Error: Downloading of your recipes from sever failed.');
+          this.error = true;
+          return of([]);
+        })
+      )
       .subscribe((recipes) => {
         if (recipes === null) {
           this.userRecipes = [];
@@ -127,6 +142,7 @@ export class RecipesService {
           this.userRecipes = recipes.slice();
         }
         this.recipesChanged.next(User_Recipes);
+        if(!this.error) this.userRecipesFetched;
       });
   }
 }

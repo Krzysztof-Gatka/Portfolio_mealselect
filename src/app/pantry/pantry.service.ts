@@ -23,7 +23,6 @@ export class PantryService {
 
 
   fetchPantry(): void {
-    console.log('fetching pantry');
     const user = this.authService.user!;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
