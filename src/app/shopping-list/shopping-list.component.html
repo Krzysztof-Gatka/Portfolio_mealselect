@@ -1,6 +1,35 @@
 <div class="full-width-flex-container">
-  <div class="shopping-list-container">
+  <div class="shopping-list-container" (click)="onClickOutsideElementMenu($event)">
     <h1 class="header" >Shopping List</h1>
+
+    <div
+    class="inputs-container"
+    [formGroup]="form"
+    >
+
+      <input
+        type="text"
+        class="ipt-default ipt-name"
+        placeholder="Name"
+        formControlName="productName"
+      >
+      <input
+        type="number"
+        class="ipt-default ipt-qty"
+        placeholder="Qty"
+        formControlName="productQuantity"
+      >
+      <input
+        type="text"
+        class="ipt-default ipt-unit"
+        placeholder="Unit"
+        formControlName="productUnit"
+      >
+
+      <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
+      <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
+
+    </div>
 
     <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
@@ -12,33 +41,8 @@
       ></app-shopping-list-element>
     </div>
 
-      <div
-      class="inputs-container"
-      [formGroup]="form"
-    >
-
-      <input
-        type="text"
-        class="ipt-default"
-        placeholder="Name"
-        formControlName="productName"
-      >
-      <input
-        type="number"
-        class="ipt-default"
-        placeholder="Qty"
-        formControlName="productQuantity"
-      >
-      <input
-        type="text"
-        class="ipt-default"
-        placeholder="Unit"
-        formControlName="productUnit"
-      >
-
-      <button (click)="onAddClick()" *ngIf="!editMode" class="btn-default">Add</button>
-      <button (click)="onSaveClick()" *ngIf="editMode" class="btn-default">Save</button>
-
+    <div class="empty-list-message" *ngIf="shoppingListElements === undefined || shoppingListElements.length === 0">
+      <p>Your Shopping List is empty</p>
     </div>
 
     <div class="btns-container">
@@ -50,8 +54,8 @@
 
     <div *ngIf="modalOpened" class="clear-list-modal" (click)="onModalClick()">
       <h3 class="header" >Are you sure that you want to clear the list ?</h3>
-      <button (click)="onYesClick()" class="btn btn-yes">Yes</button>
-      <button class="btn btn-cancel">Cancel</button>
+      <button (click)="onYesClick()" class="btn-default">Yes</button>
+      <button class="btn-default">Cancel</button>
     </div>
 
   </div>

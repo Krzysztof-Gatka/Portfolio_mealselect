@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ShoppingListService } from '../shopping-list.service';
@@ -13,12 +13,14 @@ import { Subscription } from 'rxjs';
 export class ShoppingListElementComponent implements OnInit, OnDestroy {
   @Input() product: Product | undefined;
   @Input() productIndex: number | undefined;
+  @ViewChild('btnMore') btnMore: ElementRef<HTMLButtonElement> | undefined;
 
   editButtonDisabled: boolean = false;
   openMoreMenu: boolean = false;
 
   editSub: Subscription | undefined;
   saveSub: Subscription | undefined;
+  clickOutsideSub: Subscription | undefined;
 
   form = new FormGroup({
     productName: new FormControl('', Validators.required),
@@ -29,6 +31,11 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
+    this.clickOutsideSub = this.shoppingListService.clickOutsideMoreMenu.subscribe((event) => {
+      if(!this.btnMore?.nativeElement.contains(<Node>event.target!)) {
+        this.openMoreMenu = false;
+      }
+    })
     this.editSub = this.shoppingListService.productBeingEdited.subscribe((id)=>{
       if(id === -1) {
         this.editButtonDisabled = false;
@@ -45,6 +52,7 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.editSub?.unsubscribe();
     this.saveSub?.unsubscribe();
+    this.clickOutsideSub?.unsubscribe();
   }
 
   onProductClick(): void {

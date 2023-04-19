@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from 'rxjs'
+import { Subject, catchError, of } from 'rxjs'
 
 import { AuthService } from "../auth/auth.service";
 import { PantryService } from "../pantry/pantry.service";
 import { Default_URL } from "../recipes/recipes.service";
 import { Product } from "./shopping-list-element/product.model";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
@@ -13,17 +14,20 @@ export class ShoppingListService {
   private deletedProductsStack: Product[] = [];
 
   productsFetched: boolean = false;
+  error: boolean = false;
 
   productsChanged = new Subject();
   deletedProducts = new Subject<number>();
 
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
+  clickOutsideMoreMenu = new Subject<MouseEvent>();
 
   constructor(
     private http: HttpClient,
     private authServcie: AuthService,
     private pantryService: PantryService,
+    private toastr: ToastrService,
   ) {}
 
   fetchShoppingList(): void {
@@ -31,11 +35,19 @@ export class ShoppingListService {
     const params = new HttpParams().set('auth', this.authServcie.user!.token);
 
     this.http.get<Product[]>(Default_URL + user.uid + '/shopping-list.json', { params: params})
+      .pipe(
+        catchError((error) => {
+          console.warn(error);
+          this.toastr.error('Error: Downloading of shopping list from server failed.');
+          this.error = true;
+          return of([]);
+        }),
+      )
       .subscribe((products)=> {
         this.shoppingListElements = products;
-        this.productsFetched = true;
+        if (!this.error) this.productsFetched = true;
         this.productsChanged.next('');
-      })
+      });
   }
 
   clearBoughtProducts(): void {
