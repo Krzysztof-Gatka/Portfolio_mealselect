@@ -7,7 +7,7 @@
 }
 
 .header {
-  color: $secondary-text-color;
+  color: $accent-cta-color;
   font-weight: 600;
 }
 
@@ -24,16 +24,16 @@
 }
 
 .section {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   min-width: 20rem;
 }
 
 .list {
   margin-top:0.5rem;
   padding:0.25rem 2rem;
-  color: $secondary-text-color;
+  color: $default-text-color;
   background-color: $accent-color;
-  box-shadow: 0px 0px 5px 0px $secondary-color;
+  box-shadow: 0px 0px 5px 0px $accent-text-color;
   border-radius: 5px;
   width: fit-content;
 }
@@ -50,29 +50,15 @@
   flex-wrap: wrap;
 }
 
-.btn {
-  margin-top: 2rem;
-
-  cursor: pointer;
-  width: fit-content;
-  font-size: 1.5rem;
-  padding:1rem;
-  box-shadow: 0px 0px 5px 0px $accent-cta-color;
-  border: none;
-  border-radius: 5px;
-  color: $accent-cta-color;
-  background-color: $dominant-color;
-  transition: color 500ms ease-out 0ms, scale 500ms ease-out 0ms, background-color 500ms ease-out 0ms;
-}
-
-.btn:hover {
-  background-color: $accent-cta-color;
-  color: $accent-color;
-  scale: 110%;
-}
 
 .btns-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
 
+.btn-default {
+  width:60%;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
 }
