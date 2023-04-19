@@ -1,4 +1,5 @@
 <div class="full-width-flex-container">
+  <div class="recipes-list-container">
   <div class="recipes-nav-container">
 
     <button
@@ -19,72 +20,28 @@
       [routerLink]="['/recipes/recipes-list/community-recipes']"
       [routerLinkActive]="'active'"
       class="recipes-nav-btn comm-rec">
-      Community Recipes
+      Community
     </button>
 
   </div>
 
-  <div class="filter-sort-container">
-    <div class="filter-container">
+  <div class="filter-sort-menu">
+    <button (click)="onFilterButtonClick()" class="btn-default">Filter & Sort</button>
+  </div>
 
-      <form [formGroup]="filterForm">
+  <div *ngIf="filterModalOpen" class="modal-container">
 
-        <div class="inputs-container">
-
-          <div class="input-container">
-            <label class="lbl-default" for="name">Name</label>
-            <input class="ipt-default" formControlName="name" id="name" type="text">
-          </div>
-
-          <div class="input-container">
-
-            <div>
-              <label class="lbl-default" for="prepTime">PrepTime</label>
-              <input class="ipt-default" formControlName="prepTime" id="prepTime" type="text">
-            </div>
-
-            <div class="diff-container">
-              <label class="lbl-default" for="difficulty">Difficulty</label>
-              <select class="ipt-default" formControlName="difficulty" id="difficulty">
-                <option value="easy">easy</option>
-                <option value="medium">medium</option>
-                <option value="hard">hard</option>
-              </select>
-            </div>
-
-          </div>
-
-          <div class="input-container">
-            <div>
-              <label class="lbl-default" for="tags">Tags</label>
-              <input class="ipt-default" formControlName="tags" id="tags "type="text">
-              <button (click)="onAddTagClick()" class="btn-default">+</button>
-            </div>
-          </div>
-          <div class="tags-container">
-            <div class="tag-container" *ngFor="let tag of tags; let i = index">
-              <p class="tag"> {{ tag }} </p>
-              <button (click)="onXClick(i)" class="btn-default">x</button>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="btns-container">
-
-          <button [ngClass]="filtering ? 'active' : ''" class="btn-default" (click)="onFilterClick()">Filter</button>
-          <button class="btn-default" (click)="onClearFiltersClick()">Clear Filters</button>
-
-        </div>
-
-      </form>
+    <div class="btn-container">
+      <button (click)="onxClick()" class="btn-x">
+        <img src="../../../assets/cancel2-svgrepo-com.svg" alt="">
+      </button>
     </div>
+
     <div class="sort-container">
       <form [formGroup]="sortForm">
         <div class="inputs-container">
 
           <div class="input-container">
-            <label class="lbl-default" for="sort">sort</label>
             <select class="ipt-default" formControlName="sort" id="sort">
               <option value="prepTimeAscending">preparation time ascending</option>
               <option value="prepTimeDescending">preparation time descending</option>
@@ -94,22 +51,74 @@
           </div>
         </div>
         <div class="btns-container">
-          <button [ngClass]="sorting ? 'active' : ''" class="btn-default" (click)="onSortClick()">Sort</button>
-          <button class="btn-default" (click)="onClearSortClick()">Clear Sorting</button>
+          <button [ngClass]="sorting ? 'active' : ''" class="btn-sorting" (click)="onSortClick()">Sort</button>
+          <button class="btn-sorting" (click)="onClearSortClick()">Clear Sorting</button>
         </div>
 
       </form>
     </div>
+
+    <form [formGroup]="filterForm" class="form-container">
+
+      <div class="ipt-container">
+        <label class="lbl-default" for="name">Name</label>
+        <input class="ipt-default" formControlName="name" id="name" type="text">
+      </div>
+
+      <div class="ipt-container">
+        <label class="lbl-default" for="prepTime">Max Preparation Time (mins)</label>
+        <input class="ipt-default" formControlName="prepTime" id="prepTime" type="text">
+      </div>
+
+      <div class="ipt-container">
+        <label class="lbl-default" for="difficulty">Difficulty</label>
+        <select class="ipt-default" formControlName="difficulty" id="difficulty">
+          <option value=""></option>
+          <option value="easy">easy</option>
+          <option value="medium">medium</option>
+          <option value="hard">hard</option>
+        </select>
+      </div>
+
+
+      <div class="ipt-container">
+        <label class="lbl-default" for="tags">Tags</label>
+        <input class="ipt-default" formControlName="tags" id="tags "type="text">
+        <button [ngClass]="filterForm.invalid ? 'invalid' : ''" (click)="onAddTagClick()" class="btn-default">+</button>
+      </div>
+
+      <div class="tags-container">
+        <div class="tag-container" *ngFor="let tag of tags; let i = index">
+          <p class="tag"> {{ tag }} </p>
+          <button (click)="onXClick(i)" class="tag-x">x</button>
+        </div>
+      </div>
+
+
+      <div class="btns-container">
+
+        <button [ngClass]="filtering ? 'active' : ''" class="btn-sorting" (click)="onFilterClick()">Filter</button>
+        <button class="btn-sorting" (click)="onClearFiltersClick()">Clear Filters</button>
+
+      </div>
+
+    </form>
   </div>
-  <div *ngIf="recipesType === 'user-recipes'" class="new-recipe-container">
-    <button class="btn-default" [routerLink]="['/new-recipe']"> New Recipe</button>
-  </div>
+
+  <!-- <div class="filter-sort-container">
+    <div class="filter-container">
+
+
+    </div>
+
+  </div> -->
+
+
   <div class="list-header">
     <p class="header-name header-title">Name</p>
     <p class="header-prep-time header-title">Prep. Time</p>
     <p class="header-difficulty header-title">Difficulty</p>
     <p class="header-pantry header-title">Pantry</p>
-    <p class="placeholder"></p>
   </div>
   <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
   <div *ngIf="!loading" class="recipes-list-container">
@@ -119,10 +128,14 @@
       [recipesType]="recipesType"
     ></app-recipes-list-element>
 
-    <p *ngIf="recipes!.length === 0 && !loading">
+    <p class="empty-list-message" *ngIf="recipes!.length === 0 && !loading">
       You didn't add recipe to your recipes.
       Add a recipe from our Recipe Base, or create your own recipe.
     </p>
 
   </div>
+  <div *ngIf="recipesType === 'user-recipes'" class="new-recipe-container">
+    <button class="btn-default" [routerLink]="['/new-recipe']"> New Recipe</button>
+  </div>
+</div>
 </div>
