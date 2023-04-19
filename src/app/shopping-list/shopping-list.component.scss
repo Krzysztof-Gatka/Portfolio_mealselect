@@ -63,6 +63,12 @@
 
 .btn-form {
   max-width: 3rem;
+  transition: opacity 500ms ease-in-out 0ms;
+}
+
+.btn-form.invalid {
+  opacity:0.5;
+  pointer-events: none;
 }
 
 .clear-list-modal {
@@ -87,3 +93,5 @@
   width:70%;
   text-align: center;
 }
+
+

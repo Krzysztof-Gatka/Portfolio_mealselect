@@ -26,8 +26,8 @@
         formControlName="productUnit"
       >
 
-      <button (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
-      <button (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
+      <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
+      <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
 
     </div>
 

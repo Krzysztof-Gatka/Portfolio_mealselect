@@ -25,7 +25,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   editSub: Subscription | undefined;
 
   form = new FormGroup({
-    productName: new FormControl('', Validators.required),
+    productName: new FormControl<string | null>(null, Validators.required),
     productQuantity: new FormControl<number | null | undefined>(null, Validators.pattern(/^[1-9][0-9]*/)),
     productUnit: new FormControl<string | null | undefined>(null)
   })
@@ -108,8 +108,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   private _createProduct(): Product {
     const name = this.form.controls.productName.value!;
-    const quantity = +this.form.controls.productQuantity.value!;
-    const unit = this.form.controls.productUnit.value!;
+    const quantity = this.form.controls.productQuantity.value;
+    const unit = this.form.controls.productUnit.value;
     return new Product(name, quantity, unit);
   }
 
