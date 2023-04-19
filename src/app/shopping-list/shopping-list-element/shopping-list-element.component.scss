@@ -97,7 +97,7 @@
   transition: transform 600ms ease-in-out 0ms;
 }
 
-.green-window {
+.gray-window {
   position: absolute;
   top:0;
   left:0;
@@ -106,11 +106,11 @@
   transition: background-color 600ms ease-in-out 0ms;
 }
 
-.list-element.non-active .green-window {
-  background-color: rgba($accent-color, 0.5);
+.list-el-default.non-active .gray-window {
+  background-color: rgba($accent-text-color, 0.25);
 }
 
-.list-element.non-active {
+.list-el-default.non-active {
   color: gray;
 }
 

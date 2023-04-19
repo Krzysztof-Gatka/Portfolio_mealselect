@@ -2,6 +2,35 @@
   <div class="shopping-list-container" (click)="onClickOutsideElementMenu($event)">
     <h1 class="header" >Shopping List</h1>
 
+    <div
+    class="inputs-container"
+    [formGroup]="form"
+    >
+
+      <input
+        type="text"
+        class="ipt-default ipt-name"
+        placeholder="Name"
+        formControlName="productName"
+      >
+      <input
+        type="number"
+        class="ipt-default ipt-qty"
+        placeholder="Qty"
+        formControlName="productQuantity"
+      >
+      <input
+        type="text"
+        class="ipt-default ipt-unit"
+        placeholder="Unit"
+        formControlName="productUnit"
+      >
+
+      <button (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
+      <button (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
+
+    </div>
+
     <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
     <div class="shopping-list-elements-container">
@@ -10,35 +39,6 @@
       [product]="element"
       [productIndex]="i"
       ></app-shopping-list-element>
-    </div>
-
-      <div
-      class="inputs-container"
-      [formGroup]="form"
-    >
-
-      <input
-        type="text"
-        class="ipt-default"
-        placeholder="Name"
-        formControlName="productName"
-      >
-      <input
-        type="number"
-        class="ipt-default"
-        placeholder="Qty"
-        formControlName="productQuantity"
-      >
-      <input
-        type="text"
-        class="ipt-default"
-        placeholder="Unit"
-        formControlName="productUnit"
-      >
-
-      <button (click)="onAddClick()" *ngIf="!editMode" class="btn-default">Add</button>
-      <button (click)="onSaveClick()" *ngIf="editMode" class="btn-default">Save</button>
-
     </div>
 
     <div class="btns-container">

@@ -21,12 +21,33 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap:1rem;
+
 }
 
 .inputs-container {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  padding: 0.5rem 0.25rem;
+}
+
+.ipt-qty,
+.ipt-unit {
+  max-width: 15%;
+}
+
+.btn-default {
+  padding: 0.75rem 0.25rem;
+  width: 50%;
+}
+
+.btn-default.btn-form {
+  padding: 0.25rem 0.25rem;
+}
+
+.btn-form {
+  max-width: 3rem;
 }
 
 .clear-list-modal {
