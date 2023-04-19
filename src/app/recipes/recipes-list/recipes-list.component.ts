@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesFilterService } from '../recipes-filter.service';
@@ -22,13 +22,14 @@ export class RecipesListComponent implements OnInit{
   sorting: boolean = false;
   filtering: boolean = false;
   loading: boolean = true;
+  filterModalOpen: boolean = false;
 
   filterForm = new FormGroup({
     name: new FormControl(''),
     prepTime: new FormControl(null),
     difficulty: new FormControl(''),
     price: new FormControl(''),
-    tags: new FormControl(''),
+    tags: new FormControl('', Validators.required),
   });
 
   sortForm = new FormGroup({
@@ -58,6 +59,9 @@ export class RecipesListComponent implements OnInit{
       }
       this.filtering = false;
       this.sorting = false;
+      this.tags = [];
+      this.sortForm.reset();
+      this.filterForm.reset();
 
     });
   }
@@ -105,5 +109,13 @@ export class RecipesListComponent implements OnInit{
   onXClick(index: number):void {
     this.tags = this.tags!.filter((tag, i) => index !== i);
     this.onFilterClick();
+  }
+
+  onFilterButtonClick() {
+    this.filterModalOpen = true;
+  }
+
+  onxClick() {
+    this.filterModalOpen = false;
   }
 }

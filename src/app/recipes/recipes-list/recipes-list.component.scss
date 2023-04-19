@@ -1,13 +1,82 @@
 @import '../../../scss/variables';
 
+
 .recipes-list-container {
-  width: 100%;
-  max-width: 60rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 35rem;
+}
+
+.modal-container {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height: 100vh;
+
+  background-color: rgba($dominant-color, 0.90);
+
+  z-index: 100;
+
+  padding: 1rem;
+}
+
+.ipt-container {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.btn-default.invalid {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.btn-x {
+  border: none;
+  background-color: rgba($dominant-color, 0.95);
+}
+
+.btn-x img {
+  width: 1.5rem;
+  // filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
+  filter: invert(41%) sepia(30%) saturate(0%) hue-rotate(211deg) brightness(89%) contrast(85%);
+}
+
+.ipt-container .lbl-default {
+  width: fit-content;
+}
+
+.form-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.filter-sort-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  gap:2rem;
+
+  margin-top: 1.5rem;
+  padding: 0.5rem;
 }
 
 .filter-sort-container {
-  width: 100%;
-  max-width: 30rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   padding: 0.5rem;
 }
 
@@ -35,6 +104,11 @@
   flex-direction: row;
   padding: 0.5rem;
   justify-content: space-between;
+}
+
+.btn-default {
+  width:35%;
+  transition: opacity 500ms ease-in-out 0ms;
 }
 
 .btns-container{
@@ -86,21 +160,32 @@
   position: relative;
 }
 
-.recipes-nav-btn.comm-rec::before {
-  content: "still in development";
-  position: absolute;
-  top:-1.25rem;
-  left:0;
-  color: $accent-text-color;
+.empty-list-message {
+  margin-top: 2rem;
+  text-align: center;
+  color: $default-text-color;
+  font-size: 0.75rem;
+  padding: 0 0.5rem;
 }
+
+
+// .recipes-nav-btn.comm-rec::before {
+//   content: "still in development";
+//   position: absolute;
+//   top:-1.25rem;
+//   left:0;
+//   color: $accent-text-color;
+// }
 
 .list-header {
   margin-top: 1rem;
-  max-width: 56rem;
-  width: 90%;
+  // margin-right: calc(3.25rem + 5px);
   padding:0.5rem;
+  padding-right: calc(2.25rem + 5px);
+  padding-left: 0.5rem;
 
   color: $default-text-color;
+  font-size: 0.75rem;
 
   display: flex;
   flex-direction: row;
@@ -131,17 +216,51 @@
 .tags-container {
   display: flex;
   flex-direction: row;
+  gap:5px;
+  flex-wrap: wrap;
 }
 
 .btn-x {
   width:3rem;
 }
 
+.tag-x {
+  border:none;
+  width: 1rem;
+  background-color: $accent-color;
+}
+
 .tag-container {
+  padding: 0.25rem 0.5rem;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  width:49%;
+  margin-bottom: 0.5rem;
+  outline: 1px solid $accent-text-color;
+  background-color: $accent-color;
+  border-radius: 5px;
 }
 
 .tag {
   width:fit-content;
+  font-size: 0.85rem;
+  color: $default-text-color;
+}
+
+.btn-sorting {
+  padding: 0.25rem 0.5rem;
+  width:35%;
+  border-radius: 5px;
+  background-color: $accent-color;
+  border: none;
+  outline: 2px solid $accent-cta-color;
+  color: $accent-text-color;
+  box-shadow: 0px 0px 8px 0px $accent-cta-color;
+  font-weight: bolder;
+}
+
+.btn-sorting.active {
+  color: $accent-color;
+  background-color: $accent-cta-color;
 }
