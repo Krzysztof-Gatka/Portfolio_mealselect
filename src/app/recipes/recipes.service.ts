@@ -103,6 +103,7 @@ export class RecipesService {
   }
 
   private _fetchRecipesBase(): void {
+    this.error = false;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
     this.http.get<Recipe[]>(Fetch_Recipes_URL, {params: params})
@@ -117,11 +118,12 @@ export class RecipesService {
       .subscribe((recipes) => {
         this.recipesBase = recipes.slice();
         this.recipesChanged.next(Recipes_Base);
-        if(!this.error) this.recipesBaseFetched;
+        if(!this.error) this.recipesBaseFetched = true;
     });
   }
 
   private _fetchUserRecipes(): void {
+    this.error = false;
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
     const URL = Default_URL + user.uid + '/recipes.json';
@@ -142,7 +144,7 @@ export class RecipesService {
           this.userRecipes = recipes.slice();
         }
         this.recipesChanged.next(User_Recipes);
-        if(!this.error) this.userRecipesFetched;
+        if(!this.error) this.userRecipesFetched = true;
       });
   }
 }
