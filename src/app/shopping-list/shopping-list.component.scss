@@ -25,6 +25,21 @@
 
 }
 
+.empty-list-message {
+  padding: 0.5rem 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-list-message p {
+  text-align: center;
+  color: $default-text-color;
+  font-size: 0.75rem;
+}
+
 .inputs-container {
   display: flex;
   flex-direction: row;

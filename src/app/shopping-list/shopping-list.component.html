@@ -41,6 +41,10 @@
       ></app-shopping-list-element>
     </div>
 
+    <div class="empty-list-message" *ngIf="shoppingListElements === undefined || shoppingListElements.length === 0">
+      <p>Your Shopping List is empty</p>
+    </div>
+
     <div class="btns-container">
       <button *ngIf="deletedProductsAvailable" class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
       <button *ngIf="shoppingListElements?.length !== 0" class="btn-default" (click)="onClearList()">Clear list</button>
