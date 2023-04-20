@@ -71,13 +71,13 @@ export class RecipesService {
     return recipes;
   }
 
-  private _putRecipes(): void {
+  private _putRecipes(pantryUpdate: boolean = false): void {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
     const recipes = this.userRecipes!.slice();
     this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
       .subscribe(() => {
-        this.toastr.success('Successfully updated Your Recipes');
+        if (!pantryUpdate) this.toastr.success('Successfully updated Your Recipes');
         // this.router.navigate(['/recipes']);
       });
   }
@@ -90,18 +90,16 @@ export class RecipesService {
       recipe.ingredients = recipe.ingredients.map((ing) => {
 
         const inPantry = pantry.some((prod) => {
-          console.log(prod.name + '===' + ing.name + '&&' + prod.quantity! +">=" + ing.quantity!)
           return prod.name === ing.name && prod.quantity! >= ing.quantity!
         })
 
         ing.inPantry = inPantry;
         return ing;
       })
-      console.log(recipe);
       return recipe;
     })
-
-    this._putRecipes();
+    this.recipesChanged.next(User_Recipes);
+    this._putRecipes(true);
   }
 
   addRecipe(recipe: Recipe): void {
