@@ -21,9 +21,6 @@ export class RecipesListElementComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    if(!this.pantryService.pantryFetched) {
-      this.pantryService.fetchPantry();
-    }
     this.ingsInPantry = this.recipe.ingredients.filter(ing => ing.inPantry).length;
   }
 
