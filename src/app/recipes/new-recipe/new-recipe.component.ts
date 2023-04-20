@@ -42,7 +42,7 @@ export class NewRecipeComponent implements OnInit{
   editingStepIndex: number = -1;
   units = units;
   recipe: Recipe = new Recipe(
-    new Date().getTime(),
+    new Date().getTime().toString(),
     'Name',
     [
     ],

@@ -105,6 +105,7 @@ export class RecipesService {
   }
 
   addRecipe(recipe: Recipe): void {
+    recipe.id = this.authService.user?.email! + recipe.id;
     if(this.userRecipes === null || this.userRecipes === undefined) {
       this.userRecipes = [recipe];
     } else {
@@ -114,7 +115,7 @@ export class RecipesService {
     this._putRecipes();
   }
 
-  deleteRecipe(id: number): void {
+  deleteRecipe(id: string): void {
     this.userRecipes = this.userRecipes!.filter((recipe) => recipe.id !== id);
     this.recipesChanged.next(User_Recipes);
     this._putRecipes();
