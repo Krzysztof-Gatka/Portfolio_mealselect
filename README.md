@@ -6,4 +6,5 @@ TODO
   - (CSS) find colors for the app 
 
 What i learnt:
+  - DON'T use temporary solutions, instead write code in right way at the beggining
   - Think about layout and color pallete at the beginning of project development
