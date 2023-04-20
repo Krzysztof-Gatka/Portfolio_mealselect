@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, catchError, of } from "rxjs";
+import { Subject, catchError, map, of } from "rxjs";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
@@ -14,9 +14,10 @@ export const Default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.f
 
 @Injectable({providedIn: 'root'})
 export class RecipesService {
+
   private recipesBase: Recipe[] | undefined;
   private userRecipes: Recipe[] | undefined;
-  private communityRecipes: Recipe[] = [];
+  private communityRecipes: Recipe[] | undefined;
 
   recipesBaseFetched: boolean = false;
   userRecipesFetched: boolean = false;
@@ -57,49 +58,30 @@ export class RecipesService {
         if(this.userRecipes === null || this.userRecipes === undefined) {
           recipes = []
         } else {
-          recipes = this.userRecipes;
+          recipes = this._updateRecipesInPantry(this.userRecipes);
         }
         break;
       default:
         if(this.recipesBase === null || this.recipesBase === undefined) {
           recipes = [];
         } else {
-          recipes = this.recipesBase;
+          recipes = this._updateRecipesInPantry(this.recipesBase);
         }
     }
 
     return recipes;
   }
 
-  private _putRecipes(pantryUpdate: boolean = false): void {
+
+  private _putRecipes(): void {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
     const recipes = this.userRecipes!.slice();
     this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
-      .subscribe(() => {
-        if (!pantryUpdate) this.toastr.success('Successfully updated Your Recipes');
+    .subscribe(() => {
+        this.toastr.success('Successfully updated Your Recipes');
         // this.router.navigate(['/recipes']);
       });
-  }
-
-  updateInPantry(): void {
-    //userRecipes
-    const pantry = this.pantryService.getPantry();
-    this.userRecipes = this.userRecipes?.map((recipe) => {
-
-      recipe.ingredients = recipe.ingredients.map((ing) => {
-
-        const inPantry = pantry.some((prod) => {
-          return prod.name === ing.name && prod.quantity! >= ing.quantity!
-        })
-
-        ing.inPantry = inPantry;
-        return ing;
-      })
-      return recipe;
-    })
-    this.recipesChanged.next(User_Recipes);
-    this._putRecipes(true);
   }
 
   addRecipe(recipe: Recipe): void {
@@ -137,12 +119,12 @@ export class RecipesService {
           this.error = true;
           return of([]);
         })
-      )
-      .subscribe((recipes) => {
-        this.recipesBase = recipes.slice();
-        this.recipesChanged.next(Recipes_Base);
-        if(!this.error) this.recipesBaseFetched = true;
-    });
+        )
+        .subscribe((recipes) => {
+          this.recipesBase = recipes.slice();
+          this.recipesChanged.next(Recipes_Base);
+          if(!this.error) this.recipesBaseFetched = true;
+        });
   }
 
   private _fetchUserRecipes(): void {
@@ -152,13 +134,13 @@ export class RecipesService {
     const URL = Default_URL + user.uid + '/recipes.json';
 
     this.http.get<Recipe[]>(URL, {params: params})
-      .pipe(
-        catchError((error) => {
-          console.warn(error);
-          this.toastr.error('Error: Downloading of your recipes from sever failed.');
-          this.error = true;
-          return of([]);
-        })
+    .pipe(
+      catchError((error) => {
+        console.warn(error);
+        this.toastr.error('Error: Downloading of your recipes from sever failed.');
+        this.error = true;
+        return of([]);
+      })
       )
       .subscribe((recipes) => {
         if (recipes === null) {
@@ -169,5 +151,20 @@ export class RecipesService {
         this.recipesChanged.next(User_Recipes);
         if(!this.error) this.userRecipesFetched = true;
       });
+  }
+
+  private _updateRecipesInPantry(recipes: Recipe[]): Recipe[] {
+    const pantry = this.pantryService.getPantry();
+    recipes = recipes.map((recipe) => {
+        recipe.ingredients = recipe.ingredients.map((ing) => {
+          const inPantry = pantry.some((prod) => {
+            return prod.name === ing.name && prod.quantity! >= ing.quantity!
+          })
+          ing.inPantry = inPantry;
+          return ing;
+        })
+        return recipe;
+      });
+      return recipes;
   }
 }

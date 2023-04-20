@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  pantrySub: Subscription | undefined;
   authSub: Subscription | undefined;
 
   constructor(
@@ -33,13 +32,9 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.pantrySub = this.pantryService.pantryChanged.subscribe(()=> {
-      this.recipesService.updateInPantry();
-    })
   }
 
   ngOnDestroy(): void {
     this.authSub?.unsubscribe();
-    this.pantrySub?.unsubscribe();
   }
 }
