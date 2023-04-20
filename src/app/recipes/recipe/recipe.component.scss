@@ -1,8 +1,7 @@
 @import '../../../scss/variables';
 
 .recipe-container {
-  padding: 1rem;
-  width: 100%;
+  padding: 0.5rem;
   max-width: 60rem;
 }
 
@@ -12,36 +11,57 @@
 }
 
 .list-header {
-  color: $accent-text-color
+  color: $accent-cta-color;
+  margin-top: 1rem;
 }
 
-.section-ingredients {
-  padding: 1rem;
-}
-
-.section-preparation-steps {
-  padding: 1rem;
+.sections-container {
+  padding: 0.5rem;
 }
 
 .section {
-  margin-top: 0.75rem;
+  margin-top: 0.25rem;
   min-width: 20rem;
+}
+
+.prep-time {
+  margin-top: 0.75rem;
 }
 
 .list {
   margin-top:0.5rem;
-  padding:0.25rem 2rem;
+  padding:0.25rem;
+  padding-left: 1.5rem;
   color: $default-text-color;
-  background-color: $accent-color;
-  box-shadow: 0px 0px 5px 0px $accent-text-color;
+  // background-color: $accent-color;
+  // box-shadow: 0px 0px 5px 0px $accent-text-color;
   border-radius: 5px;
   width: fit-content;
 }
 
+.description {
+  font-size: 0.75rem;
+  color: $default-text-color;
+}
 
+.p-tags {
+  font-size: 0.7rem;
+  color: $accent-text-color;
+  font-weight: bolder;
+}
+
+ul {
+  list-style-type: circle;
+
+}
 
 .list-element {
   padding: 0.10rem 0.25rem;
+}
+
+.list-element.bought {
+  color: $accent-text-color;
+  list-style-type: disc;
 }
 
 .sections-container {
@@ -52,6 +72,7 @@
 
 
 .btns-container {
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;

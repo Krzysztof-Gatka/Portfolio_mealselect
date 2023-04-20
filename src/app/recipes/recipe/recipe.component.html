@@ -4,10 +4,25 @@
 
     <div class="sections-container">
 
+      <section class="section">
+        <p class="p-tags"> <span class="tag" *ngFor="let tag of recipe!.tags; let i = index">{{ tag }}{{ recipe!.tags.length === 1 || i === recipe!.tags.length-1 ? '.' : ',' }} </span></p>
+      </section>
+
+      <section class="section">
+        <p class="description">{{ recipe!.description }}</p>
+      </section>
+
+      <section class="section prep-time">
+        <p class="p-tags"> {{ recipe!.prepTime }} min</p>
+        <p class="p-tags"> {{ recipe!.difficulty }} </p>
+        <p class="p-tags"> {{ recipe!.servings }} servings</p>
+        <p *ngIf="recipe!.lastPrepDate" class="p-tags">Last Preparation date: {{ recipe!.lastPrepDate | date}} </p>
+      </section>
+
       <section class="section-ingredients section">
         <h3 class="list-header">Ingredients</h3>
         <ul class="list">
-          <li class="list-element" *ngFor="let product of recipe!.ingredients">
+          <li class="list-element" [ngClass]="product.bought ? 'bought' : ''" *ngFor="let product of recipe!.ingredients">
             {{ product.name }} {{ product.quantity }} {{ product.unit}}
           </li>
         </ul>
@@ -15,16 +30,16 @@
 
       <section class="section-preparation-steps section">
         <h3 class="list-header">Prepartion</h3>
-        <ul class="list">
+        <ol class="list">
           <li class="list-element" *ngFor="let step of recipe!.prepSteps">
             {{ step }}
           </li>
-        </ul>
+        </ol>
       </section>
 
     </div>
     <div class="btns-container">
-      <button class="btn-default" (click)="onAddToMyRecipes()">Add Recipe to My Recipes</button>
+      <button *ngIf="recipesType === 'recipes-base'" class="btn-default" (click)="onAddToMyRecipes()">Add Recipe to My Recipes</button>
       <button class="btn-default" (click)="onAddToShoppingListClick()">Add Ingredients to shopping List</button>
       <button *ngIf="recipesType === 'user-recipes'" class="btn-default" [routerLink]="['/edit-recipe', recipe!.id]">Edit Recipe</button>
       <button *ngIf="recipesType === 'user-recipes'" class="btn-default" (click)="onDeleteRecipeClick(recipe!.id)">Delete Recipe</button>

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Recipe } from '../../recipe/recipe.model';
 import { PantryService } from 'src/app/pantry/pantry.service';
+import { RecipesService } from '../../recipes.service';
 
 @Component({
   selector: 'app-recipes-list-element',
@@ -14,19 +15,26 @@ export class RecipesListElementComponent implements OnInit{
   ingsInPantry: number = 0;
   details: boolean = false;
 
-  constructor(private pantryService: PantryService) {}
+  constructor(
+    private pantryService: PantryService,
+    private recipesService: RecipesService
+  ) {}
 
   ngOnInit(): void {
     if(!this.pantryService.pantryFetched) {
       this.pantryService.fetchPantry();
     }
     const pantry = this.pantryService.getPantry();
-    this.recipe.ingredients.map((ingredient) => {
+    this.recipe.ingredients = this.recipe.ingredients.map((ingredient) => {
       const ingInPantry = pantry.find(product => product.name === ingredient.name)
       if (ingInPantry?.quantity! >= ingredient.quantity!) {
+        ingredient.bought = true
         this.ingsInPantry++;
       }
-    })
+      return ingredient;
+    });
+
+    // this.recipesService.updateRecipe(this.recipe);
   }
 
   onMoreBtnClick():void {

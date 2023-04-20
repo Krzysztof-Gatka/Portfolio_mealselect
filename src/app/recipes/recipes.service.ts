@@ -76,7 +76,7 @@ export class RecipesService {
     this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
       .subscribe(() => {
         this.toastr.success('Successfully updated Your Recipes');
-        this.router.navigate(['/recipes']);
+        // this.router.navigate(['/recipes']);
       });
   }
 
