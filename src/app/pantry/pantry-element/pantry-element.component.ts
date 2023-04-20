@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Product } from 'src/app/shopping-list/shopping-list-element/shopping-list-element.model';
 import { PantryService } from '../pantry.service';
 import { Subscription } from 'rxjs';
+import { PantryElement } from './pantry.model';
 
 @Component({
   selector: 'app-pantry-element',
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./pantry-element.component.scss']
 })
 export class PantryElementComponent implements OnInit, OnDestroy{
-  @Input() product!: Product;
+  @Input() product!: PantryElement;
   @Input() index!: number;
   @ViewChild('btnMore') btnMore: ElementRef<HTMLButtonElement> | undefined;
 

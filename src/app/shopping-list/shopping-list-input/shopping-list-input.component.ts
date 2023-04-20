@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ShoppingListService } from '../shopping-list.service';
-import { Product } from '../shopping-list-element/shopping-list-element.model';
 import { Subscription } from 'rxjs';
+import { ShoppingListElement } from '../shopping-list-element/shopping-list-element.model';
 
 @Component({
   selector: 'app-shopping-list-input',
@@ -18,10 +18,10 @@ export class ShoppingListInputComponent implements OnInit, OnDestroy {
     productUnit: new FormControl<string | null | undefined>(null)
   })
 
-  @Output() itemAdded = new EventEmitter<Product>();
-  @Output() saveButtonClicked = new EventEmitter<Product>();
+  @Output() itemAdded = new EventEmitter<ShoppingListElement>();
+  @Output() saveButtonClicked = new EventEmitter<ShoppingListElement>();
   @Input() editing: boolean | undefined;
-  @Input() product: Product | undefined;
+  @Input() product: ShoppingListElement | undefined;
   sub: Subscription | undefined;
 
   constructor(private shoppingListService: ShoppingListService) {}
@@ -52,10 +52,10 @@ export class ShoppingListInputComponent implements OnInit, OnDestroy {
   }
 
 
-  private _createProduct(): Product {
+  private _createProduct(): ShoppingListElement {
     const name = this.form.controls.productName.value!;
     const quantity = +this.form.controls.productQuantity.value!;
     const unit = this.form.controls.productUnit.value!;
-    return new Product(name, quantity, unit);
+    return new ShoppingListElement(name, quantity, unit);
   }
 }

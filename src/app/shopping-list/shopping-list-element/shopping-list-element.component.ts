@@ -2,8 +2,8 @@ import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@ang
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ShoppingListService } from '../shopping-list.service';
-import { Product } from './shopping-list-element.model';
 import { Subscription } from 'rxjs';
+import { ShoppingListElement } from './shopping-list-element.model';
 
 @Component({
   selector: 'app-shopping-list-element',
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./shopping-list-element.component.scss']
 })
 export class ShoppingListElementComponent implements OnInit, OnDestroy {
-  @Input() product: Product | undefined;
+  @Input() product: ShoppingListElement | undefined;
   @Input() productIndex: number | undefined;
   @ViewChild('btnMore') btnMore: ElementRef<HTMLButtonElement> | undefined;
 
@@ -67,7 +67,7 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
     this.shoppingListService.productSaved.next(this.productIndex!);
   }
 
-  onSavebuttonClikced(product: Product): void {
+  onSavebuttonClikced(product: ShoppingListElement): void {
     this.product = product;
     this.shoppingListService.updateProduct(this.productIndex!, this.product);
   }

@@ -1,12 +1,12 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Product } from 'src/app/shopping-list/shopping-list-element/shopping-list-element.model';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
 import { units } from '../recipe/recipe.model';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User_Recipes } from '../recipes-list/recipes-list.component';
+import { Ingredient } from '../recipe/ingredient.model';
 
 @Component({
   selector: 'app-new-recipe',
@@ -67,7 +67,7 @@ export class NewRecipeComponent implements OnInit{
     const productQuantity = +this.ingredientForm.controls.productQuantity.value!;
     const productUnit = this.ingredientForm.controls.productUnit.value!;
 
-    this.recipe.ingredients.push(new Product(productName, productQuantity, productUnit))
+    this.recipe.ingredients.push(new Ingredient(productName, productQuantity, productUnit))
     this.ingredientForm.reset();
     this.ingNameInpt?.nativeElement.focus();
   }
@@ -131,7 +131,7 @@ export class NewRecipeComponent implements OnInit{
     const productQuantity = +this.ingredientForm.controls.productQuantity.value!;
     const productUnit = this.ingredientForm.controls.productUnit.value!;
 
-    this.recipe.ingredients[this.editingIngIndex] = new Product(productName, productQuantity, productUnit);
+    this.recipe.ingredients[this.editingIngIndex] = new Ingredient(productName, productQuantity, productUnit);
     this.editingIngIndex = -1;
     this.ingredientForm.reset();
     this.ingNameInpt?.nativeElement.focus();
