@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ShoppingListService } from './shopping-list.service';
-import { Product } from './shopping-list-element/product.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ShoppingListElement } from './shopping-list-element/shopping-list-element.model';
 
 @Component({
   selector: 'app-shopping-list',
@@ -11,7 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./shopping-list.component.scss']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
-  shoppingListElements: Product[] | undefined;
+  shoppingListElements: ShoppingListElement[] | undefined;
 
   deletedProductsAvailable: boolean = false;
   modalOpened: boolean = false;
@@ -71,7 +71,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.deleteSub?.unsubscribe();
   }
 
-  onItemAdded(product: Product): void {
+  onItemAdded(product: ShoppingListElement): void {
     this.shoppingListElements = this.shoppingListService.addProduct(product);
   }
 
@@ -106,11 +106,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.form.reset();
   }
 
-  private _createProduct(): Product {
+  private _createProduct(): ShoppingListElement {
     const name = this.form.controls.productName.value!;
     const quantity = this.form.controls.productQuantity.value;
     const unit = this.form.controls.productUnit.value;
-    return new Product(name, quantity, unit);
+    return new ShoppingListElement(name, quantity, unit);
   }
 
   onSaveClick(): void {

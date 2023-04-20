@@ -1,21 +1,23 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, catchError, of } from "rxjs";
+import { Subject, catchError, map, of } from "rxjs";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
 import { AuthService } from "../auth/auth.service";
 import { Recipe } from "./recipe/recipe.model";
 import { User_Recipes, Recipes_Base, Community_Recipes } from "./recipes-list/recipes-list.component";
+import { PantryService } from "../pantry/pantry.service";
 
 export const Fetch_Recipes_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/recipes.json';
 export const Default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/';
 
 @Injectable({providedIn: 'root'})
 export class RecipesService {
+
   private recipesBase: Recipe[] | undefined;
   private userRecipes: Recipe[] | undefined;
-  private communityRecipes: Recipe[] = [];
+  private communityRecipes: Recipe[] | undefined;
 
   recipesBaseFetched: boolean = false;
   userRecipesFetched: boolean = false;
@@ -28,6 +30,7 @@ export class RecipesService {
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
+    private pantryService: PantryService,
   ) {}
 
   fetchRecipes(recipesType: string) {
@@ -55,32 +58,34 @@ export class RecipesService {
         if(this.userRecipes === null || this.userRecipes === undefined) {
           recipes = []
         } else {
-          recipes = this.userRecipes;
+          recipes = this._updateRecipesInPantry(this.userRecipes);
         }
         break;
       default:
         if(this.recipesBase === null || this.recipesBase === undefined) {
           recipes = [];
         } else {
-          recipes = this.recipesBase;
+          recipes = this._updateRecipesInPantry(this.recipesBase);
         }
     }
 
     return recipes;
   }
 
+
   private _putRecipes(): void {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
     const recipes = this.userRecipes!.slice();
     this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
-      .subscribe(() => {
+    .subscribe(() => {
         this.toastr.success('Successfully updated Your Recipes');
-        this.router.navigate(['/recipes']);
+        // this.router.navigate(['/recipes']);
       });
   }
 
   addRecipe(recipe: Recipe): void {
+    recipe.id = this.authService.user?.email! + recipe.id;
     if(this.userRecipes === null || this.userRecipes === undefined) {
       this.userRecipes = [recipe];
     } else {
@@ -90,7 +95,7 @@ export class RecipesService {
     this._putRecipes();
   }
 
-  deleteRecipe(id: number): void {
+  deleteRecipe(id: string): void {
     this.userRecipes = this.userRecipes!.filter((recipe) => recipe.id !== id);
     this.recipesChanged.next(User_Recipes);
     this._putRecipes();
@@ -103,6 +108,7 @@ export class RecipesService {
   }
 
   private _fetchRecipesBase(): void {
+    this.error = false;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
     this.http.get<Recipe[]>(Fetch_Recipes_URL, {params: params})
@@ -113,27 +119,28 @@ export class RecipesService {
           this.error = true;
           return of([]);
         })
-      )
-      .subscribe((recipes) => {
-        this.recipesBase = recipes.slice();
-        this.recipesChanged.next(Recipes_Base);
-        if(!this.error) this.recipesBaseFetched;
-    });
+        )
+        .subscribe((recipes) => {
+          this.recipesBase = recipes.slice();
+          this.recipesChanged.next(Recipes_Base);
+          if(!this.error) this.recipesBaseFetched = true;
+        });
   }
 
   private _fetchUserRecipes(): void {
+    this.error = false;
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
     const URL = Default_URL + user.uid + '/recipes.json';
 
     this.http.get<Recipe[]>(URL, {params: params})
-      .pipe(
-        catchError((error) => {
-          console.warn(error);
-          this.toastr.error('Error: Downloading of your recipes from sever failed.');
-          this.error = true;
-          return of([]);
-        })
+    .pipe(
+      catchError((error) => {
+        console.warn(error);
+        this.toastr.error('Error: Downloading of your recipes from sever failed.');
+        this.error = true;
+        return of([]);
+      })
       )
       .subscribe((recipes) => {
         if (recipes === null) {
@@ -142,7 +149,22 @@ export class RecipesService {
           this.userRecipes = recipes.slice();
         }
         this.recipesChanged.next(User_Recipes);
-        if(!this.error) this.userRecipesFetched;
+        if(!this.error) this.userRecipesFetched = true;
       });
+  }
+
+  private _updateRecipesInPantry(recipes: Recipe[]): Recipe[] {
+    const pantry = this.pantryService.getPantry();
+    recipes = recipes.map((recipe) => {
+        recipe.ingredients = recipe.ingredients.map((ing) => {
+          const inPantry = pantry.some((prod) => {
+            return prod.name === ing.name && prod.quantity! >= ing.quantity!
+          })
+          ing.inPantry = inPantry;
+          return ing;
+        })
+        return recipe;
+      });
+      return recipes;
   }
 }

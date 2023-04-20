@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { Product } from '../shopping-list/shopping-list-element/product.model';
+
 import { PantryService } from './pantry.service';
 import { formatDate } from '@angular/common';
+import { PantryElement } from './pantry-element/pantry.model';
 
 @Component({
   selector: 'app-pantry',
@@ -12,7 +13,7 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./pantry.component.scss']
 })
 export class PantryComponent implements OnInit, OnDestroy{
-  pantry: Product[] | undefined;
+  pantry: PantryElement[] | undefined;
 
   pantryChangesSub: Subscription | undefined;
   pantryElementEditSub: Subscription | undefined;
@@ -74,13 +75,16 @@ export class PantryComponent implements OnInit, OnDestroy{
     this.elementEditing = false;
   }
 
-  _getFormElement(): Product {
+  _getFormElement(): PantryElement {
     const name = this.form.controls.name.value!;
     const qty = this.form.controls.qty.value;
     const unit = this.form.controls.unit.value;
-    const expDate = this.form.controls.date.value;
+    let expDate = null;
+    if(this.form.controls.date.value) {
+       expDate = new Date(this.form.controls.date.value);
+    }
 
-    const newProduct = new Product(name, qty, unit, expDate);
+    const newProduct = new PantryElement(name, qty, unit, expDate);
 
     return newProduct;
   }

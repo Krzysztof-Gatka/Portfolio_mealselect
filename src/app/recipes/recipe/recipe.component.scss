@@ -1,47 +1,67 @@
 @import '../../../scss/variables';
 
 .recipe-container {
-  padding: 1rem;
-  width: 100%;
+  padding: 0.5rem;
   max-width: 60rem;
 }
 
 .header {
-  color: $secondary-text-color;
+  color: $accent-cta-color;
   font-weight: 600;
 }
 
 .list-header {
-  color: $accent-text-color
+  color: $accent-cta-color;
+  margin-top: 1rem;
 }
 
-.section-ingredients {
-  padding: 1rem;
-}
-
-.section-preparation-steps {
-  padding: 1rem;
+.sections-container {
+  padding: 0.5rem;
 }
 
 .section {
-  margin-top: 1rem;
+  margin-top: 0.25rem;
   min-width: 20rem;
+}
+
+.prep-time {
+  margin-top: 0.75rem;
 }
 
 .list {
   margin-top:0.5rem;
-  padding:0.25rem 2rem;
-  color: $secondary-text-color;
-  background-color: $accent-color;
-  box-shadow: 0px 0px 5px 0px $secondary-color;
+  padding:0.25rem;
+  padding-left: 1.5rem;
+  color: $default-text-color;
+  // background-color: $accent-color;
+  // box-shadow: 0px 0px 5px 0px $accent-text-color;
   border-radius: 5px;
   width: fit-content;
 }
 
+.description {
+  font-size: 0.75rem;
+  color: $default-text-color;
+}
 
+.p-tags {
+  font-size: 0.7rem;
+  color: $accent-text-color;
+  font-weight: bolder;
+}
+
+ul {
+  list-style-type: circle;
+
+}
 
 .list-element {
   padding: 0.10rem 0.25rem;
+}
+
+.list-element.bought {
+  color: $accent-text-color;
+  list-style-type: disc;
 }
 
 .sections-container {
@@ -50,29 +70,16 @@
   flex-wrap: wrap;
 }
 
-.btn {
-  margin-top: 2rem;
-
-  cursor: pointer;
-  width: fit-content;
-  font-size: 1.5rem;
-  padding:1rem;
-  box-shadow: 0px 0px 5px 0px $accent-cta-color;
-  border: none;
-  border-radius: 5px;
-  color: $accent-cta-color;
-  background-color: $dominant-color;
-  transition: color 500ms ease-out 0ms, scale 500ms ease-out 0ms, background-color 500ms ease-out 0ms;
-}
-
-.btn:hover {
-  background-color: $accent-cta-color;
-  color: $accent-color;
-  scale: 110%;
-}
 
 .btns-container {
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
 
+.btn-default {
+  width:60%;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
 }

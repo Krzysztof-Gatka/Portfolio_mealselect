@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
-import { User_Recipes, Recipes_Base } from '../recipes-list/recipes-list.component';
 
 import { RecipesService } from '../recipes.service';
 import { Recipe } from './recipe.model';
@@ -46,7 +45,7 @@ export class RecipeComponent implements OnInit, OnDestroy{
     this.recipesService.addRecipe(this.recipe!);
   }
 
-  onDeleteRecipeClick(id: number): void {
+  onDeleteRecipeClick(id: string): void {
     this.recipesService.deleteRecipe(id);
   }
 

@@ -3,12 +3,12 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 
 import { AuthService } from "../auth/auth.service";
-import { Product } from "../shopping-list/shopping-list-element/product.model";
 import { Default_URL } from "../recipes/recipes.service";
+import { PantryElement } from "./pantry-element/pantry.model";
 
 @Injectable({providedIn: 'root'})
 export class PantryService {
-  private pantry: Product[] | undefined;
+  private pantry: PantryElement[] | undefined;
 
   pantryFetched: boolean = false;
 
@@ -26,7 +26,7 @@ export class PantryService {
     const user = this.authService.user!;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
-    this.http.get<Product[]>(Default_URL + user.uid + '/pantry.json', { params: params})
+    this.http.get<PantryElement[]>(Default_URL + user.uid + '/pantry.json', { params: params})
       .subscribe((products)=> {
         this.pantry = products;
         this.pantryFetched = true;
@@ -41,7 +41,7 @@ export class PantryService {
     this.http.put(Default_URL + user.uid + '/pantry.json', this.pantry ,{params: params}).subscribe();
   }
 
-  getPantry(): Product[] {
+  getPantry(): PantryElement[] {
     if(this.pantry) {
       return this.pantry.slice();
     } else {
@@ -55,13 +55,13 @@ export class PantryService {
     this.pantryChanged.next('');
   }
 
-  updateElement(product: Product, index: number): void {
+  updateElement(product: PantryElement, index: number): void {
     this.pantry = this.pantry!.map((prod, i) => (i === index) ? product : prod);
     this._putPantry();
     this.pantryChanged.next('');
   }
 
-  addElement(product: Product): void {
+  addElement(product: PantryElement): void {
     if(this.pantry) {
       this.pantry.push(product);
     } else {

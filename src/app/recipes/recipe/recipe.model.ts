@@ -1,10 +1,10 @@
-import { Product } from "../../shopping-list/shopping-list-element/product.model";
+import { Ingredient } from "./ingredient.model";
 
 export class Recipe {
   constructor(
-    public id: number,
+    public id: string,
     public name: string,
-    public ingredients: Product[],
+    public ingredients: Ingredient[],
     public prepSteps: string[],
     public prepTime: number = 0,
     public difficulty: string = '',

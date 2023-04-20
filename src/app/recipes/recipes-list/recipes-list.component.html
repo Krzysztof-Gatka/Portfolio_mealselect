@@ -26,7 +26,7 @@
   </div>
 
   <div class="filter-sort-menu">
-    <button (click)="onFilterButtonClick()" class="btn-default">Filter & Sort</button>
+    <button *ngIf="recipes !== undefined && recipes.length !==0 && !loading" (click)="onFilterButtonClick()" class="btn-default">Filter & Sort</button>
   </div>
 
   <div *ngIf="filterModalOpen" class="modal-container">
@@ -114,7 +114,7 @@
   </div> -->
 
 
-  <div class="list-header">
+  <div *ngIf="recipes !== undefined && recipes.length !==0 && !loading" class="list-header">
     <p class="header-name header-title">Name</p>
     <p class="header-prep-time header-title">Prep. Time</p>
     <p class="header-difficulty header-title">Difficulty</p>
