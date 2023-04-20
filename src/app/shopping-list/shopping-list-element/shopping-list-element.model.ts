@@ -1,10 +1,10 @@
-export class Product {
+import { Product } from "src/app/recipes/recipe/product.model";
+
+export class ShoppingListElement implements Product {
   constructor(
     public name: string,
     public quantity?: number | null,
     public unit?: string | null,
-    public expDate?: Date | string | null,
     public bought?: boolean,
-    public inPantry?: boolean,
   ) {}
 }

@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@ang
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ShoppingListService } from '../shopping-list.service';
-import { Product } from './product.model';
+import { Product } from './shopping-list-element.model';
 import { Subscription } from 'rxjs';
 
 @Component({

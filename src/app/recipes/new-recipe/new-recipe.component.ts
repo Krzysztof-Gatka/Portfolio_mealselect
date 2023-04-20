@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
+import { Product } from 'src/app/shopping-list/shopping-list-element/shopping-list-element.model';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
 import { units } from '../recipe/recipe.model';

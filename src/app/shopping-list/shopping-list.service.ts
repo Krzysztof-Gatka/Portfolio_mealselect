@@ -5,7 +5,7 @@ import { Subject, catchError, of } from 'rxjs'
 import { AuthService } from "../auth/auth.service";
 import { PantryService } from "../pantry/pantry.service";
 import { Default_URL } from "../recipes/recipes.service";
-import { Product } from "./shopping-list-element/product.model";
+import { Product } from "./shopping-list-element/shopping-list-element.model";
 import { ToastrService } from "ngx-toastr";
 
 @Injectable({providedIn: 'root'})

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { Product } from '../shopping-list/shopping-list-element/product.model';
+import { Product } from '../shopping-list/shopping-list-element/shopping-list-element.model';
 import { PantryService } from './pantry.service';
 import { formatDate } from '@angular/common';
 

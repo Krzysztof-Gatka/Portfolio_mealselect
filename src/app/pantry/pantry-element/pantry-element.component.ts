@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Product } from 'src/app/shopping-list/shopping-list-element/product.model';
+import { Product } from 'src/app/shopping-list/shopping-list-element/shopping-list-element.model';
 import { PantryService } from '../pantry.service';
 import { Subscription } from 'rxjs';
 

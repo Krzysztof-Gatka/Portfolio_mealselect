@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 
 import { AuthService } from "../auth/auth.service";
-import { Product } from "../shopping-list/shopping-list-element/product.model";
+import { Product } from "../shopping-list/shopping-list-element/shopping-list-element.model";
 import { Default_URL } from "../recipes/recipes.service";
 
 @Injectable({providedIn: 'root'})
