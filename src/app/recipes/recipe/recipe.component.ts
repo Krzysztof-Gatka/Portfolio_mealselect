@@ -25,11 +25,9 @@ export class RecipeComponent implements OnInit, OnDestroy{
   ) {}
 
   ngOnInit(): void {
-    console.log(this.recipe!);
     this.sub = this.route.params.subscribe((params) => {
       this.recipesType = params['recipes'];
       this.recipe = this.recipesService.getRecipes(this.recipesType).filter(recipe => recipe.id == params['id'])[0];
-      console.log(this.recipe);
     })
   }
 

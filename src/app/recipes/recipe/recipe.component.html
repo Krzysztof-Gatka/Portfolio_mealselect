@@ -22,7 +22,7 @@
       <section class="section-ingredients section">
         <h3 class="list-header">Ingredients</h3>
         <ul class="list">
-          <li class="list-element" [ngClass]="product.bought ? 'bought' : ''" *ngFor="let product of recipe!.ingredients">
+          <li class="list-element" [ngClass]="product.inPantry ? 'bought' : ''" *ngFor="let product of recipe!.ingredients">
             {{ product.name }} {{ product.quantity }} {{ product.unit}}
           </li>
         </ul>

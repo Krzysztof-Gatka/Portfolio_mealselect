@@ -7,6 +7,7 @@ import { ToastrService } from "ngx-toastr";
 import { AuthService } from "../auth/auth.service";
 import { Recipe } from "./recipe/recipe.model";
 import { User_Recipes, Recipes_Base, Community_Recipes } from "./recipes-list/recipes-list.component";
+import { PantryService } from "../pantry/pantry.service";
 
 export const Fetch_Recipes_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/recipes.json';
 export const Default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -28,6 +29,7 @@ export class RecipesService {
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
+    private pantryService: PantryService,
   ) {}
 
   fetchRecipes(recipesType: string) {
@@ -78,6 +80,28 @@ export class RecipesService {
         this.toastr.success('Successfully updated Your Recipes');
         // this.router.navigate(['/recipes']);
       });
+  }
+
+  updateInPantry(): void {
+    //userRecipes
+    const pantry = this.pantryService.getPantry();
+    this.userRecipes = this.userRecipes?.map((recipe) => {
+
+      recipe.ingredients = recipe.ingredients.map((ing) => {
+
+        const inPantry = pantry.some((prod) => {
+          console.log(prod.name + '===' + ing.name + '&&' + prod.quantity! +">=" + ing.quantity!)
+          return prod.name === ing.name && prod.quantity! >= ing.quantity!
+        })
+
+        ing.inPantry = inPantry;
+        return ing;
+      })
+      console.log(recipe);
+      return recipe;
+    })
+
+    this._putRecipes();
   }
 
   addRecipe(recipe: Recipe): void {

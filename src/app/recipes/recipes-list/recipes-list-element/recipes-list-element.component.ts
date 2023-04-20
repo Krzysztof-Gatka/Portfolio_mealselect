@@ -24,17 +24,7 @@ export class RecipesListElementComponent implements OnInit{
     if(!this.pantryService.pantryFetched) {
       this.pantryService.fetchPantry();
     }
-    const pantry = this.pantryService.getPantry();
-    this.recipe.ingredients = this.recipe.ingredients.map((ingredient) => {
-      const ingInPantry = pantry.find(product => product.name === ingredient.name)
-      if (ingInPantry?.quantity! >= ingredient.quantity!) {
-        ingredient.bought = true
-        this.ingsInPantry++;
-      }
-      return ingredient;
-    });
-
-    // this.recipesService.updateRecipe(this.recipe);
+    this.ingsInPantry = this.recipe.ingredients.filter(ing => ing.inPantry).length;
   }
 
   onMoreBtnClick():void {
