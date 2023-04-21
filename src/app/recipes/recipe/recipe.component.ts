@@ -16,6 +16,7 @@ export class RecipeComponent implements OnInit, OnDestroy{
   recipe: Recipe | undefined;
   recipesType: string = '';
   sub: Subscription | undefined;
+  buttons: boolean = false;
   constructor(
     private recipesService: RecipesService,
     private route: ActivatedRoute,
@@ -39,17 +40,25 @@ export class RecipeComponent implements OnInit, OnDestroy{
       this.shoppingListService.addProduct(product);
     })
     this.toastr.success('Successfully added ingredients to your Shopping List');
+    this.buttons = false;
   }
 
   onAddToMyRecipes() :void{
     this.recipesService.addRecipe(this.recipe!);
+    this.buttons = false;
+
   }
 
   onDeleteRecipeClick(id: string): void {
     this.recipesService.deleteRecipe(id);
+    this.buttons = false;
   }
 
   onEditRecipeClick(id: number) :void{
 
+  }
+
+  onMoreButtonClick() {
+    this.buttons = !this.buttons;
   }
 }

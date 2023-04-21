@@ -1,6 +1,19 @@
 <div class="full-width-flex-container">
   <div class="recipe-container">
-    <h2 class="header">{{ recipe!.name }}</h2>
+
+    <div class="header-container">
+      <h2 class="header">{{ recipe!.name }}</h2>
+      <button (click)="onMoreButtonClick()" class="btn-more">
+        <img *ngIf="!buttons" src="./../../../assets/more-vertical-svgrepo-com.svg" alt="btn-more">
+        <img *ngIf="buttons" src="./../../../assets/cancel2-svgrepo-com.svg" alt="btn-more">
+      </button>
+      <div *ngIf="buttons" class="btns-container">
+        <button *ngIf="recipesType === 'recipes-base'" class="btn-default" (click)="onAddToMyRecipes()">Add Recipe to My Recipes</button>
+        <button class="btn-default" (click)="onAddToShoppingListClick()">Add Ingredients to shopping List</button>
+        <button *ngIf="recipesType === 'user-recipes'" class="btn-default" [routerLink]="['/edit-recipe', recipe!.id]">Edit Recipe</button>
+        <button *ngIf="recipesType === 'user-recipes'" class="btn-default" (click)="onDeleteRecipeClick(recipe!.id)">Delete Recipe</button>
+      </div>
+    </div>
 
     <div class="sections-container">
 
@@ -38,12 +51,7 @@
       </section>
 
     </div>
-    <div class="btns-container">
-      <button *ngIf="recipesType === 'recipes-base'" class="btn-default" (click)="onAddToMyRecipes()">Add Recipe to My Recipes</button>
-      <button class="btn-default" (click)="onAddToShoppingListClick()">Add Ingredients to shopping List</button>
-      <button *ngIf="recipesType === 'user-recipes'" class="btn-default" [routerLink]="['/edit-recipe', recipe!.id]">Edit Recipe</button>
-      <button *ngIf="recipesType === 'user-recipes'" class="btn-default" (click)="onDeleteRecipeClick(recipe!.id)">Delete Recipe</button>
-    </div>
+
   </div>
 
 </div>
