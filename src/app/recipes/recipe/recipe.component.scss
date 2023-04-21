@@ -5,9 +5,27 @@
   max-width: 60rem;
 }
 
+.header-container {
+  background-color: $dominant-color;
+  z-index: 50;
+  position: fixed;
+  top: 2.25rem;
+  left: 0;
+  padding:0.5rem 0.25rem 0.25rem;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  box-shadow: 0px 0px 3px 0px $accent-cta-color;
+}
+
 .header {
   color: $accent-cta-color;
   font-weight: 600;
+  width: fit-content;
+  display: flex;
+  align-items: center;
 }
 
 .list-header {
@@ -16,7 +34,23 @@
 }
 
 .sections-container {
+  margin-top: 2.5rem;
   padding: 0.5rem;
+}
+
+.btn-more img {
+  filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
+}
+
+.btn-more {
+  cursor: pointer;
+
+  width: 3rem;
+
+  border: none;
+  font-weight: bolder;
+  background-color: $dominant-color;
+  z-index: 1;
 }
 
 .section {
@@ -72,14 +106,23 @@ ul {
 
 
 .btns-container {
-  margin-top: 1rem;
+  position: absolute;
+  background-color: $dominant-color;
+
+  top: 6rem;
+  left: 10%;
+  width: 80%;
+
+  padding: 1rem 2rem;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px 0px $accent-cta-color;
 }
 
 .btn-default {
-  width:60%;
   margin-bottom: 0.5rem;
   padding: 0.75rem 1rem;
 }
