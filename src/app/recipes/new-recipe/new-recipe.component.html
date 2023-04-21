@@ -1,123 +1,186 @@
 <div class="full-width-flex-container">
   <div class="new-recipe-container">
 
+    <p class="p-progress" *ngIf="progress !== 4">step {{ progress + 1}} of 4</p>
+    <div class="progression-bar-container">
+      <div [ngClass]=" {'progression-bar-25' : progress === 1, 'progression-bar-50' : progress === 2, 'progression-bar-75': progress===3, 'progression-bar-100': progress===4}" class="progression-bar"></div>
+    </div>
+    <h3 *ngIf="progress === 4" class="header">Your Recipe is ready!</h3>
+    <h3 *ngIf="progress !== 4" class="header"> {{ stepTitles[progress] }}</h3>
+
     <form [formGroup]="recipeForm">
       <div class="recipe-form-container">
-        <input autofocus class="ipt ipt-name" formControlName="name" type="text" [placeholder]="recipe.name" >
 
-        <h3 class="header">
-          Ingredients
-        </h3>
-        <ul>
-          <li class="list-element" *ngFor="let product of recipe.ingredients; let i = index">
-            <p class="ing-attr">{{product.name}} {{(product.quantity === 0) ? '' : product.quantity}} {{ product.unit }}</p>
-            <div class="btns-container">
-              <button class="btn" (click)="onDeleteIngClick(i)">Delete</button>
-              <button class="btn" (click)="onEditIngClick(i)">Edit</button>
-            </div>
-          </li>
-
-          <form [formGroup]="ingredientForm">
-            <div class="ingredients-form-container">
-
-              <div class="ingredients-inputs-container">
-                <input #ing_name_input class="ipt ipt-product-name" formControlName="productName" type="text" placeholder="product Name">
-                <input class="ipt ipt-product-qty" formControlName="productQuantity" type="text" placeholder="quantity">
-                <input class="ipt ipt-product-unit" formControlName="productUnit" type="text" list="units" placeholder="unit">
-                <datalist id="units">
-                  <option *ngFor="let unit of units">{{ unit }}</option>
-                </datalist>
-              </div>
-
-              <button [ngClass]="!ingredientForm.valid ? 'invalid' : ''" *ngIf="editingIngIndex === -1" class="btn btn-add-ing" (click)="onAddIngredient()" >Add Ingredient</button>
-              <button [ngClass]="!ingredientForm.valid ? 'invalid' : ''" *ngIf="editingIngIndex !== -1" class="btn btn-add-ing" (click)="onSaveChangesClick()" >Save Changes</button>
-            </div>
-          </form>
-        </ul>
-
-        <h3 class="header">Preparation</h3>
-        <ul>
-          <li class="list-element" *ngFor="let step of recipe.prepSteps; let i = index">
-            <p class="step">{{ step }}</p>
-            <div class="btns-container">
-              <button class="btn" (click)="onDeleteStepClick(i)">Delete</button>
-              <button class="btn" (click)="onEditStepClick(i)">Edit</button>
-            </div>
-          </li>
-          <form [formGroup]="stepForm">
-            <div class="step-form-container">
-              <input #step_input class="ipt" formControlName="step" type="text" placeholder="Preparation Step">
-              <button [ngClass]="!stepForm.valid ? 'invalid' : ''" *ngIf="editingStepIndex === -1" class="btn btn-add-step" (click)="onAddStep()" >Add Step</button>
-             <button  [ngClass]="!stepForm.valid ? 'invalid' : ''" *ngIf="editingStepIndex !== -1"class="btn btn-add-step" (click)="onSaveStepChangesClick()" >Save Changes</button>
-            </div>
-          </form>
-        </ul>
-
-        <h3 class="header">Optional Attributes</h3>
-
-        <div class="opt-attr-container">
+        <div *ngIf="progress === 0" >
           <input
-            class="ipt"
-            formControlName="prepTime"
-            id="prep-time"
+            autofocus
+            class="ipt-default"
+            formControlName="name"
             type="text"
-            placeholder="Preparation Time"
-          >
-
-          <select
-            class="ipt"
-            formControlName="difficulty"
-            id="difficulty"
-            placeholder="difficulty"
-
-          >
-            <option value="" disabled selected>difficulty</option>
-            <option value="easy">easy</option>
-            <option value="medium">medium</option>
-            <option value="hard">hard</option>
-          </select>
-
-          <input
-            class="ipt"
-            formControlName="servings"
-            id="servings"
-            type="text"
-            placeholder="servings"
+            [placeholder]="recipe.name"
           >
 
           <input
-            class="ipt"
-            formControlName="pricePerServing"
-            id="price-per-serving"
-            type="text"
-            placeholder="Price Per Serving"
-          >
-
-          <input
-            class="ipt description"
-            formControlName="description"
-            id="description"
-            type="text"
-            placeholder="description"
-          >
-
-          <div class="tags-container">
-            <input
-            class="ipt tags"
-            formControlName="tags"
-            id="tags"
-            type="text"
-            placeholder="tag"
+              class="ipt-default"
+              formControlName="prepTime"
+              id="prep-time"
+              type="text"
+              placeholder="Preparation Time (mins)"
             >
-            <button class="btn-tags" (click)="onAddTagClick()">+</button>
-            <p>tags:</p>
-            <p *ngFor="let tag of recipe.tags"> {{ tag }} </p>
-          </div>
 
+            <select
+              class="ipt-default"
+              formControlName="difficulty"
+              id="difficulty"
+              placeholder="difficulty"
+
+            >
+              <option value="" disabled selected>difficulty</option>
+              <option value="easy">easy</option>
+              <option value="medium">medium</option>
+              <option value="hard">hard</option>
+            </select>
+
+            <input
+              class="ipt-default"
+              formControlName="servings"
+              id="servings"
+              type="text"
+              placeholder="servings"
+            >
+
+            <textarea
+              formControlName="description"
+              placeholder="description"
+              class="ipt-default"
+              name=""
+              id=""
+              cols="30"
+              rows="10"
+            >
+            </textarea>
         </div>
 
-        <button *ngIf="!editMode" type="button" class="btn btn-add-recipe" (click)="onAddRecipe()">Add Recipe</button>
-        <button *ngIf="editMode" type="button" class="btn btn-add-recipe" (click)="onSaveChanges(recipe)">Save Changes</button>
+
+        <div *ngIf="progress === 1" class="ingredients-container">
+
+
+          <ul>
+            <form [formGroup]="ingredientForm">
+              <div class="ingredients-form-container">
+
+                <div class="ingredients-inputs-container">
+                  <input
+                    #ing_name_input
+                    class="ipt-default ipt-one-line ipt-name"
+                    formControlName="productName"
+                    type="text"
+                    placeholder="name"
+                  >
+                  <input
+                    class="ipt-default ipt-one-line ipt-qty"
+                    formControlName="productQuantity"
+                    type="text"
+                    placeholder="quantity"
+                  >
+                  <input
+                    class="ipt-default ipt-one-line ipt-unit"
+                    formControlName="productUnit"
+                    type="text"
+                    list="units"
+                    placeholder="unit"
+                  >
+                  <datalist id="units">
+                    <option *ngFor="let unit of units">{{ unit }}</option>
+                  </datalist>
+
+                  <button [ngClass]="!ingredientForm.valid ? 'disabled' : ''" *ngIf="editingIngIndex === -1" class="btn-default btn-add" (click)="onAddIngredient()" >Add</button>
+                  <button [ngClass]="!ingredientForm.valid ? 'disabled' : ''" *ngIf="editingIngIndex !== -1" class="btn-default btn-save" (click)="onSaveChangesClick()" >Save</button>
+
+                </div>
+              </div>
+            </form>
+
+            <li class="lst" *ngFor="let product of recipe.ingredients; let i = index">
+              <p class="list-element">{{product.name}} {{ product.quantity }} {{ product.unit }}</p>
+              <button class="btn-more" (click)="onMoreClick('ings', i)">
+                <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+                <div *ngIf="moreMenu && moreMenu.id === i && moreMenu.open" class="more-menu">
+                  <button (click)="onDeleteIngClick(i)" class="btn-default">delete</button>
+                  <button (click)="onEditIngClick(i)"class="btn-default">edit</button>
+                </div>
+              </button>
+            </li>
+
+
+          </ul>
+        </div>
+
+        <div *ngIf="progress === 2" class="preparation-container">
+          <ul>
+            <form [formGroup]="stepForm">
+              <div class="step-form-container">
+                <input #step_input class="ipt-default" formControlName="step" type="text" placeholder="Preparation Step">
+                <button [ngClass]="!stepForm.valid ? 'disabled' : ''" *ngIf="editingStepIndex === -1" class="btn-default btn-add" (click)="onAddStep()" >Add</button>
+                <button  [ngClass]="!stepForm.valid ? 'disabled' : ''" *ngIf="editingStepIndex !== -1"class="btn-default btn-save" (click)="onSaveStepChangesClick()" >Save</button>
+              </div>
+            </form>
+
+            <li class="lst" *ngFor="let step of recipe.prepSteps; let i = index">
+              <p class="list-element">{{ step }}</p>
+              <button class="btn-more" (click)="onMoreClick('step', i)">
+                <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+                <div *ngIf="moreMenu && moreMenu.id === i && moreMenu.open" class="more-menu">
+                  <button (click)="onDeleteStepClick(i)" class="btn-default">delete</button>
+                  <button (click)="onEditStepClick(i)"class="btn-default">edit</button>
+                </div>
+              </button>
+            </li>
+
+          </ul>
+        </div>
+
+        <div *ngIf="progress === 3" class="tags-container">
+          <form [formGroup]="tagsForm">
+            <div class="tag-form-container">
+              <input
+              class="ipt-default"
+              formControlName="tag"
+              id="tags"
+              type="text"
+              placeholder="tag"
+              >
+              <button [ngClass]="tagsForm.invalid ? 'disabled' : ''" *ngIf="editingTagIndex === -1" class="btn-default" (click)="onAddTagClick()">Add</button>
+              <button [ngClass]="!tagsForm.valid ? 'disabled' : ''" *ngIf="editingTagIndex !== -1" class="btn-default btn-save" (click)="onSaveTagChangesClick()" >Save</button>
+
+            </div>
+          </form>
+          <li class="lst" *ngFor="let tag of recipe.tags; let i = index">
+            <p class="list-element">{{ tag }}</p>
+            <button class="btn-more" (click)="onMoreClick('tag', i)">
+              <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+              <div *ngIf="moreMenu && moreMenu.id === i && moreMenu.open" class="more-menu">
+                <button (click)="onDeleteTagClick(i)" class="btn-default">delete</button>
+                <button (click)="onEditTagClick(i)"class="btn-default">edit</button>
+              </div>
+            </button>
+          </li>
+        </div>
+
+        <div *ngIf="progress === 4">
+          <app-recipe [recipe]="recipe"></app-recipe>
+        </div>
+
+        <div class="btns-container">
+          <button *ngIf="progress !== 4" (click)="onNextClick()" class="btn-default" [ngClass]="recipeForm.valid ? '' : 'disabled'">Next</button>
+          <button *ngIf="progress !== 0" (click)="onBackClick()" class="btn-default" [ngClass]="recipeForm.valid ? '' : 'disabled'">Back</button>
+
+          <button *ngIf="!editMode && progress === 4" type="button" class="btn-default" (click)="onAddRecipe()">Add Recipe</button>
+          <button *ngIf="editMode && progress === 4" type="button" class="btn-default" (click)="onSaveChanges(recipe)">Save Changes</button>
+        </div>
+
+
+
 
       </div>
     </form>

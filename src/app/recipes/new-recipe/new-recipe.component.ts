@@ -14,33 +14,59 @@ import { Ingredient } from '../recipe/ingredient.model';
   styleUrls: ['./new-recipe.component.scss']
 })
 export class NewRecipeComponent implements OnInit{
+  recipeForm = new FormGroup({
+    name: new FormControl<string | null>(null, Validators.required),
+    prepTime: new FormControl<number | null>(null, Validators.required),
+    difficulty: new FormControl<string | null>('', Validators.required),
+    servings: new FormControl<number | null>(null, Validators.required),
+    description: new FormControl<string | null>(null),
+  });
+
   ingredientForm =  new FormGroup({
-    productName: new FormControl('', Validators.required),
-    productQuantity: new FormControl(''),
-    productUnit: new FormControl(''),
+    productName: new FormControl<string | null>(null, Validators.required),
+    productQuantity: new FormControl<number | null>(null),
+    productUnit: new FormControl<string | null>(null),
   });
 
   stepForm =  new FormGroup({
-    step: new FormControl('', Validators.required),
+    step: new FormControl<string | null>('', Validators.required),
   });
 
-  recipeForm = new FormGroup({
-    name: new FormControl(''),
-    prepTime: new FormControl(null),
-    difficulty: new FormControl(''),
-    servings: new FormControl(''),
-    pricePerServing: new FormControl(''),
-    description: new FormControl(''),
-    tags: new FormControl(''),
+  tagsForm = new FormGroup ({
+    tag: new FormControl<string | null>(null, Validators.required),
   })
 
   @ViewChild('ing_name_input') ingNameInpt?: ElementRef<HTMLInputElement>;
   @ViewChild('step_input') stepInput?: ElementRef<HTMLInputElement>;
   paramsSub: Subscription | undefined;
   editMode: boolean = false;
+  moreMenu: { id: number, open: boolean} | undefined;
+
+  stepTitles = [
+    'Basic Attributes',
+    'Ingredients',
+    'Preparation Steps',
+    'Tags',
+ ];
+
+  progress: number = 0;
   editingIngIndex: number = -1;
   editingStepIndex: number = -1;
+  editingTagIndex: number = -1;
   units = units;
+  recipeBasic:
+    {
+      name: string,
+      prepTime: number,
+      difficulty: string,
+      servings: number,
+      description: string | null,
+    } | undefined;
+
+  ingredients: Ingredient[] = [];
+  steps: string[] = [];
+  tags: string[] = [];
+
   recipe: Recipe = new Recipe(
     new Date().getTime().toString(),
     'Name',
@@ -67,7 +93,8 @@ export class NewRecipeComponent implements OnInit{
     const productQuantity = +this.ingredientForm.controls.productQuantity.value!;
     const productUnit = this.ingredientForm.controls.productUnit.value!;
 
-    this.recipe.ingredients.push(new Ingredient(productName, productQuantity, productUnit))
+    this.recipe.ingredients.push(new Ingredient(productName, productQuantity, productUnit));
+    this.ingredients.push(new Ingredient(productName, productQuantity, productUnit));
     this.ingredientForm.reset();
     this.ingNameInpt?.nativeElement.focus();
   }
@@ -75,6 +102,7 @@ export class NewRecipeComponent implements OnInit{
   onAddStep(): void {
     const step = this.stepForm.controls.step.value!;
 
+    this.steps.push(step);
     this.recipe.prepSteps.push(step);
     this.stepForm.reset();
 
@@ -107,10 +135,14 @@ export class NewRecipeComponent implements OnInit{
     this.recipe.prepSteps = this.recipe.prepSteps.filter((recipe, i) => i !== index);
   }
 
+  onDeleteTagClick(index: number): void {
+    this.recipe.tags = this.recipe.tags.filter((recipe, i) => i !== index);
+  }
+
   onEditIngClick(index: number): void {
     const editedIng = this.recipe.ingredients[index];
     this.ingredientForm.controls.productName.setValue(editedIng.name);
-    this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity!.toString())
+    this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity!);
     this.ingredientForm.controls.productUnit.setValue(editedIng.unit!);
 
     this.editingIngIndex = index;
@@ -124,6 +156,14 @@ export class NewRecipeComponent implements OnInit{
 
     this.editingStepIndex = index;
     this.stepInput?.nativeElement.focus();
+  }
+
+  onEditTagClick(index: number) :void {
+    const editedTag = this.recipe.tags[index];
+
+    this.tagsForm.controls.tag.setValue(editedTag);
+
+    this.editingTagIndex = index;
   }
 
   onSaveChangesClick(): void {
@@ -145,17 +185,58 @@ export class NewRecipeComponent implements OnInit{
     this.stepInput?.nativeElement.focus();
   }
 
+  onSaveTagChangesClick(): void {
+    const tag = this.tagsForm.controls.tag.value!;
+    this.recipe.tags[this.editingTagIndex] = tag;
+    this.editingTagIndex = -1;
+    this.stepForm.reset();
+  }
+
   onSaveChanges(recipe: Recipe): void {
     this.recipesService.updateRecipe(recipe);
   }
 
   onAddTagClick(): void {
-    const tag = this.recipeForm.controls.tags.value!;
-    this.recipeForm.controls.tags.reset();
+    const tag = this.tagsForm.controls.tag.value!;
+    this.tagsForm.controls.tag.reset();
     if (this.recipe.tags) {
       this.recipe.tags.push(tag);
     } else {
       this.recipe.tags = [tag];
     }
   }
+
+  onNextClick(): void {
+    if(this.progress === 0) {
+      this.recipeBasic = {
+        name: this.recipeForm.controls.name.value!,
+        prepTime: this.recipeForm.controls.prepTime.value!,
+        difficulty: this.recipeForm.controls.difficulty.value!,
+        servings: this.recipeForm.controls.servings.value!,
+        description: this.recipeForm.controls.description.value
+      }
+    }
+    if(this.moreMenu) {
+      this.moreMenu.open = false;
+    }
+    this.progress = this.progress + 1;
+  }
+
+  onBackClick(): void {
+    this.progress = this.progress - 1;
+  }
+
+  onMoreClick(list: string, id: number): void {
+    if(this.moreMenu) {
+      if(this.moreMenu.id === id) {
+        this.moreMenu.open = !this.moreMenu.open;
+      } else {
+        this.moreMenu.id = id;
+        this.moreMenu.open = true;
+      }
+    } else {
+      this.moreMenu = { id: id, open: true};
+    }
+  }
+
 }
