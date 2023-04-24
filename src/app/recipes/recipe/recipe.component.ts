@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -13,10 +13,11 @@ import { Recipe } from './recipe.model';
   styleUrls: ['./recipe.component.scss'],
 })
 export class RecipeComponent implements OnInit, OnDestroy{
-  recipe: Recipe | undefined;
+  @Input() recipe: Recipe | undefined;
   recipesType: string = '';
   sub: Subscription | undefined;
   buttons: boolean = false;
+  recipePreview: boolean = false;
   constructor(
     private recipesService: RecipesService,
     private route: ActivatedRoute,
@@ -25,10 +26,15 @@ export class RecipeComponent implements OnInit, OnDestroy{
   ) {}
 
   ngOnInit(): void {
-    this.sub = this.route.params.subscribe((params) => {
-      this.recipesType = params['recipes'];
-      this.recipe = this.recipesService.getRecipes(this.recipesType).filter(recipe => recipe.id == params['id'])[0];
-    })
+    if(this.recipe === undefined) {
+      this.sub = this.route.params.subscribe((params) => {
+        this.recipesType = params['recipes'];
+        this.recipe = this.recipesService.getRecipes(this.recipesType).filter(recipe => recipe.id == params['id'])[0];
+      });
+    } else {
+      this.recipePreview = true;
+    }
+
   }
 
   ngOnDestroy(): void {

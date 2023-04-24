@@ -1,7 +1,7 @@
 <div class="full-width-flex-container">
   <div class="recipe-container">
 
-    <div class="header-container">
+    <div *ngIf="!recipePreview"class="header-container">
       <h2 class="header">{{ recipe!.name }}</h2>
       <button (click)="onMoreButtonClick()" class="btn-more">
         <img *ngIf="!buttons" src="./../../../assets/more-vertical-svgrepo-com.svg" alt="btn-more">
@@ -13,6 +13,10 @@
         <button *ngIf="recipesType === 'user-recipes'" class="btn-default" [routerLink]="['/edit-recipe', recipe!.id]">Edit Recipe</button>
         <button *ngIf="recipesType === 'user-recipes'" class="btn-default" (click)="onDeleteRecipeClick(recipe!.id)">Delete Recipe</button>
       </div>
+    </div>
+
+    <div *ngIf="recipePreview">
+      <h2 class="header">{{ recipe!.name }}</h2>
     </div>
 
     <div class="sections-container">
