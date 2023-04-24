@@ -85,7 +85,18 @@ export class NewRecipeComponent implements OnInit{
         const recipe = this.recipesService.getRecipes(User_Recipes).filter((recipe) => params['id'] == recipe.id);
         this.recipe = recipe[0];
       }
-    })
+    });
+    if(this.editMode) this.loadRecipe();
+  }
+
+  loadRecipe(): void {
+    this.recipeForm.controls.name.setValue(this.recipe.name);
+    this.recipeForm.controls.servings.setValue(this.recipe.servings);
+    this.recipeForm.controls.prepTime.setValue(this.recipe.prepTime);
+    this.recipeForm.controls.difficulty.setValue(this.recipe.difficulty);
+    if(this.recipe.description) {
+      this.recipeForm.controls.description.setValue(this.recipe.description);
+    }
   }
 
   onAddIngredient(): void {
@@ -193,6 +204,13 @@ export class NewRecipeComponent implements OnInit{
   }
 
   onSaveChanges(recipe: Recipe): void {
+    this.recipe.name = this.recipeBasic?.name!;
+    this.recipe.prepTime = this.recipeBasic?.prepTime!;
+    this.recipe.difficulty = this.recipeBasic?.difficulty!;
+    this.recipe.servings = this.recipeBasic?.servings!;
+    if(this.recipeBasic?.description) {
+      this.recipe.description = this.recipeBasic?.description;
+    }
     this.recipesService.updateRecipe(recipe);
   }
 
