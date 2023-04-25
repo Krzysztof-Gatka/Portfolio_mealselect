@@ -31,7 +31,6 @@
 
     </div>
 
-    <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
     <div class="shopping-list-elements-container">
       <app-shopping-list-element
@@ -40,6 +39,8 @@
       [productIndex]="i"
       ></app-shopping-list-element>
     </div>
+
+    <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
     <div class="empty-list-message" *ngIf="shoppingListElements === undefined || shoppingListElements.length === 0">
       <p>Your Shopping List is empty</p>

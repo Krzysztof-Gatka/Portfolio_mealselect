@@ -72,6 +72,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   onItemAdded(product: ShoppingListElement): void {
+    this.loading = true;
     this.shoppingListElements = this.shoppingListService.addProduct(product);
   }
 

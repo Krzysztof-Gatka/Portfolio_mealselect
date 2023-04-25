@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, catchError, of } from 'rxjs'
+import { Subject, catchError, of, retry } from 'rxjs'
 
 import { AuthService } from "../auth/auth.service";
 import { PantryService } from "../pantry/pantry.service";
@@ -36,6 +36,7 @@ export class ShoppingListService {
 
     this.http.get<ShoppingListElement[]>(Default_URL + user.uid + '/shopping-list.json', { params: params})
       .pipe(
+        retry({count: 3, delay:2000}),
         catchError((error) => {
           console.warn(error);
           this.toastr.error('Error: Downloading of shopping list from server failed.');
@@ -48,6 +49,23 @@ export class ShoppingListService {
         if (!this.error) this.productsFetched = true;
         this.productsChanged.next('');
       });
+  }
+
+  private _putShoppingList(): void {
+    const user = this.authServcie.user!;
+    const params = new HttpParams().set('auth', this.authServcie.user!.token);
+
+    this.http.put(Default_URL + 'error' + user.uid + '/shopping-list.json', this.shoppingListElements ,{params: params})
+      .pipe(
+        retry({count: 3, delay: 2000}),
+        catchError((error) => {
+          console.warn(error);
+          this.toastr.error('Error: Saving Shopping List on Server failed.');
+          this.error = true;
+          return of(-1);
+        })
+      )
+      .subscribe( (res) => { if(res !== -1) this.productsChanged.next('') });
   }
 
   clearBoughtProducts(): void {
@@ -80,7 +98,6 @@ export class ShoppingListService {
       this.shoppingListElements.push(product);
     }
     this._putShoppingList();
-    this.productsChanged.next('');
     return this.shoppingListElements.slice();
   }
 
@@ -124,12 +141,7 @@ export class ShoppingListService {
       .map(product => this.pantryService.addElement(product));
   }
 
-  private _putShoppingList(): void {
-    const user = this.authServcie.user!;
-    const params = new HttpParams().set('auth', this.authServcie.user!.token);
 
-    this.http.put(Default_URL + user.uid + '/shopping-list.json', this.shoppingListElements ,{params: params}).subscribe();
-  }
 
   private _getLastDeletedProduct(): ShoppingListElement | undefined {
     return this.deletedProductsStack.pop()
