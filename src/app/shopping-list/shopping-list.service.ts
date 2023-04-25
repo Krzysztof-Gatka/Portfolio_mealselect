@@ -55,7 +55,7 @@ export class ShoppingListService {
     const user = this.authServcie.user!;
     const params = new HttpParams().set('auth', this.authServcie.user!.token);
 
-    this.http.put(Default_URL + 'error' + user.uid + '/shopping-list.json', this.shoppingListElements ,{params: params})
+    this.http.put(Default_URL + user.uid + '/shopping-list.json', this.shoppingListElements ,{params: params})
       .pipe(
         retry({count: 3, delay: 2000}),
         catchError((error) => {

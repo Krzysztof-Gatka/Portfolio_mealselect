@@ -1,6 +1,19 @@
 <div class="full-width-flex-container">
   <div class="shopping-list-container" (click)="onClickOutsideElementMenu($event)">
-    <h1 class="header" >Shopping List</h1>
+
+    <div class="header-container">
+      <h1 class="header" >Shopping List</h1>
+      <button class="btn-more" (click)="onMoreClick()">
+        <img *ngIf="!moreMenuOpened" src="./../../assets/more-vertical-svgrepo-com.svg" alt="">
+        <img *ngIf="moreMenuOpened" src="./../../assets/cancel2-svgrepo-com.svg" alt="">
+        <div *ngIf="moreMenuOpened" class="btns-container">
+          <button *ngIf="deletedProductsAvailable" class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
+          <button *ngIf="shoppingListElements?.length !== 0" class="btn-default" (click)="onClearList()">Clear list</button>
+          <button *ngIf="boughtElements" class="btn-default" (click)="onClearBoughtElements()">Clear Bought Elements</button>
+          <button *ngIf="boughtElements" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
+        </div>
+      </button>
+    </div>
 
     <div
     class="inputs-container"
@@ -31,27 +44,27 @@
 
     </div>
 
+    <div class="content">
+      <div *ngIf="loading" class="empty-list-message">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+      </div>
 
-    <div class="shopping-list-elements-container">
-      <app-shopping-list-element
-      *ngFor="let element of shoppingListElements; let i = index"
-      [product]="element"
-      [productIndex]="i"
-      ></app-shopping-list-element>
+      <div class="empty-list-message" *ngIf="(shoppingListElements === undefined || shoppingListElements.length === 0) && !loading">
+        <p>Your Shopping List is empty</p>
+      </div>
+
+      <div class="shopping-list-elements-container">
+        <app-shopping-list-element
+        *ngFor="let element of shoppingListElements; let i = index"
+        [product]="element"
+        [productIndex]="i"
+        ></app-shopping-list-element>
+      </div>
     </div>
 
-    <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
-    <div class="empty-list-message" *ngIf="shoppingListElements === undefined || shoppingListElements.length === 0">
-      <p>Your Shopping List is empty</p>
-    </div>
 
-    <div class="btns-container">
-      <button *ngIf="deletedProductsAvailable" class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
-      <button *ngIf="shoppingListElements?.length !== 0" class="btn-default" (click)="onClearList()">Clear list</button>
-      <button *ngIf="boughtElements" class="btn-default" (click)="onClearBoughtElements()">Clear Bought Elements</button>
-      <button *ngIf="boughtElements" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
-    </div>
+
 
     <div *ngIf="modalOpened" class="clear-list-modal" (click)="onModalClick()">
       <h3 class="header" >Are you sure that you want to clear the list ?</h3>
