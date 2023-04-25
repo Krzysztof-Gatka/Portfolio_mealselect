@@ -19,7 +19,7 @@
 
       </div>
 
-      <div class="add-element-container">
+      <div [ngClass]="{'editing': elementEditing}" class="add-element-container">
         <div class="form-container">
           <form [formGroup]="form">
             <div class="inputs-container">

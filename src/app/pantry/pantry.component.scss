@@ -113,6 +113,10 @@
   gap:5px;
 }
 
+.add-element-container.editing .ipt-default{
+  outline: 3px solid $accent-cta-color;
+}
+
 .ipt-default {
   font-size: 0.8rem;
   height: 100%;
