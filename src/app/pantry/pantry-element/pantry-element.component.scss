@@ -3,6 +3,7 @@
 .pantry-element-container {
   display: flex;
   flex-direction: row;
+  gap:10px;
 }
 
 .basic-attr-container {
@@ -44,7 +45,7 @@
   width: 2rem;
   border: none;
   font-weight: bolder;
-  background-color: $dominant-color;
+  background-color: rgba($dominant-color, 1);
 }
 
 .attr-exp-date {
@@ -68,7 +69,6 @@
 }
 
 
-
 .form-container {
   width:80%;
 }
@@ -77,5 +77,15 @@
   display: flex;
   flex-direction: row;
   gap:5px;
+}
+
+.product-expired-soon {
+  color: $accent-cta-color;
+  font-weight: bold;
+}
+
+.product-exipred {
+  color: rgb(194, 1, 1);
+  font-weight: bolder;
 }
 

@@ -1,13 +1,13 @@
 <div class="full-width-flex-container">
   <div class="pantry-element-container">
 
-    <button class="list-el-default">
+    <button  class="list-el-default">
       <div class="basic-attr-container">
         <p class="attr-name">{{ product.name }}</p>
         <p class="attr-qty">{{ product.quantity }}</p>
         <p class="attr-unit">{{ product.unit }}</p>
       </div>
-      <p class="attr-exp-date">{{ product.expDate | date}}</p>
+      <p [ngClass]="{'product-expired-soon': productExpiredSoon,'product-exipred': productExpired}" class="attr-exp-date">{{ product.expDate | date}}</p>
 
 
     </button>

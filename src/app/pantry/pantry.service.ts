@@ -91,4 +91,10 @@ export class PantryService {
     this._putPantry();
     this.pantryChanged.next('');
   }
+
+  clearPantry(): void {
+    this.pantry = [];
+    this.pantryChanged.next('');
+    this._putPantry();
+  }
 }

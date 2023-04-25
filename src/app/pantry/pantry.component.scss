@@ -1,35 +1,103 @@
 @import '../../scss/variables';
 
 .pantry-container {
+  position: relative;
   padding: 0.25rem;
-  max-width: 60rem;
+}
+
+.more-menu-container {
+  position: fixed;
+  top: 10rem;
+  left: 15%;
+
+  width:70%;
+  padding: 0.75rem 0.75rem;
+  background-color: $accent-color;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+  box-shadow: 0px 0px 5px 0px $accent-cta-color;
+  border-radius: 5px;
+
+  z-index: 100;
+}
+
+.more-menu-container .btn-default {
+  padding: 1rem 0.25rem;
+}
+
+.page-menu {
+  position: fixed;
+  top: 2.3rem;
+  left:0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+
+  background-color: $dominant-color;
+
+  z-index: 50;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
 }
 
 .pantry-elements-container{
   padding:0.5rem;
+  margin-top: 7rem;
+}
+
+.empty-pantry {
+  margin-top: 7rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.empty-pantry p {
+  color:$default-text-color;
+  font-size: 0.85rem;
+  text-align: center;
 }
 
 .header {
-  color: $accent-text-color;
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  padding: 0 0.25rem;
+
+  color: $accent-cta-color;
+}
+
+.btn-more {
+  max-width: 3rem;
+
+  background-color: $dominant-color;
+  border: none;
+}
+
+.btn-more img {
+  filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
 }
 
 .add-element-container {
-  padding: 0.25rem;
-  margin-top:2rem;
+  padding: 0.5rem 0.25rem;
   display: flex;
   flex-direction: row;
   gap: 5px;
 }
 
-.inputs-container {
-  display: flex;
-  flex-direction: row;
-  width: 95%;
-  gap:5px;
-}
-
-.btn-default {
+.btn-default.btn-save,
+.btn-default.btn-add {
   max-width: 3rem;
   transition: opacity 500ms ease-in-out 0ms;
 }
@@ -37,6 +105,17 @@
 .btn-default.invalid {
   opacity: 0.75;
   pointer-events: none;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: row;
+  gap:5px;
+}
+
+.ipt-default {
+  font-size: 0.8rem;
+  height: 100%;
 }
 
 .date-container {
