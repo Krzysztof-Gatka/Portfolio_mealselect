@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { formatDate } from '@angular/common';
 
 
 import { PantryService } from './pantry.service';
-import { formatDate } from '@angular/common';
 import { PantryElement } from './pantry-element/pantry.model';
+import { PantrySortService } from './pantry-sort.service';
 
 @Component({
   selector: 'app-pantry',
@@ -21,6 +22,8 @@ export class PantryComponent implements OnInit, OnDestroy{
   loading: boolean = true;
   elementEditing: boolean = false;
   elementIndex: number | undefined;
+  pageMenuOpened: boolean = false;
+  sorting: boolean = false;
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     qty: new FormControl<number | null | undefined>(null),
@@ -28,13 +31,14 @@ export class PantryComponent implements OnInit, OnDestroy{
     date: new FormControl<Date | string | null | undefined>(null),
   })
 
-  constructor(private pantryService: PantryService) {}
+  constructor(private pantryService: PantryService, private pantrySortService: PantrySortService) {}
 
   ngOnInit(): void {
     this.pantryChangesSub = this.pantryService.pantryChanged.subscribe(()=>{
       this.pantry = this.pantryService.getPantry();
       this.loading = false;
       this.elementEditing = false;
+      this.sorting = false;
       this.form.reset();
     });
 
@@ -81,7 +85,7 @@ export class PantryComponent implements OnInit, OnDestroy{
     const unit = this.form.controls.unit.value;
     let expDate = null;
     if(this.form.controls.date.value) {
-       expDate = new Date(this.form.controls.date.value);
+      expDate = new Date(this.form.controls.date.value);
     }
 
     const newProduct = new PantryElement(name, qty, unit, expDate);
@@ -91,6 +95,29 @@ export class PantryComponent implements OnInit, OnDestroy{
 
   onClickOutsideElementMenu(event: MouseEvent) {
     this.pantryService.clickOutsideMoreMenu.next(event);
+  }
+
+  onMoreClick():void {
+    this.pageMenuOpened = !this.pageMenuOpened;
+  }
+
+  closeMoreMenu(): void {
+    this.pageMenuOpened = false;
+  }
+
+  onClearPantryClick(): void {
+    this.pantryService.clearPantry();
+    this.sorting = false;
+  }
+
+  onSortByDateClick(): void {
+    this.pantry = this.pantrySortService.sortByExpirationDate();
+    this.sorting = true;
+  }
+
+  onClearSort(): void {
+    this.pantry = this.pantryService.getPantry();
+    this.sorting = false;
   }
 }
 
