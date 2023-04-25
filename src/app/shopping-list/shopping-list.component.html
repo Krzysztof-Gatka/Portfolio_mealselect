@@ -1,48 +1,51 @@
 <div class="full-width-flex-container">
   <div class="shopping-list-container" (click)="onClickOutsideElementMenu($event)">
 
-    <div class="header-container">
-      <h1 class="header" >Shopping List</h1>
-      <button class="btn-more" (click)="onMoreClick()">
-        <img *ngIf="!moreMenuOpened" src="./../../assets/more-vertical-svgrepo-com.svg" alt="">
-        <img *ngIf="moreMenuOpened" src="./../../assets/cancel2-svgrepo-com.svg" alt="">
-        <div *ngIf="moreMenuOpened" class="btns-container">
-          <button *ngIf="deletedProductsAvailable" class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
-          <button *ngIf="shoppingListElements?.length !== 0" class="btn-default" (click)="onClearList()">Clear list</button>
-          <button *ngIf="boughtElements" class="btn-default" (click)="onClearBoughtElements()">Clear Bought Elements</button>
-          <button *ngIf="boughtElements" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
-        </div>
-      </button>
+    <div *ngIf="moreMenuOpened" class="more-menu-container">
+      <button [ngClass]="deletedProductsAvailable ? '' : 'invalid'"  class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
+      <button [ngClass]="shoppingListElements?.length !== 0 ? '' : 'invalid'"  class="btn-default" (click)="onClearList()">Clear list</button>
+      <button [ngClass]="boughtElements ? '' : 'invalid'"  class="btn-default" (click)="onClearBoughtElements()">Clear Bought Elements</button>
+      <button [ngClass]="boughtElements ? '' : 'invalid'" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
     </div>
 
-    <div
-    class="inputs-container"
-    [formGroup]="form"
-    >
+    <div class="page-menu">
+      <div class="header-container">
+        <h1 class="header" >Shopping List</h1>
+        <button class="btn-more" (click)="onMoreClick()">
+          <img [src]=" moreMenuOpened ? './../../assets/cancel2-svgrepo-com.svg' : './../../assets/more-vertical-svgrepo-com.svg'">
+        </button>
+      </div>
 
-      <input
-        type="text"
-        class="ipt-default ipt-name"
-        placeholder="Name"
-        formControlName="productName"
-      >
-      <input
-        type="number"
-        class="ipt-default ipt-qty"
-        placeholder="Qty"
-        formControlName="productQuantity"
-      >
-      <input
-        type="text"
-        class="ipt-default ipt-unit"
-        placeholder="Unit"
-        formControlName="productUnit"
+      <div
+      class="inputs-container"
+      [formGroup]="form"
       >
 
-      <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
-      <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
+        <input
+          type="text"
+          class="ipt-default ipt-name"
+          placeholder="Name"
+          formControlName="productName"
+        >
+        <input
+          type="number"
+          class="ipt-default ipt-qty"
+          placeholder="Qty"
+          formControlName="productQuantity"
+        >
+        <input
+          type="text"
+          class="ipt-default ipt-unit"
+          placeholder="Unit"
+          formControlName="productUnit"
+        >
 
+        <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
+        <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
+
+      </div>
     </div>
+
 
     <div class="content">
       <div *ngIf="loading" class="empty-list-message">

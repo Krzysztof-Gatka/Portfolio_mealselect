@@ -3,14 +3,46 @@
 .shopping-list-container {
   position: relative;
   padding: 0.25rem;
-  max-width: 60rem;
+}
+
+.more-menu-container {
+  position: fixed;
+  top: 10rem;
+  left: 15%;
+
+  width:70%;
+  padding: 0.75rem 0.75rem;
+  background-color: $accent-color;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+  box-shadow: 0px 0px 5px 0px $accent-cta-color;
+  border-radius: 5px;
+
+  z-index: 90;
+}
+
+.more-menu-container .btn-default {
+  width: 100%;
+}
+
+.page-menu {
+  position: fixed;
+  top: 2.3rem;
+  left:0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+
+  background-color: $dominant-color;
+
+  z-index: 90;
 }
 
 .header-container {
-  position: fixed;
-  top:2.5rem;
-  left:0;
-  padding:0.25rem;
 
   display: flex;
   flex-direction: row;
@@ -18,7 +50,6 @@
 
 
   background-color: $dominant-color;
-  z-index: 100;
 }
 
 
@@ -54,7 +85,7 @@
   background-color: $accent-color;
   box-shadow: 0px 0px 5px 0px $accent-cta-color;
 
-  z-index: 100;
+  z-index: 90;
 }
 
 .btns-container .btn-default {
@@ -74,7 +105,7 @@
 }
 
 .header {
-  color: $accent-text-color;
+  color: $accent-cta-color;
   margin-bottom: 1rem;
 }
 
@@ -104,7 +135,7 @@
   flex-direction: row;
   gap: 10px;
   padding: 0.5rem 0.25rem;
-  z-index: 100;
+  z-index: 90;
   background-color: $dominant-color;
 }
 
@@ -120,6 +151,11 @@
 
 .btn-default.btn-form {
   padding: 0.25rem 0.25rem;
+}
+
+.btn-default.invalid {
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 .btn-form {
