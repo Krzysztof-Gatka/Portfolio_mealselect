@@ -1,17 +1,18 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, catchError, of, retry } from "rxjs";
 
 import { AuthService } from "../auth/auth.service";
 import { Default_URL } from "../recipes/recipes.service";
 import { PantryElement } from "./pantry-element/pantry.model";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable({providedIn: 'root'})
 export class PantryService {
   private pantry: PantryElement[] | undefined;
 
   pantryFetched: boolean = false;
-
+  error: boolean = false;
   pantryChanged = new Subject();
   pantryElementEdit = new Subject<number>();
   clickOutsideMoreMenu = new Subject<MouseEvent>();
@@ -19,6 +20,7 @@ export class PantryService {
   constructor(
     private authService:AuthService,
     private http: HttpClient,
+    private toastr: ToastrService,
   ) {}
 
 
@@ -27,9 +29,18 @@ export class PantryService {
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
     this.http.get<PantryElement[]>(Default_URL + user.uid + '/pantry.json', { params: params})
+      .pipe(
+        retry({count: 3, delay:2000}),
+        catchError((error) => {
+          console.warn(error);
+          this.toastr.error('Error: Downloading of Pantry from server failed.');
+          this.error = true;
+          return of([]);
+        }),
+      )
       .subscribe((products)=> {
         this.pantry = products;
-        this.pantryFetched = true;
+        if(!this.error) this.pantryFetched = true;
         this.pantryChanged.next('');
       })
   }
@@ -38,7 +49,17 @@ export class PantryService {
     const user = this.authService.user!;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
-    this.http.put(Default_URL + user.uid + '/pantry.json', this.pantry ,{params: params}).subscribe();
+    this.http.put(Default_URL + user.uid + '/pantry.json', this.pantry ,{params: params})
+      .pipe(
+        retry({count: 3, delay: 2000}),
+        catchError((error) => {
+          console.warn(error);
+          this.toastr.error('Error: Saving Pantry on Server failed.');
+          this.error = true;
+          return of(-1);
+        })
+      )
+      .subscribe();
   }
 
   getPantry(): PantryElement[] {
