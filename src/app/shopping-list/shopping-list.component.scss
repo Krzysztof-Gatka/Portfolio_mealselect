@@ -6,8 +6,71 @@
   max-width: 60rem;
 }
 
+.header-container {
+  position: fixed;
+  top:2.5rem;
+  left:0;
+  padding:0.25rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+
+  background-color: $dominant-color;
+  z-index: 100;
+}
+
+
+.header-container .header {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-container .btn-more {
+
+  border: none;
+  background-color: $dominant-color;
+}
+
+.header-container .btns-container {
+  position: absolute;
+
+
+  top: 4rem;
+  left: 15%;
+
+  width: 70%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 5px;
+  padding: 0.75rem;
+  background-color: $accent-color;
+  box-shadow: 0px 0px 5px 0px $accent-cta-color;
+
+  z-index: 100;
+}
+
+.btns-container .btn-default {
+  width: 100%;
+}
+
+.btn-more img {
+  filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
+}
+
 .shopping-list-elements-container {
   padding:0.5rem;
+}
+
+.btn-more {
+  max-width: 3rem;
 }
 
 .header {
@@ -15,15 +78,7 @@
   margin-bottom: 1rem;
 }
 
-.btns-container {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap:1rem;
 
-}
 
 .empty-list-message {
   padding: 0.5rem 0.5rem;
@@ -41,10 +96,16 @@
 }
 
 .inputs-container {
+  position: fixed;
+  top: 6rem;
+  left:0;
+
   display: flex;
   flex-direction: row;
   gap: 10px;
   padding: 0.5rem 0.25rem;
+  z-index: 100;
+  background-color: $dominant-color;
 }
 
 .ipt-qty,
@@ -95,3 +156,6 @@
 }
 
 
+.content {
+  margin-top: 7rem;
+}
