@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, catchError, map, of } from "rxjs";
+import { Subject, catchError, map, of, retry } from "rxjs";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
@@ -78,8 +78,17 @@ export class RecipesService {
     const params = new HttpParams().set('auth', user.token);
     const recipes = this.userRecipes!.slice();
     this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
-    .subscribe(() => {
-        this.toastr.success('Successfully updated Your Recipes');
+      .pipe(
+        retry({count: 3, delay: 2000}),
+        catchError((error) => {
+          console.warn(error);
+          this.toastr.error('Error: Saving Recipes on Server failed.');
+          this.error = true;
+          return of(-1);
+        })
+      )
+      .subscribe((res) => {
+        if(res !== -1) this.toastr.success('Successfully updated Your Recipes');
         // this.router.navigate(['/recipes']);
       });
   }
