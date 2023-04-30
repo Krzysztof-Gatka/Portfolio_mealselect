@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
 import { units } from '../recipe/recipe.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User_Recipes } from '../recipes-list/recipes-list.component';
 import { Ingredient } from '../recipe/ingredient.model';
@@ -60,6 +60,7 @@ export class NewRecipeComponent implements OnInit{
   constructor(
     private recipesService: RecipesService,
     private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -119,6 +120,7 @@ export class NewRecipeComponent implements OnInit{
 
   onAddRecipe(): void {
     this.recipesService.addRecipe(this.recipe);
+    this.router.navigate(['recipes']);
     this.recipeForm.reset();
   }
 
@@ -189,6 +191,7 @@ export class NewRecipeComponent implements OnInit{
 
   onSaveChanges(recipe: Recipe): void {
     this.recipesService.updateRecipe(recipe);
+    this.router.navigate(['recipes']);
   }
 
   onAddTagClick(): void {
