@@ -10,7 +10,6 @@ export class Recipe {
     public difficulty: string = '',
     public tags: string[] = [],
     public servings: number = -1,
-    public lastPrepDate: Date | number = -1,
     public description?: string,
   ) {}
 }
