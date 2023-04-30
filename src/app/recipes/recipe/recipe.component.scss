@@ -20,6 +20,14 @@
   box-shadow: 0px 0px 3px 0px $accent-cta-color;
 }
 
+.name-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  // padding: 0.25rem 0.5rem;
+}
+
 .header {
   color: $accent-cta-color;
   font-weight: 600;
@@ -45,7 +53,7 @@
 .btn-more {
   cursor: pointer;
 
-  width: 3rem;
+  width: 2rem;
 
   border: none;
   font-weight: bolder;
