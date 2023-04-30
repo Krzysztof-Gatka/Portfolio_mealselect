@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User_Recipes } from '../recipes-list/recipes-list.component';
 import { Ingredient } from '../recipe/ingredient.model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-new-recipe',
@@ -54,29 +55,12 @@ export class NewRecipeComponent implements OnInit{
   editingStepIndex: number = -1;
   editingTagIndex: number = -1;
   units = units;
-  recipeBasic:
-    {
-      name: string,
-      prepTime: number,
-      difficulty: string,
-      servings: number,
-      description: string | null,
-    } | undefined;
+  recipe: Recipe = new Recipe(this.authService.user!.email + new Date().getTime().toString(), '', [], []);
 
-  ingredients: Ingredient[] = [];
-  steps: string[] = [];
-  tags: string[] = [];
-
-  recipe: Recipe = new Recipe(
-    new Date().getTime().toString(),
-    'Name',
-    [
-    ],
-    [
-    ],
-  )
-
-  constructor(private recipesService: RecipesService, private route: ActivatedRoute) {}
+  constructor(
+    private recipesService: RecipesService,
+    private route: ActivatedRoute,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.paramsSub = this.route.params.subscribe((params) => {
@@ -105,7 +89,6 @@ export class NewRecipeComponent implements OnInit{
     const productUnit = this.ingredientForm.controls.productUnit.value!;
 
     this.recipe.ingredients.push(new Ingredient(productName, productQuantity, productUnit));
-    this.ingredients.push(new Ingredient(productName, productQuantity, productUnit));
     this.ingredientForm.reset();
     this.ingNameInpt?.nativeElement.focus();
   }
@@ -113,28 +96,30 @@ export class NewRecipeComponent implements OnInit{
   onAddStep(): void {
     const step = this.stepForm.controls.step.value!;
 
-    this.steps.push(step);
     this.recipe.prepSteps.push(step);
     this.stepForm.reset();
 
     this.stepInput?.nativeElement.focus();
   }
 
-  onAddRecipe(): void {
+  _loadRecipeFromForm(): void {
     const name = this.recipeForm.controls.name.value!;
     const prepTime = this.recipeForm.controls.prepTime.value!;
     const difficulty = this.recipeForm.controls.difficulty.value!;
     const servings = this.recipeForm.controls.servings.value!;
-    const description = this.recipeForm.controls.description.value!;
+    if(this.recipeForm.controls.description.value) {
+      this.recipe.description =  this.recipeForm.controls.description.value!;
+    }
 
     this.recipe.name = name;
     this.recipe.prepTime = prepTime;
     this.recipe.difficulty = difficulty;
     this.recipe.servings = +servings;
-    this.recipe.description = description;
+  }
 
+  onAddRecipe(): void {
+    this._loadRecipeFromForm();
     this.recipesService.addRecipe(this.recipe);
-
     this.recipeForm.reset();
   }
 
@@ -204,13 +189,8 @@ export class NewRecipeComponent implements OnInit{
   }
 
   onSaveChanges(recipe: Recipe): void {
-    this.recipe.name = this.recipeBasic?.name!;
-    this.recipe.prepTime = this.recipeBasic?.prepTime!;
-    this.recipe.difficulty = this.recipeBasic?.difficulty!;
-    this.recipe.servings = this.recipeBasic?.servings!;
-    if(this.recipeBasic?.description) {
-      this.recipe.description = this.recipeBasic?.description;
-    }
+    this._loadRecipeFromForm();
+
     this.recipesService.updateRecipe(recipe);
   }
 
@@ -226,13 +206,7 @@ export class NewRecipeComponent implements OnInit{
 
   onNextClick(): void {
     if(this.progress === 0) {
-      this.recipeBasic = {
-        name: this.recipeForm.controls.name.value!,
-        prepTime: this.recipeForm.controls.prepTime.value!,
-        difficulty: this.recipeForm.controls.difficulty.value!,
-        servings: this.recipeForm.controls.servings.value!,
-        description: this.recipeForm.controls.description.value
-      }
+      this._loadRecipeFromForm();
     }
     if(this.moreMenu) {
       this.moreMenu.open = false;
