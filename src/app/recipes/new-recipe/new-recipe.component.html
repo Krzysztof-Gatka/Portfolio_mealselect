@@ -5,56 +5,57 @@
     <div class="progression-bar-container">
       <div [ngClass]=" {'progression-bar-25' : progress === 1, 'progression-bar-50' : progress === 2, 'progression-bar-75': progress===3, 'progression-bar-100': progress===4}" class="progression-bar"></div>
     </div>
-    <h3 *ngIf="progress === 4" class="header">Your Recipe is ready!</h3>
+    <h3 *ngIf="progress === 4" class="header">Recipe Preview</h3>
     <h3 *ngIf="progress !== 4" class="header"> {{ stepTitles[progress] }}</h3>
 
     <form [formGroup]="recipeForm">
       <div class="recipe-form-container">
 
         <div *ngIf="progress === 0" >
+          <label for="name" class="lbl-default">Name</label>
           <input
             autofocus
             class="ipt-default"
             formControlName="name"
             type="text"
-            placeholder="Name"
+            id="name"
           >
 
+          <label for="prep-time" class="lbl-default">Preparation Time (mins)</label>
           <input
               class="ipt-default"
               formControlName="prepTime"
               id="prep-time"
               type="text"
-              placeholder="Preparation Time (mins)"
             >
 
-            <select
-              class="ipt-default"
-              formControlName="difficulty"
-              id="difficulty"
-              placeholder="difficulty"
-
-            >
-              <option value="" disabled selected>difficulty</option>
-              <option value="easy">easy</option>
-              <option value="medium">medium</option>
-              <option value="hard">hard</option>
-            </select>
-
+            <label for="servings" class="lbl-default">Servings</label>
             <input
               class="ipt-default"
               formControlName="servings"
               id="servings"
               type="text"
-              placeholder="servings"
             >
 
+          <label for="difficulty" class="lbl-default">Difficulty</label>
+            <select
+              class="ipt-default"
+              formControlName="difficulty"
+              id="difficulty"
+            >
+              <option value="easy">easy</option>
+              <option value="medium">medium</option>
+              <option value="hard">hard</option>
+            </select>
+
+
+
+            <label for="description" class="lbl-default">Description</label>
             <textarea
               formControlName="description"
-              placeholder="description"
               class="ipt-default"
               name=""
-              id=""
+              id="description"
               cols="30"
               rows="10"
             >

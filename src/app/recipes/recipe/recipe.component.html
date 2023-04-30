@@ -2,11 +2,14 @@
   <div class="recipe-container">
 
     <div *ngIf="!recipePreview"class="header-container">
-      <h2 class="header">{{ recipe!.name }}</h2>
-      <button (click)="onMoreButtonClick()" class="btn-more">
-        <img *ngIf="!buttons" src="./../../../assets/more-vertical-svgrepo-com.svg" alt="btn-more">
-        <img *ngIf="buttons" src="./../../../assets/cancel2-svgrepo-com.svg" alt="btn-more">
-      </button>
+
+      <div class="name-btn-container">
+        <h2 class="header">{{ recipe!.name }}</h2>
+        <button (click)="onMoreButtonClick()" class="btn-more">
+          <img [src]="buttons ? './../../../assets/cancel2-svgrepo-com.svg' : './../../../assets/more-vertical-svgrepo-com.svg'">
+        </button>
+      </div>
+
       <div *ngIf="buttons" class="btns-container">
         <button *ngIf="recipesType === 'recipes-base'" class="btn-default" (click)="onAddToMyRecipes()">Add Recipe to My Recipes</button>
         <button class="btn-default" (click)="onAddToShoppingListClick()">Add Ingredients to shopping List</button>
@@ -33,7 +36,6 @@
         <p class="p-tags"> {{ recipe!.prepTime }} min</p>
         <p class="p-tags"> {{ recipe!.difficulty }} </p>
         <p class="p-tags"> {{ recipe!.servings }} servings</p>
-        <p *ngIf="recipe!.lastPrepDate" class="p-tags">Last Preparation date: {{ recipe!.lastPrepDate | date}} </p>
       </section>
 
       <section class="section-ingredients section">
