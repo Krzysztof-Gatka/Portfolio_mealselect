@@ -18,7 +18,7 @@ export class NewRecipeComponent implements OnInit{
   recipeForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     prepTime: new FormControl<number | null>(null, Validators.required),
-    difficulty: new FormControl<string | null>('', Validators.required),
+    difficulty: new FormControl<string | null>(null, Validators.required),
     servings: new FormControl<number | null>(null, Validators.required),
     description: new FormControl<string | null>(null),
   });
