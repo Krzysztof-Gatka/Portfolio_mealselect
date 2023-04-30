@@ -102,7 +102,7 @@ export class NewRecipeComponent implements OnInit{
     this.stepInput?.nativeElement.focus();
   }
 
-  _loadRecipeFromForm(): void {
+  _getFormRecipe(): void {
     const name = this.recipeForm.controls.name.value!;
     const prepTime = this.recipeForm.controls.prepTime.value!;
     const difficulty = this.recipeForm.controls.difficulty.value!;
@@ -118,7 +118,6 @@ export class NewRecipeComponent implements OnInit{
   }
 
   onAddRecipe(): void {
-    this._loadRecipeFromForm();
     this.recipesService.addRecipe(this.recipe);
     this.recipeForm.reset();
   }
@@ -189,8 +188,6 @@ export class NewRecipeComponent implements OnInit{
   }
 
   onSaveChanges(recipe: Recipe): void {
-    this._loadRecipeFromForm();
-
     this.recipesService.updateRecipe(recipe);
   }
 
@@ -206,8 +203,9 @@ export class NewRecipeComponent implements OnInit{
 
   onNextClick(): void {
     if(this.progress === 0) {
-      this._loadRecipeFromForm();
+      this._getFormRecipe();
     }
+
     if(this.moreMenu) {
       this.moreMenu.open = false;
     }
