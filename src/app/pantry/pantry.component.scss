@@ -88,7 +88,7 @@
 .pantry-elements-container{
   position: relative;
   padding:0.5rem;
-  margin-top: 12rem;
+  margin-top: 13rem;
 }
 
 .empty-pantry {
@@ -145,6 +145,7 @@
 .btn-default.btn-add {
   width:60%;
   transition: opacity 500ms ease-in-out 0ms;
+  font-weight: bolder;
 }
 
 .btn-default.invalid {

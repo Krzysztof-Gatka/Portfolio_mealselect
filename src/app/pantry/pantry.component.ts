@@ -124,6 +124,7 @@ export class PantryComponent implements OnInit, OnDestroy{
   }
 
   onSortByDateClick(): void {
+    this.loading = true;
     this.pantryService.sortPantry();
     this.sorting = true;
   }

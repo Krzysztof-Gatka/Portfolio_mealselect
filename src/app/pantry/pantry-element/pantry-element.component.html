@@ -9,14 +9,14 @@
       </div>
       <p [ngClass]="{'product-expired-soon': productExpiredSoon,'product-exipred': productExpired}" class="attr-exp-date">{{ product.expDate | date}}</p>
 
-
-    </button>
-    <button (click)="onMoreClick()" class="btn-more" #btnMore>
-      <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
       <div *ngIf="openMoreMenu" class="more-menu">
         <button (click)="onEditClick()" class="btn-default">edit</button>
         <button (click)="onDeleteClick()" class="btn-default">delete</button>
       </div>
+    </button>
+
+    <button (click)="onMoreClick()" class="btn-more" #btnMore>
+      <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
     </button>
 
   </div>
