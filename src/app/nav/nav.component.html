@@ -1,6 +1,21 @@
 <div class="full-width-flex-container">
   <div class="navigation-container">
 
+    <button
+      class="btn-nav"
+      [routerLink]="['/welcome']"
+      [routerLinkActive]="'active-link'">
+      mealSelect
+    </button>
+
+    <button
+      class="btn-hamburger"
+      (click)="onHamburgerClick()"
+      >
+      <img
+        class="svg-hamburger"
+        [src]="navOpened ? '../../assets/cancel2-svgrepo-com.svg' : '../../assets/hamburger-svgrepo-com.svg'" alt="">
+    </button>
 
   </div>
 </div>
