@@ -1,21 +1,71 @@
 <div class="full-width-flex-container">
   <div class="navigation-container">
 
-    <button
-      class="btn-nav"
-      [routerLink]="['/welcome']"
-      [routerLinkActive]="'active-link'">
-      mealSelect
-    </button>
+    <div class="btn-nav-container" >
 
-    <button
-      class="btn-hamburger"
-      (click)="onHamburgerClick()"
-      >
-      <img
-        class="svg-hamburger"
-        [src]="navOpened ? '../../assets/cancel2-svgrepo-com.svg' : '../../assets/hamburger-svgrepo-com.svg'" alt="">
-    </button>
+      <button
+        class="btn-nav"
+        [routerLink]="['/welcome']"
+        [routerLinkActive]="'active-link'">
+        mealSelect
+      </button>
+
+      <button
+        class="btn-hamburger"
+        (click)="onHamburgerClick()">
+        <img
+          class="svg-hamburger"
+          [src]="navOpened ? '../../assets/cancel2-svgrepo-com.svg' : '../../assets/hamburger-svgrepo-com.svg'" alt="">
+      </button>
+
+    </div>
+
+    <div [ngClass]=" {'opened': navOpened} " class="nav-main" (click)="navOpened = false">
+
+      <button
+        *ngIf="authenticated"
+        class="btn-default btn-nav-main">
+        Recipes
+      </button>
+
+      <button
+        *ngIf="authenticated"
+        class="btn-default btn-nav-main">
+        New Recipe
+      </button>
+
+      <button
+        *ngIf="authenticated"
+        class="btn-default btn-nav-main">
+        Shopping List
+      </button>
+
+      <button
+        *ngIf="authenticated"
+        class="btn-default btn-nav-main">
+        Pantry
+      </button>
+
+      <button
+        *ngIf="authenticated"
+        class="btn-default btn-nav-main">
+        Logout
+      </button>
+
+      <button
+        *ngIf="!authenticated"
+        class="btn-default btn-nav-main"
+        [routerLink]="['/login']">
+        Log In
+      </button>
+
+      <button
+        *ngIf="!authenticated"
+        class="btn-default btn-nav-main"
+        [routerLink]="['/register']">
+        Sign Up
+      </button>
+    </div>
 
   </div>
 </div>
