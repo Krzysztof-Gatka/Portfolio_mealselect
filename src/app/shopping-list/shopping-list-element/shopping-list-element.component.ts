@@ -59,10 +59,6 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
     this.shoppingListService.toggleBought(this.productIndex!);
   }
 
-
-
-
-
   onSaveButtonClick(): void {
     this.shoppingListService.productSaved.next(this.productIndex!);
   }

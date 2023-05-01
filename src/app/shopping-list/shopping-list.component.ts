@@ -24,6 +24,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   changeSub: Subscription | undefined;
   deleteSub: Subscription | undefined;
   editSub: Subscription | undefined;
+  loadingSub: Subscription | undefined;
 
   form = new FormGroup({
     productName: new FormControl<string | null>(null, Validators.required),
@@ -58,6 +59,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       this.form.controls.productUnit.setValue(this.shoppingListElements![id].unit);
     })
 
+    this.loadingSub = this.shoppingListService.shoppingListLoading.subscribe((loading) => {
+      this.loading = loading;
+    })
+
     if(!this.shoppingListService.productsFetched) {
       this.shoppingListService.fetchShoppingList();
     } else {
@@ -72,13 +77,14 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.deleteSub?.unsubscribe();
   }
 
-  onItemAdded(product: ShoppingListElement): void {
+  onAddClick(): void {
     this.loading = true;
-    this.shoppingListElements = this.shoppingListService.addProduct(product);
+    this.shoppingListService.addProduct(this._createProduct());
+    this.form.reset();
   }
 
   onReviveLastProduct(): void {
-    this.shoppingListElements = this.shoppingListService.reviveLastProduct();
+    this.shoppingListService.reviveLastProduct();
   }
 
   onClearBoughtElements():void {
@@ -103,10 +109,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingListService.clear();
   }
 
-  onAddClick(): void {
-    this.shoppingListService.addProduct(this._createProduct());
-    this.form.reset();
-  }
 
   private _createProduct(): ShoppingListElement {
     const name = this.form.controls.productName.value!;

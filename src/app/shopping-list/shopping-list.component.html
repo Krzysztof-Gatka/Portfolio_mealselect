@@ -46,17 +46,20 @@
       </div>
     </div>
 
+    <div *ngIf="loading" class="spinner-container">
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+
 
     <div class="content">
-      <div *ngIf="loading" class="empty-list-message">
-        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-      </div>
-
       <div class="empty-list-message" *ngIf="(shoppingListElements === undefined || shoppingListElements.length === 0) && !loading">
         <p>Your Shopping List is empty</p>
       </div>
 
       <div class="shopping-list-elements-container">
+        <div *ngIf="loading" class="loading-container">
+
+        </div>
         <app-shopping-list-element
         *ngFor="let element of shoppingListElements; let i = index"
         [product]="element"
