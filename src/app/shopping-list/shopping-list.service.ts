@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, catchError, of, retry } from 'rxjs'
+import { Observable, Subject, catchError, of, retry } from 'rxjs'
 
 import { AuthService } from "../auth/auth.service";
 import { PantryService } from "../pantry/pantry.service";
@@ -24,6 +24,7 @@ export class ShoppingListService {
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
   clickOutsideMoreMenu = new Subject<MouseEvent>();
+  shoppingListLoading = new Subject<boolean>;
 
   constructor(
     private http: HttpClient,
@@ -54,45 +55,76 @@ export class ShoppingListService {
       });
   }
 
-  private _putShoppingList(): void {
+  private _putShoppingList(shoppingList: ShoppingListElement[]): Observable<ShoppingListElement[]> {
     const user = this.authServcie.user!;
     const params = new HttpParams().set('auth', this.authServcie.user!.token);
 
-    this.http.put(Default_URL + user.uid + '/shopping-list.json', this.shoppingListElements ,{params: params})
+    return this.http.put<ShoppingListElement[]>(Default_URL + user.uid + '/shopping-list.json', shoppingList ,{params: params})
       .pipe(
         retry({count: 3, delay: 2000}),
         catchError((error) => {
           console.warn(error);
           this.toastr.error('Error: Saving Shopping List on Server failed.');
           this.error = true;
-          return of(-1);
+          throw new Error(error);
         })
       )
-      .subscribe( (res) => { if(res !== -1) this.productsChanged.next('') });
   }
 
-  addToShoppingList(products: Product[]): void {
-    products.map((product) => {
-      this.addProduct(product);
-    })
-    this.toastr.success('Successfully added ingredients to your Shopping List');
-    this.router.navigate(['shopping-list']);
+  addToShoppingList(products: ShoppingListElement[]): void {
+    let updatedShoppingList: ShoppingListElement[] = [];
+
+    if(this.shoppingListElements) {
+      updatedShoppingList = [...this.shoppingListElements, ...products];
+    } else {
+      updatedShoppingList = [...products];
+    }
+
+    this._putShoppingList(updatedShoppingList).subscribe({
+      next: () => {
+        this.shoppingListElements = updatedShoppingList;
+        this.productsChanged.next('');
+        this.toastr.success('Successfully added ingredients to your Shopping List');
+        this.router.navigate(['shopping-list']);
+      },
+      error: (error) => {
+        this.toastr.error('Error: Ingredients could not be added to Shopping List.');
+      },
+    });
   }
 
   clearBoughtProducts(): void {
-    this.shoppingListElements = this.shoppingListElements?.filter((product) => !product.bought);
-    this._putShoppingList();
-    this.productsChanged.next('');
+    const productsNotBought = this.shoppingListElements!.filter((product) => !product.bought);
+
+    this._putShoppingList(productsNotBought).subscribe({
+      next: () => {
+        this.shoppingListElements = productsNotBought;
+        this.productsChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Bought Products could not be removed from Shopping List.');
+      },
+    });
   }
 
   toggleBought(index: number): void {
+    const shoppingListElements = this.getShoppingList();
+
     if(this.shoppingListElements![index].bought !== undefined) {
-      this.shoppingListElements![index].bought = !this.shoppingListElements![index].bought;
+      shoppingListElements[index].bought = !shoppingListElements[index].bought;
     } else {
-      this.shoppingListElements![index].bought = true;
+      shoppingListElements![index].bought = true;
     }
-    this._putShoppingList();
-    this.productsChanged.next('');
+
+    this._putShoppingList(shoppingListElements).subscribe({
+      next: () => {
+        this.shoppingListElements = shoppingListElements;
+        this.productsChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Data Changes could not be saved in DataBase.');
+      },
+    });
   }
 
   getShoppingList(): ShoppingListElement[] {
@@ -102,48 +134,84 @@ export class ShoppingListService {
     return [];
   }
 
-  addProduct(product: ShoppingListElement): ShoppingListElement[] {
-    if(this.shoppingListElements === undefined || this.shoppingListElements === null) {
-      this.shoppingListElements = [product];
+  addProduct(product: ShoppingListElement): void {
+    let updatedShoppingList: ShoppingListElement[] = [];
+
+    if(this.shoppingListElements) {
+      updatedShoppingList = [...this.shoppingListElements, product];
     } else {
-      this.shoppingListElements.push(product);
+      updatedShoppingList = [product];
     }
-    this._putShoppingList();
-    return this.shoppingListElements.slice();
+
+    this._putShoppingList(updatedShoppingList).subscribe({
+      next: () => {
+        this.shoppingListElements = updatedShoppingList;
+        this.productsChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: New Product could not be saved in Your Shopping List.');
+        this.shoppingListLoading.next(false);
+      },
+    });
   }
 
   deleteProduct(index: number): void {
-    this.shoppingListElements = this.shoppingListElements!.filter((element, i) =>{ if(i === index){
+    const shoppingList = this.shoppingListElements!.filter((element, i) =>{ if(i === index){
       this.deletedProductsStack.push(element);
         if(this.deletedProductsStack.length === 1) {
           this.deletedProducts.next(1);
         }
-    }
-    return i !==index
-  });
-    this._putShoppingList();
-    this.productsChanged.next('');
+      }
+      return i !==index
+    });
+
+    this._putShoppingList(shoppingList).subscribe({
+      next: () => {
+        this.shoppingListElements = shoppingList;
+        this.productsChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Product could not be removed from Your Shopping List.');
+      },
+    });
   }
 
   updateProduct(index: number, product: ShoppingListElement): void {
-    this.shoppingListElements = this.shoppingListElements!.map((prod, i)=> {
+    const shoppingList = this.shoppingListElements!.map((prod, i)=> {
       if (i === index) return product;
       return prod;
     });
-    this._putShoppingList();
-    this.productsChanged.next('');
+    this._putShoppingList(shoppingList).subscribe({
+      next: () => {
+        this.shoppingListElements = shoppingList;
+        this.productsChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Product could not be updated.');
+      },
+    });
   }
 
   clear() :void {
-    this.shoppingListElements = [];
-    this._putShoppingList();
+    const shoppingList: ShoppingListElement[] = [];
+
+    this._putShoppingList(shoppingList).subscribe({
+      next: () => {
+        this.shoppingListElements = shoppingList;
+        this.productsChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Shopping List could not be updated.');
+      },
+    });
   }
 
-  reviveLastProduct(): ShoppingListElement[] {
+  reviveLastProduct(): void {
     const deletedProduct = this._getLastDeletedProduct()
     if(this.deletedProductsStack.length === 0) this.deletedProducts.next(-1);
-    if(!deletedProduct) return this.shoppingListElements!;
-    return this.addProduct(deletedProduct);
+    if(!deletedProduct) return;
+
+    this.addProduct(deletedProduct);
   }
 
   addBoughtElementsToPantry(): void {

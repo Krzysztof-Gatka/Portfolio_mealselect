@@ -25,17 +25,25 @@
 
 .more-menu {
   position:absolute;
+
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  top:0px;
-  left:-10rem;
-  width: 10rem;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+
   z-index: 50;
-  background-color: $accent-color;
-  outline: 2px solid $accent-cta-color;
-  border-radius: 5px;
-  padding:0.85rem;
+
+  background-color: rgba(#e3c29e, 0.8);
+}
+
+.more-menu .btn-default {
+  width:5rem;
+  padding: 0.25rem;
 }
 
 .btn-more img {
