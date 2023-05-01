@@ -18,6 +18,7 @@ export class PantryComponent implements OnInit, OnDestroy{
 
   pantryChangesSub: Subscription | undefined;
   pantryElementEditSub: Subscription | undefined;
+  pantryLoadingSub: Subscription | undefined;
 
   loading: boolean = true;
   elementEditing: boolean = false;
@@ -54,6 +55,10 @@ export class PantryComponent implements OnInit, OnDestroy{
       }
     })
 
+    this.pantryLoadingSub = this.pantryService.pantryLoading.subscribe((loading) => {
+      this.loading = loading;
+    })
+
     if(!this.pantryService.pantryFetched) {
       this.pantryService.fetchPantry();
     } else {
@@ -64,16 +69,20 @@ export class PantryComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.pantryChangesSub?.unsubscribe();
+    this.pantryElementEditSub?.unsubscribe();
+    this.pantryLoadingSub?.unsubscribe();
   }
 
   onAddClick(): void {
     const newProduct = this._getFormElement();
+    this.loading = true;
     this.pantryService.addElement(newProduct);
     this.form.reset();
   }
 
   onSaveClick(): void {
     const updatedProduct = this._getFormElement();
+    this.loading = true;
     this.pantryService.updateElement(updatedProduct, this.elementIndex!);
     this.form.reset();
     this.elementEditing = false;
@@ -106,6 +115,7 @@ export class PantryComponent implements OnInit, OnDestroy{
   }
 
   onClearPantryClick(): void {
+    this.loading = true;
     this.pantryService.clearPantry();
     this.sorting = false;
   }

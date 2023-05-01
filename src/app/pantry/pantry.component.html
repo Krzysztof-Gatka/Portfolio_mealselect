@@ -82,6 +82,10 @@
       <p>Your Pantry is empty</p>
     </div>
 
+    <div class="spinner-container">
+      <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+
     <div class="pantry-elements-container">
       <app-pantry-element
         *ngFor="let product of pantry; let i = index"
@@ -89,6 +93,8 @@
         [index]="i">
       </app-pantry-element>
     </div>
+
+
 
   </div>
 </div>

@@ -24,6 +24,14 @@
   z-index: 100;
 }
 
+.spinner-container {
+  position: absolute;
+  top:1.5rem;
+  left:45%;
+
+  z-index: 110;
+}
+
 .more-menu-container .btn-default {
   padding: 1rem 0.25rem;
 }
