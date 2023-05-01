@@ -1,36 +1,38 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, catchError, of, retry } from "rxjs";
+import { Observable, Subject, catchError, of, retry } from "rxjs";
 
-import { AuthService } from "../auth/auth.service";
-import { Default_URL } from "../recipes/recipes.service";
-import { PantryElement } from "./pantry-element/pantry.model";
 import { ToastrService } from "ngx-toastr";
-import { Router } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
+import { PantryElement } from "./pantry-element/pantry.model";
+import { Default_URL } from "../recipes/recipes.service";
+import { PantrySortService } from "./pantry-sort.service";
 
 @Injectable({providedIn: 'root'})
 export class PantryService {
+
   private pantry: PantryElement[] | undefined;
 
   pantryFetched: boolean = false;
   error: boolean = false;
+
   pantryChanged = new Subject();
+  pantryLoading = new Subject<boolean>();
   pantryElementEdit = new Subject<number>();
   clickOutsideMoreMenu = new Subject<MouseEvent>();
 
   constructor(
     private authService:AuthService,
+    private pantrySortService: PantrySortService,
     private http: HttpClient,
     private toastr: ToastrService,
-    private router: Router,
   ) {}
-
 
   fetchPantry(): void {
     const user = this.authService.user!;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
-    this.http.get<PantryElement[]>(Default_URL + user.uid + '/pantry.json', { params: params})
+    this.http.get<PantryElement[]>(Default_URL + user.uid + '/pantry.json', { params: params })
       .pipe(
         retry({count: 3, delay:2000}),
         catchError((error) => {
@@ -47,75 +49,140 @@ export class PantryService {
       })
   }
 
-  private _putPantry(): void {
+  private _putPantry(updatedPantry: PantryElement[]): Observable<PantryElement> {
     const user = this.authService.user!;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
-    this.http.put(Default_URL + user.uid + '/pantry.json', this.pantry ,{params: params})
+    return this.http.put<PantryElement>(Default_URL + user.uid + '/pantry.json', updatedPantry ,{params: params})
       .pipe(
         retry({count: 3, delay: 2000}),
         catchError((error) => {
           console.warn(error);
           this.toastr.error('Error: Saving Pantry on Server failed.');
           this.error = true;
-          return of(-1);
+          throw new Error(error);
         })
       )
-      .subscribe();
   }
 
   getPantry(): PantryElement[] {
-    if(this.pantry) {
-      return this.pantry.slice();
-    } else {
-      return [];
-    }
+    if(!this.pantry) return [];
+    return this.pantry.slice();
+  }
+
+  clearPantry(): void {
+    const updatedPantry: PantryElement[] = [];
+
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry;
+        this.pantryLoading.next(false);
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Could not connect to DataBase.');
+        console.warn(error);
+        this.pantryLoading.next(false);
+      },
+    });
   }
 
   deleteElement(index: number): void {
-    this.pantry = this.pantry!.filter((product, i) => i !== index);
-    this._putPantry();
-    this.pantryChanged.next('');
+    const updatedPantry = this.pantry!.filter((product, i) => i !== index);
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry.slice();
+        this.pantryLoading.next(false);
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Product could not be removed.');
+        console.warn(error);
+        this.pantryLoading.next(false);
+
+      },
+    });
   }
 
   updateElement(product: PantryElement, index: number): void {
-    this.pantry = this.pantry!.map((prod, i) => (i === index) ? product : prod);
-    this._putPantry();
-    this.pantryChanged.next('');
+    const updatedPantry = this.pantry!.map((prod, i) => (i === index) ? product : prod);
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry.slice();
+        this.pantryLoading.next(false);
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Product could not be updated.');
+        console.warn(error);
+        this.pantryLoading.next(false);
+      },
+    });
   }
 
   addElement(product: PantryElement): void {
+    let updatedPantry: PantryElement[] = [];
+
     if(this.pantry) {
-      this.pantry.push(product);
+      updatedPantry = [...this.pantry, product];
     } else {
-      this.pantry = [product];
+      updatedPantry = [product];
     }
-    this._putPantry();
-    this.pantryChanged.next('');
+
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry.slice();
+        this.pantryLoading.next(false);
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Product could not be added.');
+        console.warn(error);
+        this.pantryLoading.next(false);
+      },
+    });
   }
 
-  addElementsToPantry(products: PantryElement[]) {
+  addElements(products: PantryElement[]) {
+    let updatedPantry: PantryElement[] = []
+
     if (this.pantry) {
       const updatedPantry = this.pantry!;
       products.map((product) => {
         updatedPantry.push(product);
       });
-
-      this.pantry = updatedPantry.slice();
     } else {
-      this.pantry = [...products];
+      updatedPantry = [...products];
     }
 
-    this._putPantry();
-    this.pantryChanged.next('');
-    // TODO ADD _putPantryObserver
-    this.toastr.success('Successfully added products to Pantry.');
-    this.router.navigate(['pantry']);
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry.slice();
+        this.pantryLoading.next(false);
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Products could not be added to Pantry.');
+        console.warn(error);
+        this.pantryLoading.next(false);
+      },
+    });
   }
 
-  clearPantry(): void {
-    this.pantry = [];
-    this.pantryChanged.next('');
-    this._putPantry();
+  sortPantry(): void {
+    const sortedPantry = this.pantrySortService.sortByExpirationDate(this.getPantry());
+
+    this._putPantry(sortedPantry).subscribe({
+      next: () => {
+        this.pantry = sortedPantry.slice();
+        this.pantryLoading.next(false);
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Products could not be sorted.');
+        console.warn(error);
+        this.pantryLoading.next(false);
+      },
+    });
   }
 }

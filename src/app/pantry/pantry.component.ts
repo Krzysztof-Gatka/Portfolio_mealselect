@@ -18,12 +18,14 @@ export class PantryComponent implements OnInit, OnDestroy{
 
   pantryChangesSub: Subscription | undefined;
   pantryElementEditSub: Subscription | undefined;
+  pantryLoadingSub: Subscription | undefined;
 
-  loading: boolean = true;
-  elementEditing: boolean = false;
-  elementIndex: number | undefined;
   pageMenuOpened: boolean = false;
+  loading: boolean = true;
   sorting: boolean = false;
+  elementEditing: boolean = false;
+  elementIndex: number | undefined | null;
+
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     qty: new FormControl<number | null | undefined>(null),
@@ -31,13 +33,14 @@ export class PantryComponent implements OnInit, OnDestroy{
     date: new FormControl<Date | string | null | undefined>(null),
   })
 
-  constructor(private pantryService: PantryService, private pantrySortService: PantrySortService) {}
+  constructor(private pantryService: PantryService) {}
 
   ngOnInit(): void {
     this.pantryChangesSub = this.pantryService.pantryChanged.subscribe(()=>{
       this.pantry = this.pantryService.getPantry();
       this.loading = false;
       this.elementEditing = false;
+      this.elementIndex = null;
       this.sorting = false;
       this.form.reset();
     });
@@ -54,6 +57,10 @@ export class PantryComponent implements OnInit, OnDestroy{
       }
     })
 
+    this.pantryLoadingSub = this.pantryService.pantryLoading.subscribe((loading) => {
+      this.loading = loading;
+    })
+
     if(!this.pantryService.pantryFetched) {
       this.pantryService.fetchPantry();
     } else {
@@ -64,19 +71,24 @@ export class PantryComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.pantryChangesSub?.unsubscribe();
+    this.pantryElementEditSub?.unsubscribe();
+    this.pantryLoadingSub?.unsubscribe();
   }
 
   onAddClick(): void {
     const newProduct = this._getFormElement();
+    this.loading = true;
     this.pantryService.addElement(newProduct);
     this.form.reset();
   }
 
   onSaveClick(): void {
     const updatedProduct = this._getFormElement();
+    this.loading = true;
     this.pantryService.updateElement(updatedProduct, this.elementIndex!);
     this.form.reset();
     this.elementEditing = false;
+    this.elementIndex = null;
   }
 
   _getFormElement(): PantryElement {
@@ -106,12 +118,14 @@ export class PantryComponent implements OnInit, OnDestroy{
   }
 
   onClearPantryClick(): void {
+    this.loading = true;
     this.pantryService.clearPantry();
     this.sorting = false;
   }
 
   onSortByDateClick(): void {
-    this.pantry = this.pantrySortService.sortByExpirationDate();
+    this.loading = true;
+    this.pantryService.sortPantry();
     this.sorting = true;
   }
 

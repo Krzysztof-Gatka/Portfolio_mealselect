@@ -2,9 +2,9 @@
   <div class="pantry-container">
 
     <div (click)="closeMoreMenu()" *ngIf="pageMenuOpened" class="more-menu-container">
-      <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onClearPantryClick()" class="btn-default">Clear Pantry</button>
       <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" *ngIf="!sorting" (click)="onSortByDateClick()" class="btn-default">Sort By Expiration Date</button>
       <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" *ngIf="sorting" (click)="onClearSort()" class="btn-default">Clear Sort</button>
+      <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onClearPantryClick()" class="btn-default">Clear Pantry</button>
     </div>
 
     <div class="page-menu">
@@ -59,10 +59,10 @@
             </div>
           </form>
         </div>
-
-        <button
+        <div class="btns-container">
+          <button
           *ngIf="!elementEditing"
-          [ngClass]="form.valid ? '' : 'invalid'"
+          [ngClass]="loading || form.invalid ? 'invalid' : ''"
           (click)="onAddClick()"
           class="btn-default btn-add">
           Add
@@ -70,25 +70,33 @@
 
         <button
           *ngIf="elementEditing"
-          [ngClass]="form.valid ? '' : 'invalid'"
+          [ngClass]="loading || form.invalid ? 'invalid' : ''"
           (click)="onSaveClick()"
           class="btn-default btn-save">
           Save
         </button>
+        </div>
       </div>
     </div>
 
     <div *ngIf="(pantry === undefined || pantry.length === 0) && !loading" class="empty-pantry">
       <p>Your Pantry is empty</p>
     </div>
+    <div *ngIf="loading" class="spinner-container">
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
 
     <div class="pantry-elements-container">
+      <div *ngIf="loading" class="loading-container"></div>
       <app-pantry-element
         *ngFor="let product of pantry; let i = index"
         [product]="product"
-        [index]="i">
+        [index]="i"
+        [elementEdited]="elementIndex === i">
       </app-pantry-element>
     </div>
+
+
 
   </div>
 </div>

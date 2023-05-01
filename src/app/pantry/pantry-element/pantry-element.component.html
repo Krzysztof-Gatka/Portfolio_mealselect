@@ -1,7 +1,7 @@
 <div class="full-width-flex-container">
   <div class="pantry-element-container">
 
-    <button  class="list-el-default">
+    <button [ngClass]="{'el-edit': elementEdited}" class="list-el-default">
       <div class="basic-attr-container">
         <p class="attr-name">{{ product.name }}</p>
         <p class="attr-qty">{{ product.quantity }}</p>
@@ -9,14 +9,14 @@
       </div>
       <p [ngClass]="{'product-expired-soon': productExpiredSoon,'product-exipred': productExpired}" class="attr-exp-date">{{ product.expDate | date}}</p>
 
-
-    </button>
-    <button (click)="onMoreClick()" class="btn-more" #btnMore>
-      <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
       <div *ngIf="openMoreMenu" class="more-menu">
         <button (click)="onEditClick()" class="btn-default">edit</button>
         <button (click)="onDeleteClick()" class="btn-default">delete</button>
       </div>
+    </button>
+
+    <button (click)="onMoreClick()" class="btn-more" #btnMore>
+      <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
     </button>
 
   </div>

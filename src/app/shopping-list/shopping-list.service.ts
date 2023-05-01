@@ -148,7 +148,7 @@ export class ShoppingListService {
 
   addBoughtElementsToPantry(): void {
     const products = this.shoppingListElements!.filter(product => product.bought);
-    this.pantryService.addElementsToPantry(products);
+    this.pantryService.addElements(products);
   }
 
   private _getLastDeletedProduct(): ShoppingListElement | undefined {
