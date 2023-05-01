@@ -51,7 +51,6 @@ export class PantryElementComponent implements OnInit, OnDestroy, OnChanges{
   onDeleteClick(): void {
     this.pantryService.pantryLoading.next(true);
     this.pantryService.deleteElement(this.index);
-
   }
 
   onEditClick(): void {
@@ -61,5 +60,4 @@ export class PantryElementComponent implements OnInit, OnDestroy, OnChanges{
   onMoreClick(): void {
     this.openMoreMenu = !this.openMoreMenu;
   }
-
 }

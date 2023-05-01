@@ -20,11 +20,12 @@ export class PantryComponent implements OnInit, OnDestroy{
   pantryElementEditSub: Subscription | undefined;
   pantryLoadingSub: Subscription | undefined;
 
+  pageMenuOpened: boolean = false;
   loading: boolean = true;
+  sorting: boolean = false;
   elementEditing: boolean = false;
   elementIndex: number | undefined | null;
-  pageMenuOpened: boolean = false;
-  sorting: boolean = false;
+
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     qty: new FormControl<number | null | undefined>(null),
@@ -32,7 +33,7 @@ export class PantryComponent implements OnInit, OnDestroy{
     date: new FormControl<Date | string | null | undefined>(null),
   })
 
-  constructor(private pantryService: PantryService, private pantrySortService: PantrySortService) {}
+  constructor(private pantryService: PantryService) {}
 
   ngOnInit(): void {
     this.pantryChangesSub = this.pantryService.pantryChanged.subscribe(()=>{
@@ -123,7 +124,7 @@ export class PantryComponent implements OnInit, OnDestroy{
   }
 
   onSortByDateClick(): void {
-    this.pantry = this.pantrySortService.sortByExpirationDate();
+    this.pantryService.sortPantry();
     this.sorting = true;
   }
 

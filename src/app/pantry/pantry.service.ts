@@ -2,14 +2,15 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject, catchError, of, retry } from "rxjs";
 
-import { AuthService } from "../auth/auth.service";
-import { Default_URL } from "../recipes/recipes.service";
-import { PantryElement } from "./pantry-element/pantry.model";
 import { ToastrService } from "ngx-toastr";
-import { Router } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
+import { PantryElement } from "./pantry-element/pantry.model";
+import { Default_URL } from "../recipes/recipes.service";
+import { PantrySortService } from "./pantry-sort.service";
 
 @Injectable({providedIn: 'root'})
 export class PantryService {
+
   private pantry: PantryElement[] | undefined;
 
   pantryFetched: boolean = false;
@@ -22,17 +23,16 @@ export class PantryService {
 
   constructor(
     private authService:AuthService,
+    private pantrySortService: PantrySortService,
     private http: HttpClient,
     private toastr: ToastrService,
-    private router: Router,
   ) {}
-
 
   fetchPantry(): void {
     const user = this.authService.user!;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
-    this.http.get<PantryElement[]>(Default_URL + user.uid + '/pantry.json', { params: params})
+    this.http.get<PantryElement[]>(Default_URL + user.uid + '/pantry.json', { params: params })
       .pipe(
         retry({count: 3, delay:2000}),
         catchError((error) => {
@@ -70,11 +70,27 @@ export class PantryService {
     return this.pantry.slice();
   }
 
+  clearPantry(): void {
+    const updatedPantry: PantryElement[] = [];
+
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry;
+        this.pantryLoading.next(false);
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        this.toastr.error('Error: Could not connect to DataBase.');
+        console.warn(error);
+        this.pantryLoading.next(false);
+      },
+    });
+  }
+
   deleteElement(index: number): void {
     const updatedPantry = this.pantry!.filter((product, i) => i !== index);
     this._putPantry(updatedPantry).subscribe({
       next: () => {
-        // this.toastr.success('test');
         this.pantry = updatedPantry.slice();
         this.pantryLoading.next(false);
         this.pantryChanged.next('');
@@ -92,11 +108,9 @@ export class PantryService {
     const updatedPantry = this.pantry!.map((prod, i) => (i === index) ? product : prod);
     this._putPantry(updatedPantry).subscribe({
       next: () => {
-        // this.toastr.success('test');
         this.pantry = updatedPantry.slice();
         this.pantryLoading.next(false);
         this.pantryChanged.next('');
-
       },
       error: (error) => {
         this.toastr.error('Error: Product could not be updated.');
@@ -117,20 +131,19 @@ export class PantryService {
 
     this._putPantry(updatedPantry).subscribe({
       next: () => {
-        // this.toastr.success('test');
         this.pantry = updatedPantry.slice();
         this.pantryLoading.next(false);
         this.pantryChanged.next('');
       },
       error: (error) => {
-        this.toastr.error('Error: Product could not be updated.');
+        this.toastr.error('Error: Product could not be added.');
         console.warn(error);
         this.pantryLoading.next(false);
       },
     });
   }
 
-  addElementsToPantry(products: PantryElement[]) {
+  addElements(products: PantryElement[]) {
     let updatedPantry: PantryElement[] = []
 
     if (this.pantry) {
@@ -144,7 +157,6 @@ export class PantryService {
 
     this._putPantry(updatedPantry).subscribe({
       next: () => {
-        // this.toastr.success('test');
         this.pantry = updatedPantry.slice();
         this.pantryLoading.next(false);
         this.pantryChanged.next('');
@@ -157,18 +169,17 @@ export class PantryService {
     });
   }
 
-  clearPantry(): void {
-    const updatedPantry: PantryElement[] = [];
+  sortPantry(): void {
+    const sortedPantry = this.pantrySortService.sortByExpirationDate(this.getPantry());
 
-    this._putPantry(updatedPantry).subscribe({
+    this._putPantry(sortedPantry).subscribe({
       next: () => {
-        // this.toastr.success('test');
-        this.pantry = updatedPantry;
+        this.pantry = sortedPantry.slice();
         this.pantryLoading.next(false);
         this.pantryChanged.next('');
       },
       error: (error) => {
-        this.toastr.error('Error: Could not connect to DataBase.');
+        this.toastr.error('Error: Products could not be sorted.');
         console.warn(error);
         this.pantryLoading.next(false);
       },

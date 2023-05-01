@@ -20,17 +20,20 @@
 .more-menu {
   position:absolute;
   display: flex;
+
   flex-direction: column;
-  gap: 10px;
+  gap: 2rem;
   top:0px;
   left:-10rem;
   width: 10rem;
   z-index: 50;
   background-color: $accent-color;
-  outline: 2px solid $accent-cta-color;
+  box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
   border-radius: 5px;
   padding:0.85rem;
 }
+
+
 
 
 .attr-name {
@@ -70,8 +73,7 @@
 }
 
 .el-edit {
-  // #FBFAF0
-  outline: 1.5px solid $accent-cta-color;
+  box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
   background-color: #e3c29e;
 }
 
@@ -95,3 +97,7 @@
   font-weight: bolder;
 }
 
+.more-menu .btn-default {
+  padding: 1rem 0.25rem;
+  font-size: 1.25rem;
+}
