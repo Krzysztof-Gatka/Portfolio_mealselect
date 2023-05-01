@@ -26,12 +26,12 @@
 }
 
 
-.toast-container.toast-top-right {
-  top:3rem;
+.toast-container.toast-bottom-right {
+  bottom: 1rem;
   right: -2rem;
 }
 
-.toast-container.toast-top-right .toast-success{
+.toast-container.toast-bottom-right .toast-success{
   background-color: $secondary-color;
 }
 

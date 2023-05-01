@@ -6,6 +6,7 @@ import { AuthService } from "../auth/auth.service";
 import { Default_URL } from "../recipes/recipes.service";
 import { PantryElement } from "./pantry-element/pantry.model";
 import { ToastrService } from "ngx-toastr";
+import { Router } from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class PantryService {
@@ -21,6 +22,7 @@ export class PantryService {
     private authService:AuthService,
     private http: HttpClient,
     private toastr: ToastrService,
+    private router: Router,
   ) {}
 
 
@@ -90,6 +92,25 @@ export class PantryService {
     }
     this._putPantry();
     this.pantryChanged.next('');
+  }
+
+  addElementsToPantry(products: PantryElement[]) {
+    if (this.pantry) {
+      const updatedPantry = this.pantry!;
+      products.map((product) => {
+        updatedPantry.push(product);
+      });
+
+      this.pantry = updatedPantry.slice();
+    } else {
+      this.pantry = [...products];
+    }
+
+    this._putPantry();
+    this.pantryChanged.next('');
+    // TODO ADD _putPantryObserver
+    this.toastr.success('Successfully added products to Pantry.');
+    this.router.navigate(['pantry']);
   }
 
   clearPantry(): void {

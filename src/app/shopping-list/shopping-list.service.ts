@@ -7,6 +7,8 @@ import { PantryService } from "../pantry/pantry.service";
 import { Default_URL } from "../recipes/recipes.service";
 import { ToastrService } from "ngx-toastr";
 import { ShoppingListElement } from "./shopping-list-element/shopping-list-element.model";
+import { Product } from "../recipes/recipe/product.model";
+import { Router } from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
@@ -28,6 +30,7 @@ export class ShoppingListService {
     private authServcie: AuthService,
     private pantryService: PantryService,
     private toastr: ToastrService,
+    private router: Router,
   ) {}
 
   fetchShoppingList(): void {
@@ -66,6 +69,14 @@ export class ShoppingListService {
         })
       )
       .subscribe( (res) => { if(res !== -1) this.productsChanged.next('') });
+  }
+
+  addToShoppingList(products: Product[]): void {
+    products.map((product) => {
+      this.addProduct(product);
+    })
+    this.toastr.success('Successfully added ingredients to your Shopping List');
+    this.router.navigate(['shopping-list']);
   }
 
   clearBoughtProducts(): void {
@@ -135,13 +146,10 @@ export class ShoppingListService {
     return this.addProduct(deletedProduct);
   }
 
-  addBoughtElementsToPantry():void {
-    this.shoppingListElements!
-      .filter(product => product.bought)
-      .map(product => this.pantryService.addElement(product));
+  addBoughtElementsToPantry(): void {
+    const products = this.shoppingListElements!.filter(product => product.bought);
+    this.pantryService.addElementsToPantry(products);
   }
-
-
 
   private _getLastDeletedProduct(): ShoppingListElement | undefined {
     return this.deletedProductsStack.pop()
