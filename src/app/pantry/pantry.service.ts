@@ -49,11 +49,11 @@ export class PantryService {
       })
   }
 
-  private _putPantry(): Observable<PantryElement> {
+  private _putPantry(updatedPantry: PantryElement[]): Observable<PantryElement> {
     const user = this.authService.user!;
     const params = new HttpParams().set('auth', this.authService.user!.token);
 
-    return this.http.put<PantryElement>(Default_URL + user.uid + '/pantry.json', this.pantry ,{params: params})
+    return this.http.put<PantryElement>(Default_URL + user.uid + '/pantry.json', updatedPantry ,{params: params})
       .pipe(
         retry({count: 3, delay: 2000}),
         catchError((error) => {
@@ -72,7 +72,7 @@ export class PantryService {
 
   deleteElement(index: number): void {
     const updatedPantry = this.pantry!.filter((product, i) => i !== index);
-    this._putPantry().subscribe({
+    this._putPantry(updatedPantry).subscribe({
       next: () => {
         // this.toastr.success('test');
         this.pantry = updatedPantry.slice();
@@ -90,7 +90,7 @@ export class PantryService {
 
   updateElement(product: PantryElement, index: number): void {
     const updatedPantry = this.pantry!.map((prod, i) => (i === index) ? product : prod);
-    this._putPantry().subscribe({
+    this._putPantry(updatedPantry).subscribe({
       next: () => {
         // this.toastr.success('test');
         this.pantry = updatedPantry.slice();
@@ -115,7 +115,7 @@ export class PantryService {
       updatedPantry = [product];
     }
 
-    this._putPantry().subscribe({
+    this._putPantry(updatedPantry).subscribe({
       next: () => {
         // this.toastr.success('test');
         this.pantry = updatedPantry.slice();
@@ -142,7 +142,7 @@ export class PantryService {
       updatedPantry = [...products];
     }
 
-    this._putPantry().subscribe({
+    this._putPantry(updatedPantry).subscribe({
       next: () => {
         // this.toastr.success('test');
         this.pantry = updatedPantry.slice();
@@ -160,10 +160,10 @@ export class PantryService {
   clearPantry(): void {
     const updatedPantry: PantryElement[] = [];
 
-    this._putPantry().subscribe({
+    this._putPantry(updatedPantry).subscribe({
       next: () => {
         // this.toastr.success('test');
-        this.pantry = updatedPantry.slice();
+        this.pantry = updatedPantry;
         this.pantryLoading.next(false);
         this.pantryChanged.next('');
       },
