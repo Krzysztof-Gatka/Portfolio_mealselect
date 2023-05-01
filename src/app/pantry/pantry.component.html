@@ -2,9 +2,9 @@
   <div class="pantry-container">
 
     <div (click)="closeMoreMenu()" *ngIf="pageMenuOpened" class="more-menu-container">
-      <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onClearPantryClick()" class="btn-default">Clear Pantry</button>
       <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" *ngIf="!sorting" (click)="onSortByDateClick()" class="btn-default">Sort By Expiration Date</button>
       <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" *ngIf="sorting" (click)="onClearSort()" class="btn-default">Clear Sort</button>
+      <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onClearPantryClick()" class="btn-default">Clear Pantry</button>
     </div>
 
     <div class="page-menu">
@@ -89,7 +89,8 @@
       <app-pantry-element
         *ngFor="let product of pantry; let i = index"
         [product]="product"
-        [index]="i">
+        [index]="i"
+        [elementEdited]="elementIndex === i">
       </app-pantry-element>
     </div>
 

@@ -1,7 +1,7 @@
 <div class="full-width-flex-container">
   <div class="pantry-element-container">
 
-    <button  class="list-el-default">
+    <button [ngClass]="{'el-edit': elementEdited}" class="list-el-default">
       <div class="basic-attr-container">
         <p class="attr-name">{{ product.name }}</p>
         <p class="attr-qty">{{ product.quantity }}</p>

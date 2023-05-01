@@ -13,11 +13,13 @@ const Miliseconds_In_Day = 1000*60*60*24;
 export class PantryElementComponent implements OnInit, OnDestroy, OnChanges{
   @Input() product!: PantryElement;
   @Input() index!: number;
+  @Input() elementEdited: boolean = false;
   @ViewChild('btnMore') btnMore: ElementRef<HTMLButtonElement> | undefined;
 
   openMoreMenu:boolean = false;
   productExpired: boolean = false;
   productExpiredSoon: boolean = false;
+  productBeingEdited: boolean = false;
   clickOutsideSub: Subscription | undefined;
 
   constructor(private pantryService: PantryService) {}

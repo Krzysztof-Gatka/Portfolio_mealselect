@@ -22,7 +22,7 @@ export class PantryComponent implements OnInit, OnDestroy{
 
   loading: boolean = true;
   elementEditing: boolean = false;
-  elementIndex: number | undefined;
+  elementIndex: number | undefined | null;
   pageMenuOpened: boolean = false;
   sorting: boolean = false;
   form = new FormGroup({
@@ -39,6 +39,7 @@ export class PantryComponent implements OnInit, OnDestroy{
       this.pantry = this.pantryService.getPantry();
       this.loading = false;
       this.elementEditing = false;
+      this.elementIndex = null;
       this.sorting = false;
       this.form.reset();
     });
@@ -86,6 +87,7 @@ export class PantryComponent implements OnInit, OnDestroy{
     this.pantryService.updateElement(updatedProduct, this.elementIndex!);
     this.form.reset();
     this.elementEditing = false;
+    this.elementIndex = null;
   }
 
   _getFormElement(): PantryElement {

@@ -69,6 +69,11 @@
   padding: 0.25rem;
 }
 
+.el-edit {
+  // #FBFAF0
+  outline: 1.5px solid $accent-cta-color;
+  background-color: #e3c29e;
+}
 
 .form-container {
   width:80%;
