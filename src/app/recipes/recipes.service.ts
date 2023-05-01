@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpEvent, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, catchError, map, of, retry } from "rxjs";
+import { MonoTypeOperatorFunction, Observable, Subject, catchError, map, of, retry } from "rxjs";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
@@ -73,24 +73,20 @@ export class RecipesService {
   }
 
 
-  private _putRecipes(): void {
+  private _putRecipes(): Observable<Recipe> {
     const user =  this.authService.user!;
     const params = new HttpParams().set('auth', user.token);
     const recipes = this.userRecipes!.slice();
-    this.http.put(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
+    return this.http.put<Recipe>(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
       .pipe(
         retry({count: 3, delay: 2000}),
         catchError((error) => {
           console.warn(error);
-          this.toastr.error('Error: Saving Recipes on Server failed.');
+          this.toastr.error('Error: Connection to DataBase failed.');
           this.error = true;
-          return of(-1);
+          throw new Error(error);
         })
       )
-      .subscribe((res) => {
-        if(res !== -1) this.toastr.success('Successfully updated Your Recipes');
-        // this.router.navigate(['/recipes']);
-      });
   }
 
   addRecipe(recipe: Recipe): void {
@@ -101,13 +97,33 @@ export class RecipesService {
       this.userRecipes.push(recipe);
     }
     this.recipesChanged.next(User_Recipes);
-    this._putRecipes();
+    this._putRecipes()
+      .subscribe({
+        next: () => {
+          this.toastr.success('Successfully added recipe to Your Recipes.');
+          this.router.navigate(['recipes']);
+        },
+        error: (error) => {
+          this.toastr.error('Recipe was not saved in DataBase.');
+          console.warn(error);
+        }
+      });
   }
 
   deleteRecipe(id: string): void {
     this.userRecipes = this.userRecipes!.filter((recipe) => recipe.id !== id);
     this.recipesChanged.next(User_Recipes);
-    this._putRecipes();
+    this._putRecipes()
+      .subscribe({
+        next: () => {
+          this.toastr.success('Successfully removed recipe from Your Recipes.');
+          this.router.navigate(['recipes']);
+        },
+        error: (error) => {
+          this.toastr.error('Update of your Recipes was not saved in DataBase.');
+          console.warn(error);
+        }
+      });
   }
 
   updateRecipe(updatedRecipe: Recipe): void {
