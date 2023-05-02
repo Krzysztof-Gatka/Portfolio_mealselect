@@ -11,8 +11,7 @@
       </div>
 
       <div (click)="closeMoreMenu()" class="page-menu-opened">
-        <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" *ngIf="!sorting" (click)="onSortByDateClick()" class="btn-default">Sort By Expiration Date</button>
-        <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" *ngIf="sorting" (click)="onClearSort()" class="btn-default">Clear Sort</button>
+        <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onSortByDateClick()" class="btn-default">Sort By Expiration Date</button>
         <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onClearPantryClick()" class="btn-default">Clear Pantry</button>
       </div>
 
