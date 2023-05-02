@@ -6,7 +6,8 @@
       <button
         class="btn-nav"
         [routerLink]="['/welcome']"
-        [routerLinkActive]="'active-link'">
+        [routerLinkActive]="'active-link'"
+        (click)="navOpened = false">
         mealSelect
       </button>
 
@@ -24,31 +25,40 @@
 
       <button
         *ngIf="authenticated"
-        class="btn-default btn-nav-main">
+        class="btn-default btn-nav-main"
+        [routerLink]="['/recipes']"
+        [routerLinkActive]="'active'">
         Recipes
       </button>
 
       <button
         *ngIf="authenticated"
-        class="btn-default btn-nav-main">
+        class="btn-default btn-nav-main"
+        [routerLink]="['/new-recipe']"
+        [routerLinkActive]="'active'">
         New Recipe
       </button>
 
       <button
         *ngIf="authenticated"
-        class="btn-default btn-nav-main">
+        class="btn-default btn-nav-main"
+        [routerLink]="['/shopping-list']"
+        [routerLinkActive]="'active'">
         Shopping List
       </button>
 
       <button
         *ngIf="authenticated"
-        class="btn-default btn-nav-main">
+        class="btn-default btn-nav-main"
+        [routerLink]="['/pantry']"
+        [routerLinkActive]="'active'">
         Pantry
       </button>
 
       <button
         *ngIf="authenticated"
-        class="btn-default btn-nav-main">
+        class="btn-default btn-nav-main"
+        (click)="onLogoutClick()">
         Logout
       </button>
 

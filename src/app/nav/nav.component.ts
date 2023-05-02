@@ -35,7 +35,11 @@ export class NavComponent implements OnInit, OnDestroy {
     this.authSub?.unsubscribe();
   }
 
-  onHamburgerClick():void {
+  onHamburgerClick(): void {
     this.navOpened = !this.navOpened;
+  }
+
+  onLogoutClick(): void {
+    this.authService.logOut();
   }
 }
