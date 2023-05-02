@@ -17,71 +17,71 @@
 
     </div>
 
-    <div class="list-container">
+    <div class="form-container">
+      <form [formGroup]="form">
+        <div [ngClass]="{'editing': elementEditing}" class="inputs-container">
 
-      <div class="form-container">
-        <form [formGroup]="form">
-          <div [ngClass]="{'editing': elementEditing}" class="inputs-container">
-
-            <div class="first-row">
-              <div class="name-container">
-                <input
-                placeholder="Name"
-                formControlName="name"
-                class="ipt-default"
-                type="text">
-              </div>
-
-              <div class="qty-container">
-                <input
-                placeholder="Qty"
-                formControlName="qty"
-                class="ipt-default"
-                type="number">
-              </div>
+          <div class="first-row">
+            <div class="name-container">
+              <input
+              placeholder="Name"
+              formControlName="name"
+              class="ipt-default"
+              type="text">
             </div>
 
-            <div class="second-row">
-              <div class="unit-container">
-                <input
-                placeholder="Unit"
-                formControlName="unit"
-                class="ipt-default ipt-unit"
-                type="text">
-              </div>
-
-              <div class="date-container">
-                <input
-                formControlName="date"
-                class="ipt-default ipt-date"
-                type="date"
-                >
-              </div>
+            <div class="qty-container">
+              <input
+              placeholder="Qty"
+              formControlName="qty"
+              class="ipt-default"
+              type="number">
             </div>
-
           </div>
-        </form>
 
-        <div class="btn-container">
-          <button
-            *ngIf="!elementEditing"
-            [ngClass]="loading || form.invalid ? 'invalid' : ''"
-            (click)="onAddClick()"
-            class="btn-default btn-add">
-            Add
-          </button>
+          <div class="second-row">
+            <div class="unit-container">
+              <input
+              placeholder="Unit"
+              formControlName="unit"
+              class="ipt-default ipt-unit"
+              type="text">
+            </div>
 
-          <button
-            *ngIf="elementEditing"
-            [ngClass]="loading || form.invalid ? 'invalid' : ''"
-            (click)="onSaveClick()"
-            class="btn-default btn-save">
-            Save
-          </button>
+            <div class="date-container">
+              <input
+              formControlName="date"
+              class="ipt-default ipt-date"
+              type="date"
+              >
+            </div>
+          </div>
 
         </div>
+      </form>
+
+      <div class="btn-container">
+        <button
+          *ngIf="!elementEditing"
+          [ngClass]="loading || form.invalid ? 'invalid' : ''"
+          (click)="onAddClick()"
+          class="btn-default btn-add">
+          Add
+        </button>
+
+        <button
+          *ngIf="elementEditing"
+          [ngClass]="loading || form.invalid ? 'invalid' : ''"
+          (click)="onSaveClick()"
+          class="btn-default btn-save">
+          Save
+        </button>
 
       </div>
+
+    </div>
+
+    <div class="list-container" (click)="closeMoreMenu()">
 
       <div *ngIf="loading" class="loading-container">
         <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>

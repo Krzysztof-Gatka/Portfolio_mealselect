@@ -20,13 +20,13 @@
   padding:0.5rem;
   box-shadow: 0px 0px 2px 0px $accent-dark-color;
 
-  z-index: 60;
+  z-index: 70;
 
   transition: height 700ms ease-in-out 0ms;
 }
 
 .page-header-container.opened {
-  height: 11rem;
+  height: 10.9rem;
 }
 
 .header-container {
@@ -79,15 +79,26 @@
 
 .list-container {
   position: relative;
-  margin-top: 5.5rem;
+  margin-top: 11.5rem;
 }
 
 .form-container {
+  position: fixed;
+  left: 0;
+  top: 7.25rem;
+
+
   display: flex;
   flex-direction: row;
+  gap: 0.5rem;
 
-  padding:0.5rem;
-  margin-bottom: 1rem;
+  background-color: $dominant-color;
+  padding:1.25rem 0.75rem;
+
+  box-shadow: 0px 2px 2px -2px $accent-dark-color;
+
+
+  z-index: 60;
 }
 
 .inputs-container {
