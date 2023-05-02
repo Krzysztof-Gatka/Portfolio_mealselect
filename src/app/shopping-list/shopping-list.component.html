@@ -1,12 +1,95 @@
 <div class="full-width-flex-container">
   <div class="shopping-list-container" (click)="onClickOutsideElementMenu($event)">
 
-    <div *ngIf="moreMenuOpened" class="more-menu-container">
-      <button [ngClass]="deletedProductsAvailable ? '' : 'invalid'"  class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
-      <button [ngClass]="shoppingListElements?.length !== 0 ? '' : 'invalid'"  class="btn-default" (click)="onClearList()">Clear list</button>
-      <button [ngClass]="boughtElements ? '' : 'invalid'"  class="btn-default" (click)="onClearBoughtElements()">Clear Bought Elements</button>
-      <button [ngClass]="boughtElements ? '' : 'invalid'" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
+    <div [ngClass]="{ 'opened': pageMenuOpened }" class="page-header-container">
+
+      <div class="header-container">
+        <h1 class="header">Shopping List</h1>
+        <button (click)="onMoreClick()" class="btn-more">
+          <img [src]="pageMenuOpened ? './../../assets/cancel2-svgrepo-com.svg' : './../../assets/more-vertical-svgrepo-com.svg'" alt="more button icon">
+        </button>
+      </div>
+
+      <div (click)="closeMoreMenu()" class="page-menu-opened">
+
+        <div class="first-row">
+          <button [ngClass]="deletedProductsAvailable ? '' : 'invalid'"  class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
+          <button [ngClass]="shoppingListElements?.length !== 0 ? '' : 'invalid'"  class="btn-default" (click)="onClearList()">Clear list</button>
+        </div>
+
+        <div class="second-row">
+          <button [ngClass]="boughtElements ? '' : 'invalid'" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
+        </div>
+
+      </div>
+
     </div>
+
+    <div
+      class="form-container"
+      [formGroup]="form"
+      >
+        <div class="inputs-container">
+
+          <div class="ipts-first-row">
+            <input
+            type="text"
+            class="ipt-default ipt-name"
+            placeholder="Name"
+            formControlName="productName">
+          </div>
+
+          <div class="ipts-second-row">
+            <input
+              type="number"
+              class="ipt-default ipt-qty"
+              placeholder="Qty"
+              formControlName="productQuantity">
+
+            <input
+              type="text"
+              class="ipt-default ipt-unit"
+              placeholder="Unit"
+              formControlName="productUnit">
+          </div>
+
+        </div>
+
+        <div class="btn-container">
+          <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
+          <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
+        </div>
+
+      </div>
+
+    <div class="list-container">
+
+
+
+      <div *ngIf="loading" class="loading-container">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+      </div>
+
+      <div *ngIf="(shoppingListElements === undefined || shoppingListElements.length === 0) && !loading" class="empty-pantry">
+        <p>Your Shopping List is empty</p>
+      </div>
+
+      <div class="shopping-list-elements-container">
+        <app-shopping-list-element
+        *ngFor="let element of shoppingListElements; let i = index"
+        [product]="element"
+        [productIndex]="i"
+        ></app-shopping-list-element>
+      </div>
+
+    </div>
+
+
+
+
+    <!--
+
+
 
     <div class="page-menu">
       <div class="header-container">
@@ -16,34 +99,7 @@
         </button>
       </div>
 
-      <div
-      class="inputs-container"
-      [formGroup]="form"
-      >
 
-        <input
-          type="text"
-          class="ipt-default ipt-name"
-          placeholder="Name"
-          formControlName="productName"
-        >
-        <input
-          type="number"
-          class="ipt-default ipt-qty"
-          placeholder="Qty"
-          formControlName="productQuantity"
-        >
-        <input
-          type="text"
-          class="ipt-default ipt-unit"
-          placeholder="Unit"
-          formControlName="productUnit"
-        >
-
-        <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
-        <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
-
-      </div>
     </div>
 
     <div *ngIf="loading" class="spinner-container">
@@ -56,16 +112,7 @@
         <p>Your Shopping List is empty</p>
       </div>
 
-      <div class="shopping-list-elements-container">
-        <div *ngIf="loading" class="loading-container">
 
-        </div>
-        <app-shopping-list-element
-        *ngFor="let element of shoppingListElements; let i = index"
-        [product]="element"
-        [productIndex]="i"
-        ></app-shopping-list-element>
-      </div>
     </div>
 
 
@@ -76,10 +123,9 @@
       <h3 class="header" >Are you sure that you want to clear the list ?</h3>
       <button (click)="onYesClick()" class="btn-default">Yes</button>
       <button class="btn-default">Cancel</button>
-    </div>
+    </div> -->
 
   </div>
-
 </div>
 
 
