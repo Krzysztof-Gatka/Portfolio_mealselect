@@ -3,10 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { formatDate } from '@angular/common';
 
-
 import { PantryService } from './pantry.service';
 import { PantryElement } from './pantry-element/pantry.model';
-import { PantrySortService } from './pantry-sort.service';
 
 @Component({
   selector: 'app-pantry',
@@ -22,7 +20,6 @@ export class PantryComponent implements OnInit, OnDestroy{
 
   pageMenuOpened: boolean = false;
   loading: boolean = true;
-  sorting: boolean = false;
   elementEditing: boolean = false;
   elementIndex: number | undefined | null;
 
@@ -41,7 +38,6 @@ export class PantryComponent implements OnInit, OnDestroy{
       this.loading = false;
       this.elementEditing = false;
       this.elementIndex = null;
-      this.sorting = false;
       this.form.reset();
     });
 
@@ -120,18 +116,11 @@ export class PantryComponent implements OnInit, OnDestroy{
   onClearPantryClick(): void {
     this.loading = true;
     this.pantryService.clearPantry();
-    this.sorting = false;
   }
 
   onSortByDateClick(): void {
     this.loading = true;
     this.pantryService.sortPantry();
-    this.sorting = true;
-  }
-
-  onClearSort(): void {
-    this.pantry = this.pantryService.getPantry();
-    this.sorting = false;
   }
 }
 

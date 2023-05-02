@@ -4,9 +4,9 @@ import { Observable, Subject, catchError, of, retry } from "rxjs";
 
 import { ToastrService } from "ngx-toastr";
 import { AuthService } from "../auth/auth.service";
+import { PantrySortService } from "./pantry-sort.service";
 import { PantryElement } from "./pantry-element/pantry.model";
 import { Default_URL } from "../recipes/recipes.service";
-import { PantrySortService } from "./pantry-sort.service";
 
 @Injectable({providedIn: 'root'})
 export class PantryService {
@@ -22,10 +22,10 @@ export class PantryService {
   clickOutsideMoreMenu = new Subject<MouseEvent>();
 
   constructor(
-    private authService:AuthService,
-    private pantrySortService: PantrySortService,
     private http: HttpClient,
     private toastr: ToastrService,
+    private authService:AuthService,
+    private pantrySortService: PantrySortService,
   ) {}
 
   fetchPantry(): void {
@@ -88,7 +88,7 @@ export class PantryService {
   }
 
   deleteElement(index: number): void {
-    const updatedPantry = this.pantry!.filter((product, i) => i !== index);
+    const updatedPantry = this.pantry!.filter((_, i) => i !== index);
     this._putPantry(updatedPantry).subscribe({
       next: () => {
         this.pantry = updatedPantry.slice();
@@ -99,7 +99,6 @@ export class PantryService {
         this.toastr.error('Error: Product could not be removed.');
         console.warn(error);
         this.pantryLoading.next(false);
-
       },
     });
   }

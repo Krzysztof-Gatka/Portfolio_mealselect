@@ -1,29 +1,29 @@
 <div class="full-width-flex-container" (click)="onClickOutsideElementMenu($event)">
   <div class="pantry-container">
 
-    <div (click)="closeMoreMenu()" *ngIf="pageMenuOpened" class="more-menu-container">
-      <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" *ngIf="!sorting" (click)="onSortByDateClick()" class="btn-default">Sort By Expiration Date</button>
-      <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" *ngIf="sorting" (click)="onClearSort()" class="btn-default">Clear Sort</button>
-      <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onClearPantryClick()" class="btn-default">Clear Pantry</button>
-    </div>
-
-    <div class="page-menu">
+    <div [ngClass]="{ 'opened': pageMenuOpened }" class="page-header-container">
 
       <div class="header-container">
-
-        <h1 class="header" >Pantry</h1>
-
+        <h1 class="header">Pantry</h1>
         <button (click)="onMoreClick()" class="btn-more">
           <img [src]="pageMenuOpened ? './../../assets/cancel2-svgrepo-com.svg' : './../../assets/more-vertical-svgrepo-com.svg'" alt="more button icon">
         </button>
-
       </div>
 
-      <div [ngClass]="{'editing': elementEditing}" class="add-element-container">
-        <div class="form-container">
-          <form [formGroup]="form">
-            <div class="inputs-container">
+      <div (click)="closeMoreMenu()" class="page-menu-opened">
+        <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onSortByDateClick()" class="btn-default">Sort By Expiration Date</button>
+        <button [ngClass]="pantry === undefined || pantry.length === 0 ? 'invalid' : ''" (click)="onClearPantryClick()" class="btn-default">Clear Pantry</button>
+      </div>
 
+    </div>
+
+    <div class="list-container">
+
+      <div class="form-container">
+        <form [formGroup]="form">
+          <div [ngClass]="{'editing': elementEditing}" class="inputs-container">
+
+            <div class="first-row">
               <div class="name-container">
                 <input
                 placeholder="Name"
@@ -39,7 +39,9 @@
                 class="ipt-default"
                 type="number">
               </div>
+            </div>
 
+            <div class="second-row">
               <div class="unit-container">
                 <input
                 placeholder="Unit"
@@ -55,48 +57,49 @@
                 type="date"
                 >
               </div>
-
             </div>
-          </form>
-        </div>
-        <div class="btns-container">
+
+          </div>
+        </form>
+
+        <div class="btn-container">
           <button
-          *ngIf="!elementEditing"
-          [ngClass]="loading || form.invalid ? 'invalid' : ''"
-          (click)="onAddClick()"
-          class="btn-default btn-add">
-          Add
-        </button>
+            *ngIf="!elementEditing"
+            [ngClass]="loading || form.invalid ? 'invalid' : ''"
+            (click)="onAddClick()"
+            class="btn-default btn-add">
+            Add
+          </button>
 
-        <button
-          *ngIf="elementEditing"
-          [ngClass]="loading || form.invalid ? 'invalid' : ''"
-          (click)="onSaveClick()"
-          class="btn-default btn-save">
-          Save
-        </button>
+          <button
+            *ngIf="elementEditing"
+            [ngClass]="loading || form.invalid ? 'invalid' : ''"
+            (click)="onSaveClick()"
+            class="btn-default btn-save">
+            Save
+          </button>
+
         </div>
+
       </div>
+
+      <div *ngIf="loading" class="loading-container">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+      </div>
+
+      <div *ngIf="(pantry === undefined || pantry.length === 0) && !loading" class="empty-pantry">
+        <p>Your Pantry is empty</p>
+      </div>
+
+      <div class="pantry-elements-container">
+        <app-pantry-element
+          *ngFor="let product of pantry; let i = index"
+          [product]="product"
+          [index]="i"
+          [elementEdited]="elementIndex === i">
+        </app-pantry-element>
+      </div>
+
     </div>
-
-    <div *ngIf="(pantry === undefined || pantry.length === 0) && !loading" class="empty-pantry">
-      <p>Your Pantry is empty</p>
-    </div>
-    <div *ngIf="loading" class="spinner-container">
-      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-    </div>
-
-    <div class="pantry-elements-container">
-      <div *ngIf="loading" class="loading-container"></div>
-      <app-pantry-element
-        *ngFor="let product of pantry; let i = index"
-        [product]="product"
-        [index]="i"
-        [elementEdited]="elementIndex === i">
-      </app-pantry-element>
-    </div>
-
-
-
   </div>
 </div>
