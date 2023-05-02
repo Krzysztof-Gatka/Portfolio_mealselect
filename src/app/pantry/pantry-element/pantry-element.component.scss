@@ -6,6 +6,15 @@
   gap:10px;
 }
 
+.list-el-default {
+  position: relative;
+}
+
+.el-edit {
+  box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
+  background-color: #e3c29e;
+}
+
 .basic-attr-container {
   display: flex;
   flex-direction: row;
@@ -13,8 +22,31 @@
   max-width: 12rem;
 }
 
-.btn-more img {
-  filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
+.attr-name {
+  text-align: left;
+  width: fit-content;
+  margin-right: 0.5rem;
+}
+
+.attr-exp-date {
+  text-align: right;
+  width: fit-content;
+}
+
+.attr-unit,
+.attr-qty {
+  width:fit-content;
+  text-align: left;
+}
+
+.product-expired-soon {
+  color: $accent-cta-color;
+  font-weight: bold;
+}
+
+.product-exipred {
+  color: rgb(194, 1, 1);
+  font-weight: bolder;
 }
 
 .more-menu {
@@ -23,6 +55,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
 
   top: 0;
   left: 0;
@@ -37,18 +70,16 @@
 
 .more-menu .btn-default {
   width:5rem;
+  height: 80%;
   padding: 0.25rem;
-}
 
-.list-el-default {
-  position: relative;
-}
+  font-size: 0.85rem;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
-
-.attr-name {
-  text-align: left;
-  width: fit-content;
-  margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-more {
@@ -61,48 +92,6 @@
   background-color: rgba($dominant-color, 1);
 }
 
-.attr-exp-date {
-  text-align: right;
-  width: fit-content;
+.btn-more img {
+  filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
 }
-
-.attr-unit,
-.attr-qty {
-  width:fit-content;
-  text-align: left;
-}
-
-.btns-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  margin-top: 0.25rem;
-  padding: 0.25rem;
-}
-
-.el-edit {
-  box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
-  background-color: #e3c29e;
-}
-
-.form-container {
-  width:80%;
-}
-
-.inputs-container {
-  display: flex;
-  flex-direction: row;
-  gap:5px;
-}
-
-.product-expired-soon {
-  color: $accent-cta-color;
-  font-weight: bold;
-}
-
-.product-exipred {
-  color: rgb(194, 1, 1);
-  font-weight: bolder;
-}
-

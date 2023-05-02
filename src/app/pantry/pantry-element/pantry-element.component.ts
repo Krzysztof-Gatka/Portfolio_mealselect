@@ -16,7 +16,7 @@ export class PantryElementComponent implements OnInit, OnDestroy, OnChanges{
   @Input() elementEdited: boolean = false;
   @ViewChild('btnMore') btnMore: ElementRef<HTMLButtonElement> | undefined;
 
-  openMoreMenu:boolean = false;
+  moreMenuOpened:boolean = false;
   productExpired: boolean = false;
   productExpiredSoon: boolean = false;
   productBeingEdited: boolean = false;
@@ -27,7 +27,7 @@ export class PantryElementComponent implements OnInit, OnDestroy, OnChanges{
   ngOnInit(): void {
     this.clickOutsideSub = this.pantryService.clickOutsideMoreMenu.subscribe((event) => {
       if(!this.btnMore?.nativeElement.contains(<Node>event.target!)) {
-        this.openMoreMenu = false;
+        this.moreMenuOpened = false;
       }
     })
   }
@@ -58,6 +58,6 @@ export class PantryElementComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   onMoreClick(): void {
-    this.openMoreMenu = !this.openMoreMenu;
+    this.moreMenuOpened = !this.moreMenuOpened;
   }
 }
