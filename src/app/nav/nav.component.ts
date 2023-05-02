@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -9,41 +9,37 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit, OnDestroy {
-  navbarOpen: boolean = false;
-  isUserLoggedIn: boolean = false;
-  sub: Subscription | undefined;
+
+  authSub: Subscription | undefined;
+
+  navOpened: boolean = false;
   modalOpened: boolean = false;
-  constructor(private authService: AuthService, private router: Router) {}
+  authenticated: boolean = false;
+
+  constructor (
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
-      this.isUserLoggedIn = this.authService.isUserLoggedIn();
-      this.sub = this.authService.userAuthentication.subscribe((operation) => {
-        if(operation === 'logIn' || operation === 'signIn') {
-          this.isUserLoggedIn = true;
-        } else if(operation === 'logOut') {
-          this.isUserLoggedIn = false;
-        }
-      })
+    this.authenticated = this.authService.isUserLoggedIn();
+    this.authSub = this.authService.userAuthentication.subscribe((operation) => {
+      if(operation === 'logIn' || operation === 'signIn') {
+        this.authenticated = true;
+      } else if(operation === 'logOut') {
+        this.authenticated = false;
+      }
+    })
   }
 
   ngOnDestroy(): void {
-      this.sub?.unsubscribe();
+    this.authSub?.unsubscribe();
   }
 
-  onHamburgerClick():void {
-    this.navbarOpen = !this.navbarOpen;
+  onHamburgerClick(): void {
+    this.navOpened = !this.navOpened;
   }
 
   onLogoutClick(): void {
-    this.modalOpened = true;
-  }
-
-  //MODAL
-  onModalClick(): void {
-    this.modalOpened = false;
-  }
-
-  onYesClick(): void {
     this.authService.logOut();
   }
 }

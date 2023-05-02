@@ -5,6 +5,14 @@
 // it also allows to set min and max width to that container which in my opinion creates neat environment for responsive design
 // But it also has downsides i am not sure if it will be so comfortable to style nested custom components, but this is my first
 // bigger app so i might change this approach later, at this point of development i am going to use this comment as guide
+
+// NAME CONVENTION
+// open boolean variable => <name>Opened
+
+// Z-INDEX
+// maks z-index => 100 -> main navigation
+
+
 @import './variables';
 
 
