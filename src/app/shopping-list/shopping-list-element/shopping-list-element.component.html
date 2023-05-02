@@ -2,14 +2,14 @@
   <div class="shopping-list-element-container">
 
     <div
-      [ngClass]="product.bought ? 'non-active' : ''"
+      [ngClass]=" {'non-active': product.bought, 'el-edit': editing}"
       *ngIf="product"
       class="list-el-default"
       (click)="onProductClick()"
      >
-     <div *ngIf="openMoreMenu" class="more-menu">
-      <button (click)="onEditButtonClick()" class="btn-default">edit</button>
-      <button (click)="onDeleteButtonClick()" class="btn-default">delete</button>
+     <div *ngIf="openMoreMenu" (click)="onElementMenuClick($event)" class="more-menu">
+      <button (click)="onEditButtonClick()" class="btn-default">Edit</button>
+      <button (click)="onDeleteButtonClick()" class="btn-default">Delete</button>
     </div>
       <div class="product-container">
         <div class="product-attr-container">

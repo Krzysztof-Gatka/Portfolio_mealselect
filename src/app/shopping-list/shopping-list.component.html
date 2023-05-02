@@ -27,7 +27,7 @@
       class="form-container"
       [formGroup]="form"
       >
-        <div class="inputs-container">
+        <div [ngClass]="{'editing': productEditing}" class="inputs-container">
 
           <div class="ipts-first-row">
             <input
@@ -54,8 +54,8 @@
         </div>
 
         <div class="btn-container">
-          <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" *ngIf="!editMode" class="btn-default btn-form">Add</button>
-          <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" *ngIf="editMode" class="btn-default btn-form">Save</button>
+          <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onAddClick()" *ngIf="!productEditing" class="btn-default btn-form">Add</button>
+          <button [ngClass]="form.valid ? '' : 'invalid'" (click)="onSaveClick()" *ngIf="productEditing" class="btn-default btn-form">Save</button>
         </div>
 
       </div>
@@ -75,6 +75,7 @@
         *ngFor="let element of shoppingListElements; let i = index"
         [product]="element"
         [productIndex]="i"
+        [editing]="i === editedProductIndex"
         ></app-shopping-list-element>
       </div>
 

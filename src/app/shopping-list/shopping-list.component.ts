@@ -14,11 +14,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   shoppingListElements: ShoppingListElement[] | undefined;
 
   deletedProductsAvailable: boolean = false;
-  modalOpened: boolean = false;
   pageMenuOpened: boolean = false;
   boughtElements: boolean = false;
   loading: boolean = true;
-  editMode: boolean = false;
+
+  productEditing: boolean = false;
   editedProductIndex: number | undefined;
 
   changeSub: Subscription | undefined;
@@ -39,7 +39,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.shoppingListElements = this.shoppingListService.getShoppingList();
       this.boughtElements = this.shoppingListService.getShoppingList().some(product => product.bought)
-      this.editMode = false;
+      this.productEditing = false;
       this.form.reset();
     });
 
@@ -52,7 +52,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     });
 
     this.editSub = this.shoppingListService.productBeingEdited.subscribe((id) => {
-      this.editMode = true;
+      this.productEditing = true;
       this.editedProductIndex = id;
       this.form.controls.productName.setValue(this.shoppingListElements![id].name);
       this.form.controls.productQuantity.setValue(this.shoppingListElements![id].quantity);
@@ -96,10 +96,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.onClearBoughtElements();
   }
 
-  onClearList(): void {
-    this.modalOpened = true;
-  }
-
   private _createProduct(): ShoppingListElement {
     const name = this.form.controls.productName.value!;
     const quantity = this.form.controls.productQuantity.value;
@@ -111,7 +107,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     const updateProduct = this._createProduct();
     this.shoppingListService.updateProduct(this.editedProductIndex!, updateProduct);
     this.form.reset();
-    this.editMode = false;
+    this.productEditing = false;
   }
 
   onClickOutsideElementMenu(event: MouseEvent) {
@@ -120,6 +116,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   onMoreClick(): void {
     this.pageMenuOpened = !this.pageMenuOpened;
+  }
+
+  onClearList(): void {
+
   }
 
   closeMoreMenu(): void {

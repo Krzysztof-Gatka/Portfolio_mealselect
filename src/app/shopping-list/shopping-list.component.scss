@@ -123,6 +123,12 @@
   width: 70%;
 }
 
+.inputs-container.editing .ipt-default{
+  -webkit-appearance: none;
+  box-shadow:  0px 0px 1.5px 1.5px $accent-cta-color;
+  -webkit-box-shadow:  0px 0px 1.5px 1.5px $accent-cta-color;
+}
+
 .ipts-second-row {
   display: flex;
   flex-direction: row;

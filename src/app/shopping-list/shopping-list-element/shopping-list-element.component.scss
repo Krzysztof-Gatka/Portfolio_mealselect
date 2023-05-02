@@ -29,6 +29,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
 
   top: 0;
   left: 0;
@@ -43,7 +44,16 @@
 
 .more-menu .btn-default {
   width:5rem;
+  height: 80%;
   padding: 0.25rem;
+
+  font-size: 0.85rem;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-more img {
@@ -103,6 +113,11 @@
   transform: scale(0);
 
   transition: transform 600ms ease-in-out 0ms;
+}
+
+.el-edit {
+  box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
+  background-color: #e3c29e;
 }
 
 .gray-window {

@@ -13,6 +13,7 @@ import { ShoppingListElement } from './shopping-list-element.model';
 export class ShoppingListElementComponent implements OnInit, OnDestroy {
   @Input() product: ShoppingListElement | undefined;
   @Input() productIndex: number | undefined;
+  @Input() editing: boolean = false;
   @ViewChild('btnMore') btnMore: ElementRef<HTMLButtonElement> | undefined;
 
   editButtonDisabled: boolean = false;
@@ -78,5 +79,10 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
 
   onEditButtonClick(): void {
     this.shoppingListService.productBeingEdited.next(this.productIndex!);
+  }
+
+  onElementMenuClick(event: MouseEvent): void {
+    this.openMoreMenu = false;
+    event.stopPropagation();
   }
 }
