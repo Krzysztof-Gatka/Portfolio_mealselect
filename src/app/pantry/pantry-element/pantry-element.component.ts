@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { PantryService } from '../pantry.service';
 import { Subscription } from 'rxjs';
+
+import { PantryService } from '../pantry.service';
 import { PantryElement } from './pantry.model';
 
 const Miliseconds_In_Day = 1000*60*60*24;
@@ -16,7 +17,7 @@ export class PantryElementComponent implements OnInit, OnDestroy, OnChanges{
   @Input() elementEdited: boolean = false;
   @ViewChild('btnMore') btnMore: ElementRef<HTMLButtonElement> | undefined;
 
-  moreMenuOpened:boolean = false;
+  moreMenuOpened: boolean = false;
   productExpired: boolean = false;
   productExpiredSoon: boolean = false;
   productBeingEdited: boolean = false;
