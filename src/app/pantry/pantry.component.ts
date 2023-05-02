@@ -3,10 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { formatDate } from '@angular/common';
 
-
 import { PantryService } from './pantry.service';
 import { PantryElement } from './pantry-element/pantry.model';
-import { PantrySortService } from './pantry-sort.service';
 
 @Component({
   selector: 'app-pantry',
