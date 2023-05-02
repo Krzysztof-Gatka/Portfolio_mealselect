@@ -15,7 +15,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   deletedProductsAvailable: boolean = false;
   modalOpened: boolean = false;
-  moreMenuOpened: boolean = false;
+  pageMenuOpened: boolean = false;
   boughtElements: boolean = false;
   loading: boolean = true;
   editMode: boolean = false;
@@ -129,6 +129,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   onMoreClick(): void {
-    this.moreMenuOpened = !this.moreMenuOpened;
+    this.pageMenuOpened = !this.pageMenuOpened;
+  }
+
+  closeMoreMenu(): void {
+    this.pageMenuOpened = false;
   }
 }
