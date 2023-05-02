@@ -11,7 +11,6 @@
       </div>
 
       <div (click)="closeMoreMenu()" class="page-menu-opened">
-
         <div class="first-row">
           <button [ngClass]="deletedProductsAvailable ? '' : 'invalid'"  class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
           <button [ngClass]="shoppingListElements?.length !== 0 ? '' : 'invalid'"  class="btn-default" (click)="onClearList()">Clear list</button>
@@ -20,7 +19,6 @@
         <div class="second-row">
           <button [ngClass]="boughtElements ? '' : 'invalid'" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
         </div>
-
       </div>
 
     </div>
@@ -62,9 +60,7 @@
 
       </div>
 
-    <div class="list-container">
-
-
+    <div class="list-container" (click)="closeMoreMenu()">
 
       <div *ngIf="loading" class="loading-container">
         <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
@@ -83,47 +79,6 @@
       </div>
 
     </div>
-
-
-
-
-    <!--
-
-
-
-    <div class="page-menu">
-      <div class="header-container">
-        <h1 class="header" >Shopping List</h1>
-        <button class="btn-more" (click)="onMoreClick()">
-          <img [src]=" moreMenuOpened ? './../../assets/cancel2-svgrepo-com.svg' : './../../assets/more-vertical-svgrepo-com.svg'">
-        </button>
-      </div>
-
-
-    </div>
-
-    <div *ngIf="loading" class="spinner-container">
-      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-    </div>
-
-
-    <div class="content">
-      <div class="empty-list-message" *ngIf="(shoppingListElements === undefined || shoppingListElements.length === 0) && !loading">
-        <p>Your Shopping List is empty</p>
-      </div>
-
-
-    </div>
-
-
-
-
-
-    <div *ngIf="modalOpened" class="clear-list-modal" (click)="onModalClick()">
-      <h3 class="header" >Are you sure that you want to clear the list ?</h3>
-      <button (click)="onYesClick()" class="btn-default">Yes</button>
-      <button class="btn-default">Cancel</button>
-    </div> -->
 
   </div>
 </div>

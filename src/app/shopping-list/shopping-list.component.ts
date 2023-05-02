@@ -100,16 +100,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.modalOpened = true;
   }
 
-  onModalClick(): void {
-    this.modalOpened = false;
-  }
-
-  onYesClick(): void {
-    this.shoppingListElements = [];
-    this.shoppingListService.clear();
-  }
-
-
   private _createProduct(): ShoppingListElement {
     const name = this.form.controls.productName.value!;
     const quantity = this.form.controls.productQuantity.value;
