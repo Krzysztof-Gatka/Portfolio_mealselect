@@ -71,12 +71,20 @@
 
   padding: 0.25rem 0.5rem;
 
-  color: white;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+  color: $dominant-color;
   background-color: $accent-cta-color;
   box-shadow: 0px 0px 5px 0px $accent-cta-color;
   border: none;
   border-radius: 5px;
 
+  transition: opacity 500ms ease-in-out 0ms;
+}
+
+.btn-default.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .btn-default:focus {
@@ -123,6 +131,7 @@
   padding: 0.4rem 0.3rem;
 }
 
+.ipt-default.highlight,
 .ipt-default:focus,
 .ipt-default:active {
   border: none;
@@ -131,6 +140,7 @@
   -webkit-box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
   box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
 }
+
 
 // label
 .lbl-default {

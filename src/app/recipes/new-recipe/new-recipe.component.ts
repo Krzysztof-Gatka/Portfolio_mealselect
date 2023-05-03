@@ -17,15 +17,15 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class NewRecipeComponent implements OnInit{
   recipeForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
-    prepTime: new FormControl<number | null>(null, Validators.required),
+    prepTime: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*/)]),
     difficulty: new FormControl<string | null>(null, Validators.required),
-    servings: new FormControl<number | null>(null, Validators.required),
+    servings: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*/)]),
     description: new FormControl<string | null>(null),
   });
 
   ingredientForm =  new FormGroup({
     productName: new FormControl<string | null>(null, Validators.required),
-    productQuantity: new FormControl<number | null>(null),
+    productQuantity: new FormControl<number | null>(null, Validators.pattern(/^[1-9][0-9]*/)),
     productUnit: new FormControl<string | null>(null),
   });
 
@@ -41,13 +41,14 @@ export class NewRecipeComponent implements OnInit{
   @ViewChild('step_input') stepInput?: ElementRef<HTMLInputElement>;
   paramsSub: Subscription | undefined;
   editMode: boolean = false;
-  moreMenu: { id: number, open: boolean} | undefined;
+  btnsOpened: { id: number, open: boolean} | undefined;
 
   stepTitles = [
     'Basic Attributes',
     'Ingredients',
     'Preparation Steps',
     'Tags',
+    'Recipe Preview'
  ];
 
   progress: number = 0;
@@ -86,8 +87,8 @@ export class NewRecipeComponent implements OnInit{
 
   onAddIngredient(): void {
     const productName = this.ingredientForm.controls.productName.value!;
-    const productQuantity = +this.ingredientForm.controls.productQuantity.value!;
-    const productUnit = this.ingredientForm.controls.productUnit.value!;
+    const productQuantity = this.ingredientForm.controls.productQuantity.value;
+    const productUnit = this.ingredientForm.controls.productUnit.value;
 
     this.recipe.ingredients.push(new Ingredient(productName, productQuantity, productUnit));
     this.ingredientForm.reset();
@@ -109,13 +110,13 @@ export class NewRecipeComponent implements OnInit{
     const difficulty = this.recipeForm.controls.difficulty.value!;
     const servings = this.recipeForm.controls.servings.value!;
     if(this.recipeForm.controls.description.value) {
-      this.recipe.description =  this.recipeForm.controls.description.value!;
+      this.recipe.description =  this.recipeForm.controls.description.value;
     }
 
     this.recipe.name = name;
     this.recipe.prepTime = prepTime;
     this.recipe.difficulty = difficulty;
-    this.recipe.servings = +servings;
+    this.recipe.servings = servings;
   }
 
   onAddRecipe(): void {
@@ -125,22 +126,25 @@ export class NewRecipeComponent implements OnInit{
   }
 
   onDeleteIngClick(index: number): void {
-    this.recipe.ingredients = this.recipe.ingredients.filter((recipe, i) => i !== index);
+    this.recipe.ingredients = this.recipe.ingredients.filter((_, i) => i !== index);
+    this.btnsOpened!.open = false;
   }
 
   onDeleteStepClick(index: number): void {
-    this.recipe.prepSteps = this.recipe.prepSteps.filter((recipe, i) => i !== index);
+    this.recipe.prepSteps = this.recipe.prepSteps.filter((_, i) => i !== index);
+    this.btnsOpened!.open = false;
   }
 
   onDeleteTagClick(index: number): void {
-    this.recipe.tags = this.recipe.tags.filter((recipe, i) => i !== index);
+    this.recipe.tags = this.recipe.tags.filter((_, i) => i !== index);
+    this.btnsOpened!.open = false;
   }
 
   onEditIngClick(index: number): void {
     const editedIng = this.recipe.ingredients[index];
     this.ingredientForm.controls.productName.setValue(editedIng.name);
-    this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity!);
-    this.ingredientForm.controls.productUnit.setValue(editedIng.unit!);
+    if(editedIng.quantity) this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity);
+    if(editedIng.unit) this.ingredientForm.controls.productUnit.setValue(editedIng.unit);
 
     this.editingIngIndex = index;
     this.ingNameInpt?.nativeElement.focus();
@@ -163,13 +167,14 @@ export class NewRecipeComponent implements OnInit{
     this.editingTagIndex = index;
   }
 
-  onSaveChangesClick(): void {
+  onSaveIngChangesClick(): void {
     const productName = this.ingredientForm.controls.productName.value!;
-    const productQuantity = +this.ingredientForm.controls.productQuantity.value!;
-    const productUnit = this.ingredientForm.controls.productUnit.value!;
+    const productQuantity = this.ingredientForm.controls.productQuantity.value;
+    const productUnit = this.ingredientForm.controls.productUnit.value;
 
     this.recipe.ingredients[this.editingIngIndex] = new Ingredient(productName, productQuantity, productUnit);
     this.editingIngIndex = -1;
+    this.btnsOpened!.open = false;
     this.ingredientForm.reset();
     this.ingNameInpt?.nativeElement.focus();
   }
@@ -178,6 +183,7 @@ export class NewRecipeComponent implements OnInit{
     const step = this.stepForm.controls.step.value!;
     this.recipe.prepSteps[this.editingStepIndex] = step;
     this.editingStepIndex = -1;
+    this.btnsOpened!.open = false;
     this.stepForm.reset();
     this.stepInput?.nativeElement.focus();
   }
@@ -186,6 +192,7 @@ export class NewRecipeComponent implements OnInit{
     const tag = this.tagsForm.controls.tag.value!;
     this.recipe.tags[this.editingTagIndex] = tag;
     this.editingTagIndex = -1;
+    this.btnsOpened!.open = false;
     this.stepForm.reset();
   }
 
@@ -209,8 +216,8 @@ export class NewRecipeComponent implements OnInit{
       this._getFormRecipe();
     }
 
-    if(this.moreMenu) {
-      this.moreMenu.open = false;
+    if(this.btnsOpened) {
+      this.btnsOpened.open = false;
     }
     this.progress = this.progress + 1;
   }
@@ -219,16 +226,16 @@ export class NewRecipeComponent implements OnInit{
     this.progress = this.progress - 1;
   }
 
-  onMoreClick(list: string, id: number): void {
-    if(this.moreMenu) {
-      if(this.moreMenu.id === id) {
-        this.moreMenu.open = !this.moreMenu.open;
+  onMoreClick(id: number): void {
+    if(this.btnsOpened) {
+      if(this.btnsOpened.id === id) {
+        this.btnsOpened.open = !this.btnsOpened.open;
       } else {
-        this.moreMenu.id = id;
-        this.moreMenu.open = true;
+        this.btnsOpened.id = id;
+        this.btnsOpened.open = true;
       }
     } else {
-      this.moreMenu = { id: id, open: true};
+      this.btnsOpened = { id: id, open: true};
     }
   }
 
