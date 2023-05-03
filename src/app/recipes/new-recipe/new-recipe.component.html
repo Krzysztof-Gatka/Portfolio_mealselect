@@ -138,42 +138,6 @@
 <div class="full-width-flex-container">
   <div class="new-recipe-container">
 
-    <!-- <div class="top-fixed-container">
-      <div class="progress-container">
-        <p class="p-progress">{{ stepTitles[progress] }}</p>
-        <p *ngIf="progress !== 4" class="p-progress">step {{ progress + 1}} of 4 </p>
-      </div>
-      <div class="progression-bar-container">
-        <div [ngClass]=" {'progression-bar-25' : progress === 1, 'progression-bar-50' : progress === 2, 'progression-bar-75': progress===3, 'progression-bar-100': progress===4}" class="progression-bar"></div>
-      </div>
-
-
-      <form *ngIf="progress === 2" [formGroup]="stepForm">
-        <div class="step-form-container">
-          <input #step_input class="ipt-default" formControlName="step" type="text" placeholder="Preparation Step">
-          <button [ngClass]="!stepForm.valid ? 'disabled' : ''" *ngIf="editingStepIndex === -1" class="btn-default btn-add" (click)="onAddStep()" >Add</button>
-          <button  [ngClass]="!stepForm.valid ? 'disabled' : ''" *ngIf="editingStepIndex !== -1"class="btn-default btn-save" (click)="onSaveStepChangesClick()" >Save</button>
-        </div>
-      </form>
-
-      <form  *ngIf="progress === 3" [formGroup]="tagsForm">
-        <div class="tag-form-container">
-          <input
-          class="ipt-default"
-          formControlName="tag"
-          id="tags"
-          type="text"
-          placeholder="tag"
-          >
-          <button [ngClass]="tagsForm.invalid ? 'disabled' : ''" *ngIf="editingTagIndex === -1" class="btn-default btn-add" (click)="onAddTagClick()">Add</button>
-          <button [ngClass]="!tagsForm.valid ? 'disabled' : ''" *ngIf="editingTagIndex !== -1" class="btn-default btn-save" (click)="onSaveTagChangesClick()" >Save</button>
-
-        </div>
-      </form>
-    </div>
-
--->
-
     <form *ngIf="progress === 0" class="recipe-form" [formGroup]="recipeForm">
 
       <div class="recipe-input-container">
@@ -278,72 +242,43 @@
 
     </div>
 
-    <!-- <form [formGroup]="recipeForm">
-      <div class="recipe-form-container">
-        </div>
-        <div *ngIf="progress === 1" class="ingredients-container">
-          <ul>
-            <li class="lst" *ngFor="let product of recipe.ingredients; let i = index">
-              <p class="list-element">{{product.name}} {{ product.quantity }} {{ product.unit }}</p>
-              <button class="btn-more" (click)="onMoreClick('ings', i)">
-                <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
-                <div *ngIf="moreMenu && moreMenu.id === i && moreMenu.open" class="more-menu">
-                  <button (click)="onDeleteIngClick(i)" class="btn-default">delete</button>
-                  <button (click)="onEditIngClick(i)"class="btn-default">edit</button>
-                </div>
-              </button>
-            </li>
-          </ul>
-        </div>
-        <div *ngIf="progress === 2" class="preparation-container">
-          <ul>
-            <li class="lst" *ngFor="let step of recipe.prepSteps; let i = index">
-              <p class="list-element">{{ step }}</p>
-              <button class="btn-more" (click)="onMoreClick('step', i)">
-                <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
-                <div *ngIf="moreMenu && moreMenu.id === i && moreMenu.open" class="more-menu">
-                  <button (click)="onDeleteStepClick(i)" class="btn-default">delete</button>
-                  <button (click)="onEditStepClick(i)"class="btn-default">edit</button>
-                </div>
-              </button>
-            </li>
+    <div *ngIf="progress === 2" class="steps-container">
 
-          </ul>
-        </div>
+      <div *ngFor="let step of recipe.prepSteps; let i = index" class="list-el-container">
 
-        <div *ngIf="progress === 3" class="tags-container">
+        <div [ngClass]="{'active-step': editingStepIndex === i || (this.btnsOpened && this.btnsOpened.id === i && this.btnsOpened.open) }" class="step">
 
-          <li class="lst" *ngFor="let tag of recipe.tags; let i = index">
-            <p class="list-element">{{ tag }}</p>
-            <button class="btn-more" (click)="onMoreClick('tag', i)">
-              <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
-              <div *ngIf="moreMenu && moreMenu.id === i && moreMenu.open" class="more-menu">
-                <button (click)="onDeleteTagClick(i)" class="btn-default">delete</button>
-                <button (click)="onEditTagClick(i)"class="btn-default">edit</button>
-              </div>
+          <p>{{ step }}</p>
+
+          <div *ngIf="editingStepIndex === i || (this.btnsOpened && this.btnsOpened.id === i && this.btnsOpened.open)" class="btns-container">
+
+            <button
+              *ngIf="editingStepIndex !== i"
+              class="btn-default"
+              (click)="onEditStepClick(i)"
+              >
+              Edit
             </button>
-          </li>
+
+            <button
+              *ngIf="editingStepIndex !== i"
+              class="btn-default"
+              (click)="onDeleteStepClick(i)"
+              >
+              Delete
+            </button>
+
+          </div>
+
         </div>
 
-        <div *ngIf="progress === 4">
-          <app-recipe [recipe]="recipe"></app-recipe>
-        </div>
-
-
-
-        <div class="btns-container">
-          <button *ngIf="progress !== 0" (click)="onBackClick()" class="btn-default" [ngClass]="recipeForm.valid ? '' : 'disabled'">Back</button>
-          <button *ngIf="progress !== 4" (click)="onNextClick()" class="btn-default" [ngClass]="recipeForm.valid ? '' : 'disabled'">Next</button>
-
-          <button *ngIf="!editMode && progress === 4" type="button" class="btn-default" (click)="onAddRecipe()">Add Recipe</button>
-          <button *ngIf="editMode && progress === 4" type="button" class="btn-default" (click)="onSaveChanges(recipe)">Save Changes</button>
-        </div>
-
-
+        <button class="btns-show" (click)="onMoreClick(i)">
+          <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+        </button>
 
       </div>
-    </form>  -->
 
+    </div>
 
   </div>
 </div>

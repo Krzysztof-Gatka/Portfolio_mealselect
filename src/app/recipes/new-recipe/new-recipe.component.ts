@@ -132,6 +132,7 @@ export class NewRecipeComponent implements OnInit{
 
   onDeleteStepClick(index: number): void {
     this.recipe.prepSteps = this.recipe.prepSteps.filter((recipe, i) => i !== index);
+    this.btnsOpened!.open = false;
   }
 
   onDeleteTagClick(index: number): void {
@@ -181,6 +182,7 @@ export class NewRecipeComponent implements OnInit{
     const step = this.stepForm.controls.step.value!;
     this.recipe.prepSteps[this.editingStepIndex] = step;
     this.editingStepIndex = -1;
+    this.btnsOpened!.open = false;
     this.stepForm.reset();
     this.stepInput?.nativeElement.focus();
   }
