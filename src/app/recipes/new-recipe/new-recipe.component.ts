@@ -48,6 +48,7 @@ export class NewRecipeComponent implements OnInit{
     'Ingredients',
     'Preparation Steps',
     'Tags',
+    'Recipe Preview'
  ];
 
   progress: number = 0;
