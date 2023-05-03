@@ -1,7 +1,142 @@
+<div class="top-fixed-container">
+
+  <div class="progress-container">
+
+    <div class="progress-description">
+      <p>{{ stepTitles[progress] }}</p>
+      <p *ngIf="progress !== 4">step {{ progress + 1}} of 4 </p>
+    </div>
+
+    <div class="progress-bar-container">
+      <div
+        class="progress-bar"
+        [ngClass]="{
+            'progress-bar-25': progress === 1,
+            'progress-bar-50': progress === 2,
+            'progress-bar-75': progress === 3,
+            'progress-bar-100': progress === 4
+          }">
+      </div>
+    </div>
+
+  </div>
+
+  <form *ngIf="progress === 1" class="ingredient-form" [formGroup]="ingredientForm">
+
+      <div class="ingredients-inputs-container">
+
+        <input
+          #ing_name_input
+          class="ipt-default"
+          formControlName="productName"
+          type="text"
+          placeholder="name"
+        >
+        <div class="ingredients-second-row">
+          <input
+          class="ipt-default"
+          formControlName="productQuantity"
+          type="text"
+          placeholder="quantity"
+        >
+        <input
+          class="ipt-default"
+          formControlName="productUnit"
+          type="text"
+          list="units"
+          placeholder="unit"
+        >
+        </div>
+
+        <datalist id="units">
+          <option *ngFor="let unit of units">{{ unit }}</option>
+        </datalist>
+
+      </div>
+
+      <button
+        *ngIf="editingIngIndex === -1"
+        class="btn-default btn-add"
+        [ngClass]="{ 'disabled': ingredientForm.invalid }"
+        (click)="onAddIngredient()">
+        Add
+      </button>
+
+      <button
+        *ngIf="editingIngIndex !== -1"
+        class="btn-default btn-save"
+        [ngClass]="{ 'disabled': ingredientForm.invalid }"
+        (click)="onSaveChangesClick()"
+        >Save
+      </button>
+
+  </form>
+
+  <form *ngIf="progress === 2" class="steps-form" [formGroup]="stepForm">
+
+    <textarea
+      #step_input
+      class="ipt-default"
+      formControlName="step"
+      cols="30"
+      rows="2"
+      placeholder="Preparation Step">
+    </textarea>
+
+    <button
+      *ngIf="editingStepIndex === -1"
+      class="btn-default btn-add"
+      [ngClass]="{'disabled': stepForm.invalid}"
+      (click)="onAddStep()">
+      Add
+    </button>
+
+    <button
+      *ngIf="editingStepIndex !== -1"
+      class="btn-default btn-save"
+      [ngClass]="{'disabled': stepForm.invalid}"
+      (click)="onSaveStepChangesClick()">
+      Save
+    </button>
+
+  </form>
+
+  <form *ngIf="progress === 3" class="tags-form" [formGroup]="tagsForm">
+
+      <textarea
+        class="ipt-default"
+        formControlName="tag"
+        cols="30"
+        rows="2"
+        placeholder="Tag">
+      </textarea>
+
+      <button
+        *ngIf="editingTagIndex === -1"
+        class="btn-default btn-add"
+        [ngClass]="{ 'disabled': tagsForm.invalid }"
+        (click)="onAddTagClick()">
+        Add
+      </button>
+
+      <button
+        *ngIf="editingTagIndex !== -1"
+        class="btn-default btn-save"
+        [ngClass]="{ 'disabled': tagsForm.invalid }"
+        (click)="onSaveTagChangesClick()">
+        Save
+      </button>
+
+  </form>
+
+
+</div>
+
+
 <div class="full-width-flex-container">
   <div class="new-recipe-container">
 
-    <div class="top-fixed-container">
+    <!-- <div class="top-fixed-container">
       <div class="progress-container">
         <p class="p-progress">{{ stepTitles[progress] }}</p>
         <p *ngIf="progress !== 4" class="p-progress">step {{ progress + 1}} of 4 </p>
@@ -9,43 +144,7 @@
       <div class="progression-bar-container">
         <div [ngClass]=" {'progression-bar-25' : progress === 1, 'progression-bar-50' : progress === 2, 'progression-bar-75': progress===3, 'progression-bar-100': progress===4}" class="progression-bar"></div>
       </div>
-      <form *ngIf="progress === 1" [formGroup]="ingredientForm">
-        <div class="ingredients-form-container">
 
-          <div class="ingredients-inputs-container">
-            <input
-              #ing_name_input
-              class="ipt-default ipt-one-line ipt-name"
-              formControlName="productName"
-              type="text"
-              placeholder="name"
-            >
-            <div class="ings-second-row">
-              <input
-              class="ipt-default ipt-one-line ipt-qty"
-              formControlName="productQuantity"
-              type="text"
-              placeholder="quantity"
-            >
-            <input
-              class="ipt-default ipt-one-line ipt-unit"
-              formControlName="productUnit"
-              type="text"
-              list="units"
-              placeholder="unit"
-            >
-            </div>
-
-            <datalist id="units">
-              <option *ngFor="let unit of units">{{ unit }}</option>
-            </datalist>
-
-
-          </div>
-          <button [ngClass]="!ingredientForm.valid ? 'disabled' : ''" *ngIf="editingIngIndex === -1" class="btn-default btn-add" (click)="onAddIngredient()" >Add</button>
-          <button [ngClass]="!ingredientForm.valid ? 'disabled' : ''" *ngIf="editingIngIndex !== -1" class="btn-default btn-save" (click)="onSaveChangesClick()" >Save</button>
-        </div>
-      </form>
 
       <form *ngIf="progress === 2" [formGroup]="stepForm">
         <div class="step-form-container">
@@ -197,9 +296,42 @@
 
 
       </div>
-    </form>
+    </form> -->
 
 
   </div>
 </div>
 
+<div class="bottom-fixed-container">
+
+  <button
+    *ngIf="progress !== 0"
+    class="btn-default"
+    [ngClass]="recipeForm.valid ? '' : 'disabled'"
+    (click)="onBackClick()">
+    Back
+  </button>
+
+  <button
+    *ngIf="progress !== 4"
+    class="btn-default"
+    [ngClass]="recipeForm.valid ? '' : 'disabled'"
+    (click)="onNextClick()">
+    Next
+  </button>
+
+  <button
+    *ngIf="!editMode && progress === 4"
+    class="btn-default"
+    (click)="onAddRecipe()">
+    Add Recipe
+  </button>
+
+  <button
+    *ngIf="editMode && progress === 4"
+    class="btn-default"
+    (click)="onSaveChanges(recipe)">
+    Save Changes
+  </button>
+
+</div>

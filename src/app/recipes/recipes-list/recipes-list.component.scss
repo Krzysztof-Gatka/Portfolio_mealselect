@@ -63,7 +63,6 @@
 
 .btn-x img {
   width: 2.5rem;
-  // filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
   filter: invert(41%) sepia(30%) saturate(0%) hue-rotate(211deg) brightness(89%) contrast(85%);
 }
 
@@ -99,16 +98,6 @@
   width:50%
 }
 
-.filter-sort-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 0.5rem;
-}
-
-.filter-container {
-  padding: 0.5rem;
-}
 
 .sort-container {
   padding: 0.5rem;
@@ -185,15 +174,6 @@
   background-color: $accent-color;
 }
 
-.new-recipe-container {
-  width:100%;
-  max-width: 50rem;
-  display: flex;
-  justify-content: center;
-  padding-top: 2rem;
-}
-
-
 .recipes-nav-btn.comm-rec {
   color: $default-text-color;
   box-shadow: none;
@@ -211,20 +191,11 @@
 }
 
 
-// .recipes-nav-btn.comm-rec::before {
-//   content: "still in development";
-//   position: absolute;
-//   top:-1.25rem;
-//   left:0;
-//   color: $accent-text-color;
-// }
-
 .list-header {
   position: fixed;
   top:12.5rem;
   left: 0;
   background-color: $accent-color;
-  // margin-right: calc(3.25rem + 5px);
   padding:0.5rem;
   padding-right: calc(2.25rem + 5px);
   padding-left: 0.5rem;

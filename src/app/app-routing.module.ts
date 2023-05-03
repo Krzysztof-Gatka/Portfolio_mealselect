@@ -28,7 +28,7 @@ const ROUTES: Route[] = [
         path: '', redirectTo: 'recipes-list/user-recipes', pathMatch: 'full',
       },
       {
-        path: 'recipes-list/:recipes', component: RecipesListComponent,
+        path: 'recipes-list/:recipes', component: NewRecipeComponent,
       },
       {
         path: ':recipes/recipe/:id', component: RecipeComponent,
