@@ -1,31 +1,45 @@
+<div class="top-fixed-container">
+
+  <div class="btns-container">
+
+    <button
+      [routerLink]="['/recipes/recipes-list/user-recipes']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      My Recipes
+    </button>
+
+    <button
+      [routerLink]="['/recipes/recipes-list/recipes-base']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      Recipes Base
+    </button>
+
+    <button class="btn-filter-sort">
+      <img src="../../../assets/filter-edit-svgrepo-com.svg" alt="">
+    </button>
+
+  </div>
+
+</div>
+
 <div class="full-width-flex-container">
   <div class="recipes-list-container">
-    <div class="page-menu-container">
-      <div class="recipes-nav-container">
 
-        <button
-          [routerLink]="['/recipes/recipes-list/user-recipes']"
-          [routerLinkActive]="'active'"
-          class="recipes-nav-btn">
-          My Recipes
-        </button>
-
-        <button
-          [routerLink]="['/recipes/recipes-list/recipes-base']"
-          [routerLinkActive]="'active'"
-          class="recipes-nav-btn">
-          Recipes Base
-        </button>
-
-      </div>
-
-    <div class="filter-sort-menu">
-      <button *ngIf="recipes !== undefined && recipes.length !==0 && !loading" (click)="onFilterButtonClick()" class="btn-default">Filter & Sort</button>
-    </div>
+    <div *ngIf="loading" class="loading-fog"></div>
+    <div *ngIf="loading" class="spinner-container">
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
     </div>
 
+    <app-recipes-list-element
+      *ngFor="let recipe of recipes"
+      [recipe]="recipe"
+      [recipesType]="recipesType"
+    ></app-recipes-list-element>
 
 
+<!--
   <div *ngIf="filterModalOpen" class="modal-container">
 
     <div class="btn-container">
@@ -123,7 +137,7 @@
       Add a recipe from our Recipe Base, or create your own recipe.
     </p>
 
-  </div>
+  </div> -->
 
-</div>
+  </div>
 </div>

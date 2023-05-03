@@ -138,6 +138,7 @@ export class RecipesService {
 
     this.http.get<Recipe[]>(Fetch_Recipes_URL, {params: params})
       .pipe(
+        retry({count: 3, delay: 2000}),
         catchError((error) => {
           console.warn(error);
           this.toastr.error('Error: Downloading of recipes base from sever failed.');
