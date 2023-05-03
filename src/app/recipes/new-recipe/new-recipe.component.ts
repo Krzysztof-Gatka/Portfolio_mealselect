@@ -137,6 +137,7 @@ export class NewRecipeComponent implements OnInit{
 
   onDeleteTagClick(index: number): void {
     this.recipe.tags = this.recipe.tags.filter((recipe, i) => i !== index);
+    this.btnsOpened!.open = false;
   }
 
   onEditIngClick(index: number): void {
@@ -191,6 +192,7 @@ export class NewRecipeComponent implements OnInit{
     const tag = this.tagsForm.controls.tag.value!;
     this.recipe.tags[this.editingTagIndex] = tag;
     this.editingTagIndex = -1;
+    this.btnsOpened!.open = false;
     this.stepForm.reset();
   }
 

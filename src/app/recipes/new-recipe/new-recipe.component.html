@@ -280,6 +280,48 @@
 
     </div>
 
+    <div *ngIf="progress === 3" class="tags-container">
+
+      <div *ngFor="let tag of recipe.tags; let i = index" class="list-el-container">
+
+        <div [ngClass]="{'active-tag': editingTagIndex === i || (this.btnsOpened && this.btnsOpened.id === i && this.btnsOpened.open) }" class="tag">
+
+          <p>{{ tag }}</p>
+
+          <div *ngIf="editingTagIndex === i || (this.btnsOpened && this.btnsOpened.id === i && this.btnsOpened.open)" class="btns-container">
+
+            <button
+              *ngIf="editingTagIndex !== i"
+              class="btn-default"
+              (click)="onEditTagClick(i)"
+              >
+              Edit
+            </button>
+
+            <button
+              *ngIf="editingTagIndex !== i"
+              class="btn-default"
+              (click)="onDeleteTagClick(i)"
+              >
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+        <button class="btns-show" (click)="onMoreClick(i)">
+          <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+        </button>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="progress === 4" class="preview-container">
+      <app-recipe [recipe]="recipe"></app-recipe>
+    </div>
+
   </div>
 </div>
 
