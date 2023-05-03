@@ -104,10 +104,11 @@ export class RecipesListComponent implements OnInit{
       this.tags = [this.filterForm.controls.tags.value!];
     }
     this.filterForm.controls.tags.reset();
+    this.onFilterClick();
   }
 
   onXClick(index: number):void {
-    this.tags = this.tags!.filter((tag, i) => index !== i);
+    this.tags = this.tags!.filter((_, i) => index !== i);
     this.onFilterClick();
   }
 

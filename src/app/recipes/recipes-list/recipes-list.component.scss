@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: center;
   max-width: 35rem;
+  padding: 0.2rem;
 }
 
 .page-menu-container {
@@ -28,11 +29,12 @@
   width:100vw;
   height: 100vh;
 
+
   background-color: rgba($dominant-color, 0.90);
 
   z-index: 100;
 
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .ipt-container {
@@ -59,13 +61,16 @@
 }
 
 .btn-x img {
-  width: 1.5rem;
+  width: 2.5rem;
   // filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
   filter: invert(41%) sepia(30%) saturate(0%) hue-rotate(211deg) brightness(89%) contrast(85%);
 }
 
-.ipt-container .lbl-default {
+ .lbl-default {
   width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .form-container {
@@ -130,6 +135,8 @@
   width:35%;
   transition: opacity 500ms ease-in-out 0ms;
 }
+
+
 
 
 .btns-container{
@@ -255,13 +262,20 @@
 }
 
 .btn-x {
+  color:$default-text-color;
   width:3rem;
 }
 
 .tag-x {
-  border:none;
-  width: 1rem;
-  background-color: $accent-color;
+  border: none;
+  width: fit-content;
+  background-color: $dominant-color;
+}
+
+.tag-x img{
+  background-color: $dominant-color;
+  width: 1.5rem;
+  filter: invert(41%) sepia(30%) saturate(0%) hue-rotate(211deg) brightness(89%) contrast(85%);
 }
 
 .tag-container {
@@ -271,30 +285,44 @@
   justify-content: space-between;
   width:49%;
   margin-bottom: 0.5rem;
-  outline: 1px solid $accent-text-color;
-  background-color: $accent-color;
+  -webkit-appearance: none;
+  box-shadow:  0px 0px 0.5px 0.5px $accent-cta-color;
+  -webkit-box-shadow:  0px 0px 0.5px 0.5px $accent-cta-color;
+  background-color: $dominant-color;
+
   border-radius: 5px;
 }
 
 .tag {
   width:fit-content;
-  font-size: 0.85rem;
+  font-size: 1.25rem;
   color: $default-text-color;
 }
 
 .btn-sorting {
-  padding: 0.25rem 0.5rem;
-  width:35%;
+  padding: 0.75rem 0.5rem;
+  font-size: 1.2rem;
+  width:45%;
   border-radius: 5px;
   background-color: $accent-color;
   border: none;
-  outline: 2px solid $accent-cta-color;
-  color: $accent-text-color;
-  box-shadow: 0px 0px 8px 0px $accent-cta-color;
+  color: $accent-cta-color;
+  box-shadow: 0px 0px 4px 1px $accent-cta-color;
   font-weight: bolder;
+
+  transition: background-color 500ms ease-in-out 0ms;
 }
 
 .btn-sorting.active {
   color: $accent-color;
   background-color: $accent-cta-color;
+}
+
+.btn-default.btn-plus {
+  padding:0rem 0.25rem;
+}
+
+.ipt-default {
+  font-size: 1.2rem;
+  color: $default-text-color;
 }

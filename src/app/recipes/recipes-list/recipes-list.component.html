@@ -38,8 +38,9 @@
       <form [formGroup]="sortForm">
         <div class="inputs-container">
 
-          <div class="input-container">
-            <select class="ipt-default" formControlName="sort" id="sort">
+          <div class="ipt-container">
+            <label for="id" class="lbl-default">Sort</label>
+            <select class="ipt-default" formControlName="sort" id="sort" >
               <option value="prepTimeAscending">preparation time ascending</option>
               <option value="prepTimeDescending">preparation time descending</option>
               <option value="difficultyAscending">difficulty ascending</option>
@@ -70,7 +71,6 @@
       <div class="ipt-container">
         <label class="lbl-default" for="difficulty">Difficulty</label>
         <select class="ipt-default" formControlName="difficulty" id="difficulty">
-          <option value=""></option>
           <option value="easy">easy</option>
           <option value="medium">medium</option>
           <option value="hard">hard</option>
@@ -81,13 +81,15 @@
       <div class="ipt-container">
         <label class="lbl-default" for="tags">Tags</label>
         <input class="ipt-default" formControlName="tags" id="tags "type="text">
-        <button [ngClass]="filterForm.invalid ? 'invalid' : ''" (click)="onAddTagClick()" class="btn-default">+</button>
+        <button [ngClass]="filterForm.invalid ? 'invalid' : ''" (click)="onAddTagClick()" class="btn-default btn-plus">+</button>
       </div>
 
       <div class="tags-container">
         <div class="tag-container" *ngFor="let tag of tags; let i = index">
           <p class="tag"> {{ tag }} </p>
-          <button (click)="onXClick(i)" class="tag-x">x</button>
+          <button (click)="onXClick(i)" class="tag-x">
+            <img src="../../../assets/cancel2-svgrepo-com.svg" alt="">
+          </button>
         </div>
       </div>
 
