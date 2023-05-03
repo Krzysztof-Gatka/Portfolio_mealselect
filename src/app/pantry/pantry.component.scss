@@ -26,7 +26,7 @@
 }
 
 .page-header-container.opened {
-  height: 10.9rem;
+  height: 11rem;
 }
 
 .header-container {
@@ -152,8 +152,8 @@
 }
 
 .loading-container {
-  position: absolute;
-  top:0;
+  position: fixed;
+  top:13rem;
   left:0;
 
   height: 100%;
