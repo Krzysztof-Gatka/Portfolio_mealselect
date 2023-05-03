@@ -1,8 +1,8 @@
-<div class="top-fixed-container" [ngClass]="{'opened': buttons}">
+<div class="top-fixed-container" [ngClass]="{'opened': buttons, 'hidden': recipePreview}">
 
   <div class="header-container">
 
-    <p class="recipe-name-header">{{ recipe!.name }}</p>
+    <p class="recipe-name-header">{{ recipe!.name.length > 25 ? recipe!.name.slice(0, 25).concat('...') : recipe!.name}}</p>
 
     <button class="btn-more" (click)="onMoreButtonClick()">
       <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
@@ -49,64 +49,39 @@
 </div>
 
 <div class="full-width-flex-container">
-  <div class="recipe-container">
+  <div class="recipe-container" [ngClass]="{'hidden': recipePreview}">
 
-    <!-- <div *ngIf="!recipePreview"class="header-container">
+    <h1 class="full-recipe-name">{{ recipe!.name }}</h1>
 
-      <div class="name-btn-container">
-        <h2 class="header">{{ recipe!.name }}</h2>
-        <button (click)="onMoreButtonClick()" class="btn-more">
-          <img [src]="buttons ? './../../../assets/cancel2-svgrepo-com.svg' : './../../../assets/more-vertical-svgrepo-com.svg'">
-        </button>
-      </div>
+    <div class="basic-attributes">
 
-      <div *ngIf="buttons" class="btns-container">
-        <button *ngIf="recipesType === 'recipes-base'" class="btn-default" (click)="onAddToMyRecipes()">Add Recipe to My Recipes</button>
-        <button class="btn-default" (click)="onAddToShoppingListClick()">Add Ingredients to shopping List</button>
-        <button *ngIf="recipesType === 'user-recipes'" class="btn-default" [routerLink]="['/edit-recipe', recipe!.id]">Edit Recipe</button>
-        <button *ngIf="recipesType === 'user-recipes'" class="btn-default" (click)="onDeleteRecipeClick(recipe!.id)">Delete Recipe</button>
-      </div>
+      <p class="tags"> <span class="tag" *ngFor="let tag of recipe!.tags; let i = index">{{ tag }}{{ recipe!.tags.length === 1 || i === recipe!.tags.length-1 ? '.' : ',' }} </span></p>
+
+      <p class="">{{ recipe!.prepTime }} min, {{ recipe!.difficulty }},  {{ recipe!.servings }} servings</p>
+
     </div>
 
-    <div *ngIf="recipePreview">
-      <h2 class="header">{{ recipe!.name }}</h2>
-    </div>
+    <p class="description">{{ recipe!.description }}</p>
 
-    <div class="sections-container">
-
-      <section class="section">
-        <p class="p-tags"> <span class="tag" *ngFor="let tag of recipe!.tags; let i = index">{{ tag }}{{ recipe!.tags.length === 1 || i === recipe!.tags.length-1 ? '.' : ',' }} </span></p>
-      </section>
-
-      <section class="section">
-        <p class="description">{{ recipe!.description }}</p>
-      </section>
-
-      <section class="section prep-time">
-        <p class="p-tags"> {{ recipe!.prepTime }} min</p>
-        <p class="p-tags"> {{ recipe!.difficulty }} </p>
-        <p class="p-tags"> {{ recipe!.servings }} servings</p>
-      </section>
-
-      <section class="section-ingredients section">
-        <h3 class="list-header">Ingredients</h3>
-        <ul class="list">
-          <li class="list-element" [ngClass]="product.inPantry ? 'bought' : ''" *ngFor="let product of recipe!.ingredients">
+    <div class="ingredients">
+      <h2 class="list-header">Ingredients</h2>
+        <ul class="ing-list">
+          <li class="ing-list-element" [ngClass]="{ 'in-pantry': product.inPantry }" *ngFor="let product of recipe!.ingredients">
             {{ product.name }} {{ product.quantity }} {{ product.unit}}
+            <img *ngIf="product.inPantry" src="./../../../assets/tick-svgrepo-com (1).svg" alt="">
           </li>
         </ul>
-      </section>
+    </div>
 
-      <section class="section-preparation-steps section">
-        <h3 class="list-header">Prepartion</h3>
-        <ol class="list">
-          <li class="list-element" *ngFor="let step of recipe!.prepSteps">
+    <div class="preparation-steps">
+      <h2 class="list-header">Prepartion</h2>
+        <ol class="prep-list">
+          <li [ngClass]="{'crossed': crossedSet.has(i)}" class="prep-list-element" *ngFor="let step of recipe!.prepSteps; let i = index" (click)="onPrepClick(i)">
             {{ step }}
           </li>
         </ol>
-      </section>
+    </div>
 
-    </div> -->
 
   </div>
 </div>
