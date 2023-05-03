@@ -13,9 +13,9 @@ import { ShoppingListElement } from './shopping-list-element.model';
 export class ShoppingListElementComponent implements OnInit, OnDestroy {
   @Input() product: ShoppingListElement | undefined;
   @Input() productIndex: number | undefined;
+  @Input() editing: boolean = false;
   @ViewChild('btnMore') btnMore: ElementRef<HTMLButtonElement> | undefined;
 
-  editButtonDisabled: boolean = false;
   openMoreMenu: boolean = false;
 
   editSub: Subscription | undefined;
@@ -36,17 +36,6 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
         this.openMoreMenu = false;
       }
     })
-    this.editSub = this.shoppingListService.productBeingEdited.subscribe((id)=>{
-      if(id === -1) {
-        this.editButtonDisabled = false;
-      } else {
-        this.editButtonDisabled = id !== this.productIndex;
-      }
-    })
-
-    this.saveSub = this.shoppingListService.productSaved.subscribe(() => {
-      this.editButtonDisabled = false;
-    })
   }
 
   ngOnDestroy(): void {
@@ -55,28 +44,25 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
     this.clickOutsideSub?.unsubscribe();
   }
 
-  onProductClick(): void {
-    this.shoppingListService.toggleBought(this.productIndex!);
-  }
-
-  onSaveButtonClick(): void {
-    this.shoppingListService.productSaved.next(this.productIndex!);
-  }
-
-  onSavebuttonClikced(product: ShoppingListElement): void {
-    this.product = product;
-    this.shoppingListService.updateProduct(this.productIndex!, this.product);
-  }
-
   onMoreClick(): void {
     this.openMoreMenu = !this.openMoreMenu;
   }
 
   onDeleteButtonClick(): void {
+    this.shoppingListService.shoppingListLoading.next(true);
     this.shoppingListService.deleteProduct(this.productIndex!);
   }
 
   onEditButtonClick(): void {
-    this.shoppingListService.productBeingEdited.next(this.productIndex!);
+    this.shoppingListService.productEditing.next(this.productIndex!);
+  }
+
+  onProductClick(): void {
+    this.shoppingListService.toggleBought(this.productIndex!);
+  }
+
+  onElementMenuClick(event: MouseEvent): void {
+    this.openMoreMenu = false;
+    event.stopPropagation();
   }
 }

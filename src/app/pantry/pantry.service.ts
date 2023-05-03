@@ -143,13 +143,10 @@ export class PantryService {
   }
 
   addElements(products: PantryElement[]) {
-    let updatedPantry: PantryElement[] = []
+    let updatedPantry: PantryElement[];
 
     if (this.pantry) {
-      const updatedPantry = this.pantry!;
-      products.map((product) => {
-        updatedPantry.push(product);
-      });
+      updatedPantry = [...this.pantry, ...products];
     } else {
       updatedPantry = [...products];
     }
@@ -157,7 +154,6 @@ export class PantryService {
     this._putPantry(updatedPantry).subscribe({
       next: () => {
         this.pantry = updatedPantry.slice();
-        this.pantryLoading.next(false);
         this.pantryChanged.next('');
       },
       error: (error) => {

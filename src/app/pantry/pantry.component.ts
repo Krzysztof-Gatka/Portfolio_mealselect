@@ -41,6 +41,10 @@ export class PantryComponent implements OnInit, OnDestroy{
       this.form.reset();
     });
 
+    this.pantryLoadingSub = this.pantryService.pantryLoading.subscribe((loading) => {
+      this.loading = loading;
+    });
+
     this.pantryElementEditSub = this.pantryService.pantryElementEdit.subscribe((id) => {
       this.elementEditing = true;
       this.elementIndex = id;
@@ -53,9 +57,7 @@ export class PantryComponent implements OnInit, OnDestroy{
       }
     })
 
-    this.pantryLoadingSub = this.pantryService.pantryLoading.subscribe((loading) => {
-      this.loading = loading;
-    })
+
 
     if(!this.pantryService.pantryFetched) {
       this.pantryService.fetchPantry();
