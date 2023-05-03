@@ -22,7 +22,8 @@ export class RecipesListComponent implements OnInit{
   sorting: boolean = false;
   filtering: boolean = false;
   loading: boolean = true;
-  filterModalOpen: boolean = false;
+  filterSortMenuOpened: boolean = false;
+  sortingv2: {type: string, asc: boolean} = {type: 'none', asc: false};
 
   filterForm = new FormGroup({
     name: new FormControl(''),
@@ -35,6 +36,10 @@ export class RecipesListComponent implements OnInit{
   sortForm = new FormGroup({
     sort: new FormControl(''),
   });
+
+  sliderForm = new FormGroup({
+    time: new FormControl(''),
+  })
 
   constructor (
     private recipesService: RecipesService,
@@ -113,10 +118,23 @@ export class RecipesListComponent implements OnInit{
   }
 
   onFilterButtonClick() {
-    this.filterModalOpen = true;
+    this.filterSortMenuOpened = !this.filterSortMenuOpened;
   }
 
-  onxClick() {
-    this.filterModalOpen = false;
+  onCloseFilterSortMenu() {
+    this.filterSortMenuOpened = false;
+  }
+
+  onApplyClick(): void {
+    this.filterSortMenuOpened = false;
+  }
+
+  onSortByBtnClick(type: string): void {
+    if(this.sortingv2.type === type) {
+      this.sortingv2.asc = !this.sortingv2.asc;
+    } else {
+      this.sortingv2.type = type;
+      this.sortingv2.asc = true;
+    }
   }
 }
