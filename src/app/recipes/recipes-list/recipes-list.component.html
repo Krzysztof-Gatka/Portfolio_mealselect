@@ -22,6 +22,11 @@
 
   </div>
 
+  <div class="search-container" [formGroup]="searchForm">
+    <input class="ipt-default" type="text" placeholder="Name, tags, ingredients..." formControlName="search">
+    <img src="../../../assets/search-svgrepo-com.svg" alt="">
+  </div>
+
 </div>
 
 <div class="full-width-flex-container">
@@ -62,17 +67,17 @@
 
       <button class="btn-sort" (click)="onSortByBtnClick('time')">
         <p>Preparation Time</p>
-        <img *ngIf="sortingv2.type === 'time'" [src]="sortingv2.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+        <img *ngIf="sorting.type === 'time'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
       </button>
 
       <button class="btn-sort" (click)="onSortByBtnClick('difficulty')">
         <p>Difficulty</p>
-        <img *ngIf="sortingv2.type === 'difficulty'" [src]="sortingv2.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+        <img *ngIf="sorting.type === 'difficulty'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
       </button>
 
       <button class="btn-sort" (click)="onSortByBtnClick('ingredients')">
         <p>Missing Ingredients</p>
-        <img *ngIf="sortingv2.type === 'ingredients'" [src]="sortingv2.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+        <img *ngIf="sorting.type === 'ingredients'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
       </button>
 
     </div>

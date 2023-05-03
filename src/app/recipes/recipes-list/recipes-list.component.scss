@@ -29,6 +29,30 @@
   padding: 0.75rem;
 }
 
+.search-container {
+  position: relative;
+
+  padding: 0.75rem;
+  padding-top: 0rem;
+}
+
+.search-container img {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  width: 2rem;
+  opacity:0.25;
+  filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
+}
+
+.ipt-default {
+  padding: 0.75rem 0.25rem;
+  color:$default-text-color;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
 .recipes-nav-btn {
   cursor: pointer;
   padding: 0.75rem 0.1rem;
@@ -66,7 +90,7 @@
 .recipes-list-container {
   position: relative;
 
-  margin-top: 6.5rem;
+  margin-top: 10.5rem;
 
   display: flex;
   flex-direction: column;
@@ -88,7 +112,7 @@
 
 .spinner-container {
   position: fixed;
-  top: 8.5rem;
+  top: 12.5rem;
   left: 40%;
 
   z-index: 20;
