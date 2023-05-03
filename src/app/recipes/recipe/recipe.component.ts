@@ -18,11 +18,11 @@ export class RecipeComponent implements OnInit, OnDestroy{
   sub: Subscription | undefined;
   buttons: boolean = false;
   recipePreview: boolean = false;
+  crossedSet = new Set<number>();
   constructor(
     private recipesService: RecipesService,
     private route: ActivatedRoute,
     private shoppingListService: ShoppingListService,
-    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -62,5 +62,15 @@ export class RecipeComponent implements OnInit, OnDestroy{
 
   onMoreButtonClick() {
     this.buttons = !this.buttons;
+  }
+
+  onPrepClick(index: number): void {
+    if(this.crossedSet.has(index)) {
+
+      this.crossedSet.delete(index);
+    } else {
+      this.crossedSet.add(index);
+    }
+
   }
 }
