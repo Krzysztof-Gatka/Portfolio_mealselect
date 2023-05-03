@@ -42,7 +42,7 @@ export class RecipeComponent implements OnInit, OnDestroy{
   }
 
   onAddToShoppingListClick(): void {
-    this.shoppingListService.addToShoppingList(this.recipe!.ingredients);
+    this.shoppingListService.addProducts(this.recipe!.ingredients);
     this.buttons = false;
   }
 

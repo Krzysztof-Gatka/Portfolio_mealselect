@@ -43,7 +43,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       this.loading = false;
     });
 
-    this.editSub = this.shoppingListService.productBeingEdited.subscribe((id) => {
+    this.editSub = this.shoppingListService.productEditing.subscribe((id) => {
       this.productEditing = true;
       this.editedProductIndex = id;
       this.form.controls.productName.setValue(this.shoppingListElements![id].name);
@@ -90,7 +90,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   onClearList(): void {
     this.loading = true;
-    this.shoppingListService.clearList();
+    this.shoppingListService.clearProducts();
   }
 
   onClickOutsideElementMenu(event: MouseEvent) {

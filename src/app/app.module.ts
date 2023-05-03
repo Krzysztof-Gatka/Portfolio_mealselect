@@ -9,7 +9,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingListElementComponent } from './shopping-list/shopping-list-element/shopping-list-element.component';
-import { ShoppingListInputComponent } from './shopping-list/shopping-list-input/shopping-list-input.component';
 import { AuthComponent } from './auth/auth.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RecipesComponent } from './recipes/recipes.component';
@@ -26,7 +25,6 @@ import { PantryElementComponent } from './pantry/pantry-element/pantry-element.c
     AppComponent,
     ShoppingListComponent,
     ShoppingListElementComponent,
-    ShoppingListInputComponent,
     AuthComponent,
     WelcomeComponent,
     RecipesComponent,

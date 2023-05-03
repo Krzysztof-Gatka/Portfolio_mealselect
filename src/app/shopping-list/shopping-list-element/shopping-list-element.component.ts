@@ -54,7 +54,7 @@ export class ShoppingListElementComponent implements OnInit, OnDestroy {
   }
 
   onEditButtonClick(): void {
-    this.shoppingListService.productBeingEdited.next(this.productIndex!);
+    this.shoppingListService.productEditing.next(this.productIndex!);
   }
 
   onProductClick(): void {
