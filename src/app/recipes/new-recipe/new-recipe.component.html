@@ -28,6 +28,7 @@
         <input
           #ing_name_input
           class="ipt-default"
+          [ngClass]="{'highlight': editingIngIndex !== -1}"
           formControlName="productName"
           type="text"
           placeholder="name"
@@ -35,12 +36,14 @@
         <div class="ingredients-second-row">
           <input
           class="ipt-default"
+          [ngClass]="{'highlight': editingIngIndex !== -1}"
           formControlName="productQuantity"
           type="text"
           placeholder="quantity"
         >
         <input
           class="ipt-default"
+          [ngClass]="{'highlight': editingIngIndex !== -1}"
           formControlName="productUnit"
           type="text"
           list="units"
@@ -132,7 +135,6 @@
 
 </div>
 
-
 <div class="full-width-flex-container">
   <div class="new-recipe-container">
 
@@ -170,68 +172,117 @@
       </form>
     </div>
 
+-->
 
-    <form [formGroup]="recipeForm">
-      <div class="recipe-form-container">
+    <form *ngIf="progress === 0" class="recipe-form" [formGroup]="recipeForm">
 
-        <div *ngIf="progress === 0" >
-          <label for="name" class="lbl-default">Name</label>
-          <input
-            autofocus
-            class="ipt-default"
-            formControlName="name"
-            type="text"
-            id="name"
-          >
+      <div class="recipe-input-container">
 
-          <label for="prep-time" class="lbl-default">Preparation Time (mins)</label>
-          <input
-              class="ipt-default"
-              formControlName="prepTime"
-              id="prep-time"
-              type="text"
-            >
+        <label for="name" class="lbl-default">Name</label>
+        <input
+          class="ipt-default"
+          formControlName="name"
+          id="name"
+          type="text">
 
-            <label for="servings" class="lbl-default">Servings</label>
-            <input
-              class="ipt-default"
-              formControlName="servings"
-              id="servings"
-              type="text"
-            >
+      </div>
 
-          <label for="difficulty" class="lbl-default">Difficulty</label>
-            <select
-              class="ipt-default"
-              formControlName="difficulty"
-              id="difficulty"
-            >
-              <option value="easy">easy</option>
-              <option value="medium">medium</option>
-              <option value="hard">hard</option>
-            </select>
+      <div class="recipe-input-container">
 
+        <label for="prep-time" class="lbl-default">Preparation Time (mins)</label>
+        <input
+          class="ipt-default"
+          formControlName="prepTime"
+          id="prep-time"
+          type="text">
 
+      </div>
 
-            <label for="description" class="lbl-default">Description</label>
-            <textarea
-              formControlName="description"
-              class="ipt-default"
-              name=""
-              id="description"
-              cols="30"
-              rows="5"
-            >
-            </textarea>
+      <div class="recipe-input-container">
+
+        <label for="servings" class="lbl-default">Servings</label>
+        <input
+          class="ipt-default"
+          formControlName="servings"
+          id="servings"
+          type="text">
+
+      </div>
+
+      <div class="recipe-input-container">
+
+        <label for="difficulty" class="lbl-default">Difficulty</label>
+        <select
+          class="ipt-default"
+          formControlName="difficulty"
+          id="difficulty"
+        >
+          <option value="easy">easy</option>
+          <option value="medium">medium</option>
+          <option value="hard">hard</option>
+        </select>
+
+      </div>
+
+      <div class="recipe-input-container">
+
+        <label for="description" class="lbl-default">Description</label>
+        <textarea
+          formControlName="description"
+          class="ipt-default"
+          id="description"
+          cols="30"
+          rows="5">
+        </textarea>
+
+      </div>
+
+    </form>
+
+    <div *ngIf="progress === 1" class="ingredients-container">
+
+      <div *ngFor="let ingredient of recipe.ingredients; let i = index" class="list-el-container">
+
+        <div [ngClass]="{'active-ingredient': editingIngIndex === i || (this.btnsOpened && this.btnsOpened.id === i && this.btnsOpened.open) }" class="ingredient">
+
+          <p>{{ ingredient.name }}</p>
+          <p>{{ ingredient.quantity }}</p>
+          <p>{{ ingredient.unit }}</p>
+
+          <div *ngIf="editingIngIndex === i || (this.btnsOpened && this.btnsOpened.id === i && this.btnsOpened.open)" class="btns-container">
+
+            <button
+              *ngIf="editingIngIndex !== i"
+              class="btn-default"
+              (click)="onEditIngClick(i)"
+              >
+              Edit
+            </button>
+
+            <button
+              *ngIf="editingIngIndex !== i"
+              class="btn-default"
+              (click)="onDeleteIngClick(i)"
+              >
+              Delete
+            </button>
+
+          </div>
+
         </div>
 
+        <button class="btns-show" (click)="onMoreClick(i)">
+          <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+        </button>
+      </div>
 
+    </div>
+
+    <!-- <form [formGroup]="recipeForm">
+      <div class="recipe-form-container">
+        </div>
         <div *ngIf="progress === 1" class="ingredients-container">
-
-
           <ul>
-
-
             <li class="lst" *ngFor="let product of recipe.ingredients; let i = index">
               <p class="list-element">{{product.name}} {{ product.quantity }} {{ product.unit }}</p>
               <button class="btn-more" (click)="onMoreClick('ings', i)">
@@ -242,15 +293,10 @@
                 </div>
               </button>
             </li>
-
-
           </ul>
         </div>
-
         <div *ngIf="progress === 2" class="preparation-container">
           <ul>
-
-
             <li class="lst" *ngFor="let step of recipe.prepSteps; let i = index">
               <p class="list-element">{{ step }}</p>
               <button class="btn-more" (click)="onMoreClick('step', i)">
@@ -296,7 +342,7 @@
 
 
       </div>
-    </form> -->
+    </form>  -->
 
 
   </div>

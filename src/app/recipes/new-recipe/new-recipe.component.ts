@@ -41,7 +41,7 @@ export class NewRecipeComponent implements OnInit{
   @ViewChild('step_input') stepInput?: ElementRef<HTMLInputElement>;
   paramsSub: Subscription | undefined;
   editMode: boolean = false;
-  moreMenu: { id: number, open: boolean} | undefined;
+  btnsOpened: { id: number, open: boolean} | undefined;
 
   stepTitles = [
     'Basic Attributes',
@@ -127,6 +127,7 @@ export class NewRecipeComponent implements OnInit{
 
   onDeleteIngClick(index: number): void {
     this.recipe.ingredients = this.recipe.ingredients.filter((recipe, i) => i !== index);
+    this.btnsOpened!.open = false;
   }
 
   onDeleteStepClick(index: number): void {
@@ -171,6 +172,7 @@ export class NewRecipeComponent implements OnInit{
 
     this.recipe.ingredients[this.editingIngIndex] = new Ingredient(productName, productQuantity, productUnit);
     this.editingIngIndex = -1;
+    this.btnsOpened!.open = false;
     this.ingredientForm.reset();
     this.ingNameInpt?.nativeElement.focus();
   }
@@ -210,8 +212,8 @@ export class NewRecipeComponent implements OnInit{
       this._getFormRecipe();
     }
 
-    if(this.moreMenu) {
-      this.moreMenu.open = false;
+    if(this.btnsOpened) {
+      this.btnsOpened.open = false;
     }
     this.progress = this.progress + 1;
   }
@@ -220,16 +222,16 @@ export class NewRecipeComponent implements OnInit{
     this.progress = this.progress - 1;
   }
 
-  onMoreClick(list: string, id: number): void {
-    if(this.moreMenu) {
-      if(this.moreMenu.id === id) {
-        this.moreMenu.open = !this.moreMenu.open;
+  onMoreClick(id: number): void {
+    if(this.btnsOpened) {
+      if(this.btnsOpened.id === id) {
+        this.btnsOpened.open = !this.btnsOpened.open;
       } else {
-        this.moreMenu.id = id;
-        this.moreMenu.open = true;
+        this.btnsOpened.id = id;
+        this.btnsOpened.open = true;
       }
     } else {
-      this.moreMenu = { id: id, open: true};
+      this.btnsOpened = { id: id, open: true};
     }
   }
 
