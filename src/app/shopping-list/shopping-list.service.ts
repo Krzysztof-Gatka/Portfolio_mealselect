@@ -7,19 +7,16 @@ import { PantryService } from "../pantry/pantry.service";
 import { Default_URL } from "../recipes/recipes.service";
 import { ToastrService } from "ngx-toastr";
 import { ShoppingListElement } from "./shopping-list-element/shopping-list-element.model";
-import { Product } from "../recipes/recipe/product.model";
 import { Router } from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
   private shoppingListElements: ShoppingListElement[] | undefined;
-  private deletedProductsStack: ShoppingListElement[] = [];
 
   productsFetched: boolean = false;
   error: boolean = false;
 
   productsChanged = new Subject();
-  deletedProducts = new Subject<number>();
 
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
@@ -89,6 +86,7 @@ export class ShoppingListService {
       },
       error: (error) => {
         this.toastr.error('Error: Ingredients could not be added to Shopping List.');
+        console.warn(error);
       },
     });
   }
@@ -103,6 +101,7 @@ export class ShoppingListService {
       },
       error: (error) => {
         this.toastr.error('Error: Bought Products could not be removed from Shopping List.');
+        console.warn(error);
       },
     });
   }
@@ -123,6 +122,7 @@ export class ShoppingListService {
       },
       error: (error) => {
         this.toastr.error('Error: Data Changes could not be saved in DataBase.');
+        console.warn(error);
       },
     });
   }
@@ -150,20 +150,14 @@ export class ShoppingListService {
       },
       error: (error) => {
         this.toastr.error('Error: New Product could not be saved in Your Shopping List.');
+        console.warn(error);
         this.shoppingListLoading.next(false);
       },
     });
   }
 
   deleteProduct(index: number): void {
-    const shoppingList = this.shoppingListElements!.filter((element, i) =>{ if(i === index){
-      this.deletedProductsStack.push(element);
-        if(this.deletedProductsStack.length === 1) {
-          this.deletedProducts.next(1);
-        }
-      }
-      return i !==index
-    });
+    const shoppingList = this.shoppingListElements!.filter((_, i) => i !==index);
 
     this._putShoppingList(shoppingList).subscribe({
       next: () => {
@@ -172,6 +166,7 @@ export class ShoppingListService {
       },
       error: (error) => {
         this.toastr.error('Error: Product could not be removed from Your Shopping List.');
+        console.warn(error);
         this.productsChanged.next('');
       },
     });
@@ -189,11 +184,12 @@ export class ShoppingListService {
       },
       error: (error) => {
         this.toastr.error('Error: Product could not be updated.');
+        console.warn(error);
       },
     });
   }
 
-  clear() :void {
+  clearList() :void {
     const shoppingList: ShoppingListElement[] = [];
 
     this._putShoppingList(shoppingList).subscribe({
@@ -202,25 +198,31 @@ export class ShoppingListService {
         this.productsChanged.next('');
       },
       error: (error) => {
+        console.warn(error);
         this.toastr.error('Error: Shopping List could not be updated.');
       },
     });
   }
 
-  reviveLastProduct(): void {
-    const deletedProduct = this._getLastDeletedProduct()
-    if(this.deletedProductsStack.length === 0) this.deletedProducts.next(-1);
-    if(!deletedProduct) return;
-
-    this.addProduct(deletedProduct);
-  }
-
   addBoughtElementsToPantry(): void {
-    const products = this.shoppingListElements!.filter(product => product.bought);
-    this.pantryService.addElements(products);
-  }
+    this.router.navigate(['/pantry']);
+    const boughtProducts = this.shoppingListElements!.filter(product => product.bought);
+    const products = this.shoppingListElements!.filter(product => !product.bought);
+    this._putShoppingList(products).subscribe({
+      next: () => {
+        this.shoppingListElements = products.slice();
+        this.productsChanged.next('');
+      },
+      error: (error) => {
+        // no toast because this error will be displayed by pantry comp
+        console.warn(error);
+      }
+    })
 
-  private _getLastDeletedProduct(): ShoppingListElement | undefined {
-    return this.deletedProductsStack.pop()
+    // Timout for allowing pantry component to fully init and listen to pantryLoading Subject
+    setTimeout(()=> {
+      this.pantryService.pantryLoading.next(true);
+      this.pantryService.addElements(boughtProducts);
+    },0)
   }
 }

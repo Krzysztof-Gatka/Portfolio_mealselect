@@ -85,7 +85,9 @@
 }
 
 .non-active {
-  outline: 2px solid $default-text-color;
+  -webkit-appearance: none;
+  box-shadow:  0px 0px 1.5px 1.5px $accent-cta-color;
+  -webkit-box-shadow:  0px 0px 1.5px 1.5px $accent-cta-color;
 }
 
 .non-active .tick {
@@ -108,7 +110,7 @@
 
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: bolder;
-  border: 2px solid $default-text-color;
+  border: 1.5px solid $accent-dark-color;
   color: white;
   transform: scale(0);
 

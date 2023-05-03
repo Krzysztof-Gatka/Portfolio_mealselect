@@ -11,14 +11,8 @@
       </div>
 
       <div (click)="closeMoreMenu()" class="page-menu-opened">
-        <div class="first-row">
-          <button [ngClass]="deletedProductsAvailable ? '' : 'invalid'"  class="btn-default" (click)="onReviveLastProduct()">Revive Product</button>
           <button [ngClass]="shoppingListElements?.length !== 0 ? '' : 'invalid'"  class="btn-default" (click)="onClearList()">Clear list</button>
-        </div>
-
-        <div class="second-row">
-          <button [ngClass]="boughtElements ? '' : 'invalid'" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add Bought Elements to Pantry</button>
-        </div>
+          <button [ngClass]="boughtElements ? '' : 'invalid'" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add marked to Pantry</button>
       </div>
 
     </div>

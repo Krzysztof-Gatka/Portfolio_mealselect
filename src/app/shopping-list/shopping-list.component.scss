@@ -63,12 +63,11 @@
 .page-menu-opened {
   padding: 0rem 0.25rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 .page-menu-opened .btn-default {
-  padding: 0.35rem 0.25rem;
   font-weight: bolder;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -150,8 +149,8 @@
 }
 
 .loading-container {
-  position: absolute;
-  top:0;
+  position: fixed;
+  top:13rem;
   left:0;
 
   height: 100%;

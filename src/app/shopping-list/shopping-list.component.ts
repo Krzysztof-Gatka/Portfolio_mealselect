@@ -38,6 +38,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       this.shoppingListElements = this.shoppingListService.getShoppingList();
       this.boughtElements = this.shoppingListService.getShoppingList().some(product => product.bought)
       this.productEditing = false;
+      this.editedProductIndex = -1;
       this.form.reset();
       this.loading = false;
     });
@@ -74,11 +75,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.form.reset();
   }
 
-  onReviveLastProduct(): void {
-    this.loading = true;
-    this.shoppingListService.reviveLastProduct();
-  }
-
   onAddBoughtElementsToPantry(): void {
     this.shoppingListService.addBoughtElementsToPantry();
   }
@@ -93,7 +89,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   onClearList(): void {
-
+    this.loading = true;
+    this.shoppingListService.clearList();
   }
 
   onClickOutsideElementMenu(event: MouseEvent) {
