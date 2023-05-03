@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { ShoppingListService } from './shopping-list.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ShoppingListElement } from './shopping-list-element/shopping-list-element.model';
 
 @Component({
@@ -13,12 +13,11 @@ import { ShoppingListElement } from './shopping-list-element/shopping-list-eleme
 export class ShoppingListComponent implements OnInit, OnDestroy {
   shoppingListElements: ShoppingListElement[] | undefined;
 
-  deletedProductsAvailable: boolean = false;
   pageMenuOpened: boolean = false;
   boughtElements: boolean = false;
   loading: boolean = true;
-
   productEditing: boolean = false;
+
   editedProductIndex: number | undefined;
 
   changeSub: Subscription | undefined;
@@ -36,7 +35,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.changeSub = this.shoppingListService.productsChanged.subscribe(()=> {
       this.shoppingListElements = this.shoppingListService.getShoppingList();
-      this.boughtElements = this.shoppingListService.getShoppingList().some(product => product.bought)
+      this.boughtElements = this.shoppingListService.getShoppingList().some(product => product.bought);
       this.productEditing = false;
       this.editedProductIndex = -1;
       this.form.reset();
@@ -59,6 +58,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       this.shoppingListService.fetchShoppingList();
     } else {
       this.shoppingListElements = this.shoppingListService.getShoppingList();
+      this.boughtElements = this.shoppingListService.getShoppingList().some(product => product.bought)
       this.loading = false;
     }
 
@@ -67,6 +67,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.changeSub?.unsubscribe();
     this.editSub?.unsubscribe();
+    this.loadingSub?.unsubscribe();
   }
 
   onAddClick(): void {
@@ -75,17 +76,17 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.form.reset();
   }
 
-  onAddBoughtElementsToPantry(): void {
-    this.shoppingListService.addBoughtElementsToPantry();
-  }
-
   onSaveClick(): void {
     this.loading = true;
     const updateProduct = this._createProduct();
-    this.shoppingListService.updateProduct(this.editedProductIndex!, updateProduct);
     this.form.reset();
+    this.shoppingListService.updateProduct(this.editedProductIndex!, updateProduct);
     this.productEditing = false;
     this.editedProductIndex = -1;
+  }
+
+  onAddBoughtElementsToPantry(): void {
+    this.shoppingListService.addBoughtElementsToPantry();
   }
 
   onClearList(): void {
