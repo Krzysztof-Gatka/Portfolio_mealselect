@@ -1,129 +1,101 @@
+<div class="top-fixed-container">
+
+  <div class="btns-container">
+
+    <button
+      [routerLink]="['/recipes/recipes-list/user-recipes']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      My Recipes
+    </button>
+
+    <button
+      [routerLink]="['/recipes/recipes-list/recipes-base']"
+      [routerLinkActive]="'active'"
+      class="recipes-nav-btn">
+      Recipes Base
+    </button>
+
+    <button class="btn-filter-sort" (click)="onFilterButtonClick()">
+      <img src="../../../assets/filter-edit-svgrepo-com.svg" alt="">
+    </button>
+
+  </div>
+
+  <div class="search-container" [formGroup]="searchForm">
+    <input class="ipt-default" type="text" placeholder="Name, tags, ingredients..." formControlName="search">
+    <img src="../../../assets/search-svgrepo-com.svg" alt="">
+  </div>
+
+</div>
+
 <div class="full-width-flex-container">
   <div class="recipes-list-container">
-    <div class="page-menu-container">
-      <div class="recipes-nav-container">
 
-        <button
-          [routerLink]="['/recipes/recipes-list/user-recipes']"
-          [routerLinkActive]="'active'"
-          class="recipes-nav-btn">
-          My Recipes
-        </button>
-
-        <button
-          [routerLink]="['/recipes/recipes-list/recipes-base']"
-          [routerLinkActive]="'active'"
-          class="recipes-nav-btn">
-          Recipes Base
-        </button>
-
-      </div>
-
-    <div class="filter-sort-menu">
-      <button *ngIf="recipes !== undefined && recipes.length !==0 && !loading" (click)="onFilterButtonClick()" class="btn-default">Filter & Sort</button>
-    </div>
+    <div *ngIf="loading" class="loading-fog"></div>
+    <div *ngIf="loading" class="spinner-container">
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
     </div>
 
-
-
-  <div *ngIf="filterModalOpen" class="modal-container">
-
-    <div class="btn-container">
-      <button (click)="onxClick()" class="btn-x">
-        <img src="../../../assets/cancel2-svgrepo-com.svg" alt="">
-      </button>
-    </div>
-
-    <div class="sort-container">
-      <form [formGroup]="sortForm">
-        <div class="inputs-container">
-
-          <div class="ipt-container">
-            <label for="id" class="lbl-default">Sort</label>
-            <select class="ipt-default" formControlName="sort" id="sort" >
-              <option value="prepTimeAscending">preparation time ascending</option>
-              <option value="prepTimeDescending">preparation time descending</option>
-              <option value="difficultyAscending">difficulty ascending</option>
-              <option value="difficutlyDescending">difficulty descending</option>
-            </select>
-          </div>
-        </div>
-        <div class="btns-container">
-          <button [ngClass]="sorting ? 'active' : ''" class="btn-sorting" (click)="onSortClick()">Sort</button>
-          <button class="btn-sorting" (click)="onClearSortClick()">Clear Sorting</button>
-        </div>
-
-      </form>
-    </div>
-
-    <form [formGroup]="filterForm" class="form-container">
-
-      <div class="ipt-container">
-        <label class="lbl-default" for="name">Name</label>
-        <input class="ipt-default" formControlName="name" id="name" type="text">
-      </div>
-
-      <div class="ipt-container">
-        <label class="lbl-default" for="prepTime">Max Preparation Time (mins)</label>
-        <input class="ipt-default" formControlName="prepTime" id="prepTime" type="text">
-      </div>
-
-      <div class="ipt-container">
-        <label class="lbl-default" for="difficulty">Difficulty</label>
-        <select class="ipt-default" formControlName="difficulty" id="difficulty">
-          <option value="easy">easy</option>
-          <option value="medium">medium</option>
-          <option value="hard">hard</option>
-        </select>
-      </div>
-
-
-      <div class="ipt-container">
-        <label class="lbl-default" for="tags">Tags</label>
-        <input class="ipt-default" formControlName="tags" id="tags "type="text">
-        <button [ngClass]="filterForm.invalid ? 'invalid' : ''" (click)="onAddTagClick()" class="btn-default btn-plus">+</button>
-      </div>
-
-      <div class="tags-container">
-        <div class="tag-container" *ngFor="let tag of tags; let i = index">
-          <p class="tag"> {{ tag }} </p>
-          <button (click)="onXClick(i)" class="tag-x">
-            <img src="../../../assets/cancel2-svgrepo-com.svg" alt="">
-          </button>
-        </div>
-      </div>
-
-
-      <div class="btns-container">
-
-        <button [ngClass]="filtering ? 'active' : ''" class="btn-sorting" (click)="onFilterClick()">Filter</button>
-        <button class="btn-sorting" (click)="onClearFiltersClick()">Clear Filters</button>
-
-      </div>
-
-    </form>
-  </div>
-
-  <div *ngIf="recipes !== undefined && recipes.length !==0 && !loading" class="list-header">
-    <p class="header-name header-title">Name</p>
-    <p class="header-prep-time header-title">Prep. Time</p>
-    <p class="header-difficulty header-title">Difficulty</p>
-    <p class="header-pantry header-title">Pantry</p>
-  </div>
-  <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-  <div *ngIf="!loading" class="recipes-list-container">
     <app-recipes-list-element
       *ngFor="let recipe of recipes"
       [recipe]="recipe"
       [recipesType]="recipesType"
     ></app-recipes-list-element>
 
-    <p class="empty-list-message" *ngIf="recipes!.length === 0 && !loading">
-      You didn't add recipe to your recipes.
-      Add a recipe from our Recipe Base, or create your own recipe.
-    </p>
+  </div>
+</div>
+
+
+<div [ngClass]="{'opened': filterSortMenuOpened }" class="filter-sort-fixed-container">
+
+  <div class="filter-sort-container">
+
+    <div class="header-container">
+
+      <h3 class="filter-sort-header">Sort & Filter</h3>
+
+      <button class="close-filter-sort-menu-btn" (click)="onCloseFilterSortMenu()">
+        <img src="../../../assets/cancel2-svgrepo-com.svg" alt="">
+      </button>
+
+    </div>
+
+    <div class="sort-container">
+
+      <h4 class="sort-header">Sort By</h4>
+
+      <button class="btn-sort" (click)="onSortByBtnClick('time')">
+        <p>Preparation Time</p>
+        <img *ngIf="sorting.type === 'time'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+      </button>
+
+      <button class="btn-sort" (click)="onSortByBtnClick('difficulty')">
+        <p>Difficulty</p>
+        <img *ngIf="sorting.type === 'difficulty'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+      </button>
+
+      <button class="btn-sort" (click)="onSortByBtnClick('ingredients')">
+        <p>Missing Ingredients</p>
+        <img *ngIf="sorting.type === 'ingredients'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+      </button>
+
+    </div>
+
+    <div class="filter-container" >
+
+      <h4 class="filter-header">Filter By Prep. Time: <span class="highlight">{{ sliderForm.controls.time.value }}</span></h4>
+
+      <form [formGroup]="sliderForm">
+        <input type="range" min="10" max="120" value="60" class="slider" formControlName="time">
+      </form>
+
+
+    </div>
+
+    <button class="btn-default btn-apply" (click)="onApplyClick()">Apply</button>
+
 
   </div>
 
-</div>
 </div>

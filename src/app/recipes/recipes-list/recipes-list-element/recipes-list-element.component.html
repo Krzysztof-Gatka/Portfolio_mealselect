@@ -1,22 +1,16 @@
 <div class="full-width-flex-container">
   <div class="recipes-list-element-container">
-    <button
-      class="list-el-default"
-      [routerLink]="['/recipes', recipesType, 'recipe', recipe.id.toString()]">
-      <p class="rec-name"> {{ recipe.name }} </p>
-      <p class="rec-prep-time"> {{ recipe.prepTime }} min</p>
-      <p class="rec-difficulty"> {{ recipe.difficulty }} </p>
-      <p class="rec-pantry"> {{ingsInPantry}}/{{ recipe.ingredients.length }}</p>
-      <div *ngIf="details" class="details">
-        <p class="description">{{recipe.description}}</p>
-        <div class="tags">
-          <p class="title">Tags: </p>
-          <p class="p-tags"> <span class="tag" *ngFor="let tag of recipe.tags; let i = index">{{ tag }}{{ recipe.tags.length === 1 || i === recipe.tags.length-1 ? '.' : ',' }} </span></p>
-        </div>
-      </div>
-    </button>
+
+    <div class="recipe-container" [routerLink]="['/recipes', recipesType, 'recipe', recipe.id.toString()]">
+      <p class="name"> {{ recipe.name }} </p>
+      <p class="tags">tags: <span class="tag" *ngFor="let tag of recipe.tags; let i = index">{{ tag }}{{ recipe.tags.length === 1 || i === recipe.tags.length-1 ? '.' : ',' }} </span></p>
+      <p class="attributes"> {{ recipe.prepTime }}min, {{ recipe.difficulty }}, {{ recipe.ingredients.length - ingsInPantry}} ingredients missing</p>
+      <p *ngIf="details" class="description">{{ recipe.description }}</p>
+    </div>
+
     <button (click)="onMoreBtnClick()" class="btn-more">
       <img src="../../../../assets/more-vertical-svgrepo-com.svg" alt="">
     </button>
+
   </div>
 </div>

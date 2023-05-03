@@ -47,13 +47,6 @@ export class RecipesService {
     let recipes: Recipe[];
 
     switch(recipesType) {
-      case Community_Recipes:
-        if(this.communityRecipes === null || this.communityRecipes === undefined) {
-          recipes = [];
-        } else {
-          recipes = this.communityRecipes;
-        }
-        break;
       case User_Recipes:
         if(this.userRecipes === null || this.userRecipes === undefined) {
           recipes = []
@@ -138,6 +131,7 @@ export class RecipesService {
 
     this.http.get<Recipe[]>(Fetch_Recipes_URL, {params: params})
       .pipe(
+        retry({count: 3, delay: 2000}),
         catchError((error) => {
           console.warn(error);
           this.toastr.error('Error: Downloading of recipes base from sever failed.');
@@ -191,5 +185,41 @@ export class RecipesService {
         return recipe;
       });
       return recipes;
+  }
+
+  filterSearch(searchWords: string[], recipesType: string): Recipe [] {
+    searchWords = searchWords.map((searchWords) => searchWords.toLowerCase())
+    const recipes = this.getRecipes(recipesType);
+
+    return recipes.map((recipe) => {
+      let matches = 0;
+
+      searchWords.map((searchWord) => {
+
+        recipe.name
+          .split(" ")
+          .map(word => word.toLowerCase())
+          .map((nameWord) => {
+            if (nameWord.includes(searchWord)) matches++
+          });
+
+        recipe.tags
+          .map(tag => tag.toLowerCase())
+          .map((tag) => {
+            if(tag.includes(searchWord)) matches++
+          });
+
+        recipe.ingredients
+          .map(ing => ing.name.toLowerCase())
+          .map((ingredient) => {
+            if(ingredient.includes(searchWord)) matches++
+          });
+      });
+
+      return {recipe, matches}
+    })
+    .filter(rec => rec.matches > 0)
+    .sort((a, b) => b.matches - a.matches)
+    .map(rec => rec.recipe);
   }
 }

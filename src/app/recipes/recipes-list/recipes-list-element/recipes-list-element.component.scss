@@ -1,123 +1,64 @@
 @import '../../../../scss/variables';
 
-.full-width-flex-container {
-  display: flex;
-  flex-direction: row;
-  padding: 0.25rem;
-  gap: 5px;
-}
-
-.list-el-default {
-  z-index: 10;
-  cursor: pointer;
-}
-
 .recipes-list-element-container {
-  position: relative;
   display: flex;
   flex-direction: row;
-  max-width: 60rem;
-  margin-right: 2rem;
-
+  gap: 0.25rem;
+  padding:0.25rem 0.5rem;
 }
 
-.recipes-list-element-container p {
-  width: fit-content;
-}
-
-.recipe-attr {
-  cursor: pointer;
-  padding: 0.75rem;
-
+.recipe-container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  gap:0.25rem;
 
-  border: none;
-  border-radius: 5px;
+  padding:0.25rem;
   background-color: $accent-color;
-  color: $default-text-color;
-  box-shadow: 0px 0px 5px 0px $accent-text-color;
-  border: 1px solid $accent-text-color;
 
-  transition: scale 400ms ease 0ms;
+  border-radius: 5px;
+
+  -webkit-appearance: none;
+  box-shadow:  0px 0px 0.5px 0.5px $accent-cta-color;
+  -webkit-box-shadow:  0px 0px 0.5px 0.5px $accent-cta-color;
+
 }
 
-.recipe-attr:hover {
-  scale: 110%;
-  box-shadow: 0px 0px 8px 0px $accent-text-color;
-}
-
-.rec-prep-time,
-.rec-difficulty {
-  text-align: center;
-}
-
-.list-el-default p {
-  width:25%;
-}
-
-.rec-name {
-  text-align: left;
-}
-
-.rec-pantry {
-  text-align: right;
-}
-
-
-.btn-more img {
-  filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
-}
-
-.btn-more {
-  position: absolute;;
-  cursor: pointer;
-
-  top: 0;
-  right: -2rem;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 2rem;
-
-  border: none;
+.name {
+  font-size: 1.4rem;
   font-weight: bolder;
-  background-color: $dominant-color;
-  z-index: 1;
-}
-
-.details {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  color:  $accent-cta-color;
 }
 
 .tags {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px;
-  width: 100%
-
-}
-
-.list-el-default .description {
-  width: 100%;
-  text-align: left;
-  margin-top: 10px;
-}
-
-.title {
-  text-align: left;
+  font-size: 1rem;
+  color: $default-text-color;
 }
 
 .tag {
-  color: $accent-text-color;
+  color:$accent-text-color;
+  font-weight: bold;
 }
 
-.list-el-default .p-tags {
-  width: 100%;
-  text-align: left;
+.attributes {
+  font-size: 0.9rem;
+  color: $default-text-color;
+}
+
+.description {
+  color: $default-text-color;
+  line-height: 1.15rem;
+}
+
+.btn-more {
+  width:fit-content;
+  height: fit-content;
+  border:none;
+  background-color: $dominant-color;
+}
+
+.btn-more img {
+  width: 2.5rem;
+  height: 2.5rem;
+  filter: invert(74%) sepia(16%) saturate(4093%) hue-rotate(335deg) brightness(95%) contrast(93%);
 }
 
