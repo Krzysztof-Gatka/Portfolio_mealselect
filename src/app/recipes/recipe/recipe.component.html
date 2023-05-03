@@ -1,7 +1,57 @@
+<div class="top-fixed-container" [ngClass]="{'opened': buttons}">
+
+  <div class="header-container">
+
+    <p class="recipe-name-header">{{ recipe!.name }}</p>
+
+    <button class="btn-more" (click)="onMoreButtonClick()">
+      <img src="../../../assets/more-vertical-svgrepo-com.svg" alt="">
+    </button>
+
+  </div>
+
+  <div class="btns-container">
+
+    <button
+      *ngIf="recipesType === 'recipes-base'"
+      class="btn-default"
+      (click)="onAddToMyRecipes()">
+      Add Recipe to My Recipes
+    </button>
+
+    <button
+      class="btn-default"
+      (click)="onAddToShoppingListClick()">
+      Add Ingredients to shopping List
+    </button>
+
+    <div class="edit-del-container">
+
+      <button
+        *ngIf="recipesType === 'user-recipes'"
+        class="btn-default"
+        [routerLink]="['/edit-recipe', recipe!.id]">
+        Edit Recipe
+      </button>
+
+      <button
+        *ngIf="recipesType === 'user-recipes'"
+        class="btn-default"
+        (click)="onDeleteRecipeClick(recipe!.id)">
+        Delete Recipe
+      </button>
+
+    </div>
+
+  </div>
+
+
+</div>
+
 <div class="full-width-flex-container">
   <div class="recipe-container">
 
-    <div *ngIf="!recipePreview"class="header-container">
+    <!-- <div *ngIf="!recipePreview"class="header-container">
 
       <div class="name-btn-container">
         <h2 class="header">{{ recipe!.name }}</h2>
@@ -56,8 +106,7 @@
         </ol>
       </section>
 
-    </div>
+    </div> -->
 
   </div>
-
 </div>
