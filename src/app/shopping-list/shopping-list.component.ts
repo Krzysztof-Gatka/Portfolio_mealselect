@@ -22,7 +22,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   editedProductIndex: number | undefined;
 
   changeSub: Subscription | undefined;
-  deleteSub: Subscription | undefined;
   editSub: Subscription | undefined;
   loadingSub: Subscription | undefined;
 
@@ -36,19 +35,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.changeSub = this.shoppingListService.productsChanged.subscribe(()=> {
-      this.loading = false;
       this.shoppingListElements = this.shoppingListService.getShoppingList();
       this.boughtElements = this.shoppingListService.getShoppingList().some(product => product.bought)
       this.productEditing = false;
       this.form.reset();
-    });
-
-    this.deleteSub = this.shoppingListService.deletedProducts.subscribe((code) => {
-      if(code === -1) {
-        this.deletedProductsAvailable = false;
-      } else {
-        this.deletedProductsAvailable = true;
-      }
+      this.loading = false;
     });
 
     this.editSub = this.shoppingListService.productBeingEdited.subscribe((id) => {
@@ -74,7 +65,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.changeSub?.unsubscribe();
-    this.deleteSub?.unsubscribe();
+    this.editSub?.unsubscribe();
   }
 
   onAddClick(): void {
@@ -84,30 +75,25 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   onReviveLastProduct(): void {
+    this.loading = true;
     this.shoppingListService.reviveLastProduct();
-  }
-
-  onClearBoughtElements():void {
-    this.shoppingListService.clearBoughtProducts();
   }
 
   onAddBoughtElementsToPantry(): void {
     this.shoppingListService.addBoughtElementsToPantry();
-    this.onClearBoughtElements();
-  }
-
-  private _createProduct(): ShoppingListElement {
-    const name = this.form.controls.productName.value!;
-    const quantity = this.form.controls.productQuantity.value;
-    const unit = this.form.controls.productUnit.value;
-    return new ShoppingListElement(name, quantity, unit);
   }
 
   onSaveClick(): void {
+    this.loading = true;
     const updateProduct = this._createProduct();
     this.shoppingListService.updateProduct(this.editedProductIndex!, updateProduct);
     this.form.reset();
     this.productEditing = false;
+    this.editedProductIndex = -1;
+  }
+
+  onClearList(): void {
+
   }
 
   onClickOutsideElementMenu(event: MouseEvent) {
@@ -118,11 +104,14 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.pageMenuOpened = !this.pageMenuOpened;
   }
 
-  onClearList(): void {
-
-  }
-
   closeMoreMenu(): void {
     this.pageMenuOpened = false;
+  }
+
+  private _createProduct(): ShoppingListElement {
+    const name = this.form.controls.productName.value!;
+    const quantity = this.form.controls.productQuantity.value;
+    const unit = this.form.controls.productUnit.value;
+    return new ShoppingListElement(name, quantity, unit);
   }
 }

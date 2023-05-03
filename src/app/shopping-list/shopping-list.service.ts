@@ -23,8 +23,8 @@ export class ShoppingListService {
 
   productSaved = new Subject<number>();
   productBeingEdited = new Subject<number>();
+  shoppingListLoading = new Subject<boolean>();
   clickOutsideMoreMenu = new Subject<MouseEvent>();
-  shoppingListLoading = new Subject<boolean>;
 
   constructor(
     private http: HttpClient,
@@ -172,6 +172,7 @@ export class ShoppingListService {
       },
       error: (error) => {
         this.toastr.error('Error: Product could not be removed from Your Shopping List.');
+        this.productsChanged.next('');
       },
     });
   }
