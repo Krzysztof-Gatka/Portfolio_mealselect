@@ -17,15 +17,15 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class NewRecipeComponent implements OnInit{
   recipeForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
-    prepTime: new FormControl<number | null>(null, Validators.required),
+    prepTime: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*/)]),
     difficulty: new FormControl<string | null>(null, Validators.required),
-    servings: new FormControl<number | null>(null, Validators.required),
+    servings: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*/)]),
     description: new FormControl<string | null>(null),
   });
 
   ingredientForm =  new FormGroup({
     productName: new FormControl<string | null>(null, Validators.required),
-    productQuantity: new FormControl<number | null>(null),
+    productQuantity: new FormControl<number | null>(null, Validators.pattern(/^[1-9][0-9]*/)),
     productUnit: new FormControl<string | null>(null),
   });
 
@@ -87,8 +87,8 @@ export class NewRecipeComponent implements OnInit{
 
   onAddIngredient(): void {
     const productName = this.ingredientForm.controls.productName.value!;
-    const productQuantity = +this.ingredientForm.controls.productQuantity.value!;
-    const productUnit = this.ingredientForm.controls.productUnit.value!;
+    const productQuantity = this.ingredientForm.controls.productQuantity.value;
+    const productUnit = this.ingredientForm.controls.productUnit.value;
 
     this.recipe.ingredients.push(new Ingredient(productName, productQuantity, productUnit));
     this.ingredientForm.reset();
@@ -110,13 +110,13 @@ export class NewRecipeComponent implements OnInit{
     const difficulty = this.recipeForm.controls.difficulty.value!;
     const servings = this.recipeForm.controls.servings.value!;
     if(this.recipeForm.controls.description.value) {
-      this.recipe.description =  this.recipeForm.controls.description.value!;
+      this.recipe.description =  this.recipeForm.controls.description.value;
     }
 
     this.recipe.name = name;
     this.recipe.prepTime = prepTime;
     this.recipe.difficulty = difficulty;
-    this.recipe.servings = +servings;
+    this.recipe.servings = servings;
   }
 
   onAddRecipe(): void {
@@ -126,25 +126,25 @@ export class NewRecipeComponent implements OnInit{
   }
 
   onDeleteIngClick(index: number): void {
-    this.recipe.ingredients = this.recipe.ingredients.filter((recipe, i) => i !== index);
+    this.recipe.ingredients = this.recipe.ingredients.filter((_, i) => i !== index);
     this.btnsOpened!.open = false;
   }
 
   onDeleteStepClick(index: number): void {
-    this.recipe.prepSteps = this.recipe.prepSteps.filter((recipe, i) => i !== index);
+    this.recipe.prepSteps = this.recipe.prepSteps.filter((_, i) => i !== index);
     this.btnsOpened!.open = false;
   }
 
   onDeleteTagClick(index: number): void {
-    this.recipe.tags = this.recipe.tags.filter((recipe, i) => i !== index);
+    this.recipe.tags = this.recipe.tags.filter((_, i) => i !== index);
     this.btnsOpened!.open = false;
   }
 
   onEditIngClick(index: number): void {
     const editedIng = this.recipe.ingredients[index];
     this.ingredientForm.controls.productName.setValue(editedIng.name);
-    this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity!);
-    this.ingredientForm.controls.productUnit.setValue(editedIng.unit!);
+    if(editedIng.quantity) this.ingredientForm.controls.productQuantity.setValue(editedIng.quantity);
+    if(editedIng.unit) this.ingredientForm.controls.productUnit.setValue(editedIng.unit);
 
     this.editingIngIndex = index;
     this.ingNameInpt?.nativeElement.focus();
@@ -167,10 +167,10 @@ export class NewRecipeComponent implements OnInit{
     this.editingTagIndex = index;
   }
 
-  onSaveChangesClick(): void {
+  onSaveIngChangesClick(): void {
     const productName = this.ingredientForm.controls.productName.value!;
-    const productQuantity = +this.ingredientForm.controls.productQuantity.value!;
-    const productUnit = this.ingredientForm.controls.productUnit.value!;
+    const productQuantity = this.ingredientForm.controls.productQuantity.value;
+    const productUnit = this.ingredientForm.controls.productUnit.value;
 
     this.recipe.ingredients[this.editingIngIndex] = new Ingredient(productName, productQuantity, productUnit);
     this.editingIngIndex = -1;
