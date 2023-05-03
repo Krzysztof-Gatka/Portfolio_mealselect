@@ -8,6 +8,19 @@
   max-width: 35rem;
 }
 
+.page-menu-container {
+  position: fixed;
+  top: 3rem;
+  left:0;
+
+
+  background-color: $dominant-color;
+  padding-bottom:0.5rem;
+  box-shadow: 0px 0px 2px 0px $accent-dark-color;
+
+  z-index: 70;
+}
+
 .modal-container {
   position: fixed;
   top:0;
@@ -69,8 +82,15 @@
 
   gap:2rem;
 
-  margin-top: 1.5rem;
   padding: 0.5rem;
+}
+
+.filter-sort-menu .btn-default {
+  padding: 0.75rem 0.5rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  width:50%
 }
 
 .filter-sort-container {
@@ -111,6 +131,7 @@
   transition: opacity 500ms ease-in-out 0ms;
 }
 
+
 .btns-container{
   margin-top: 1rem;
   display: flex;
@@ -120,27 +141,40 @@
 
 .recipes-nav-container {
   width: 100%;
+  margin-top: 0.75rem;
+  padding: 0rem 0.5rem;
   max-width: 50rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  gap:0.25rem
 }
+
 
 .recipes-nav-btn {
   cursor: pointer;
-  width:12rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.25rem;
   border: none;
+  font-size: 1.5rem;
+  border-radius: 5px;
+
+
+
+  font-weight: bolder;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   background-color: $dominant-color;
   color: $default-text-color;
-  font-weight: 600;
   transition: box-shadow 500ms ease-out 0ms;
 }
 
 .recipes-nav-btn.active,
 .recipes-nav-btn:hover {
+
+  -webkit-appearance: none;
+  box-shadow:  0px 0px 1.5px 1.5px $accent-cta-color;
+  -webkit-box-shadow:  0px 0px 1.5px 1.5px $accent-cta-color;
   color: $accent-cta-color;
-  box-shadow: 0px 3px 0px 0px $accent-cta-color;
+  background-color: $accent-color;
 }
 
 .new-recipe-container {
@@ -178,7 +212,7 @@
 // }
 
 .list-header {
-  margin-top: 1rem;
+  margin-top: 10rem;
   // margin-right: calc(3.25rem + 5px);
   padding:0.5rem;
   padding-right: calc(2.25rem + 5px);

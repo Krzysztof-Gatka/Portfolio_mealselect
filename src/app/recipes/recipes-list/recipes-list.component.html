@@ -1,33 +1,30 @@
 <div class="full-width-flex-container">
   <div class="recipes-list-container">
-  <div class="recipes-nav-container">
+    <div class="page-menu-container">
+      <div class="recipes-nav-container">
 
-    <button
-      [routerLink]="['/recipes/recipes-list/user-recipes']"
-      [routerLinkActive]="'active'"
-      class="recipes-nav-btn">
-      My Recipes
-    </button>
+        <button
+          [routerLink]="['/recipes/recipes-list/user-recipes']"
+          [routerLinkActive]="'active'"
+          class="recipes-nav-btn">
+          My Recipes
+        </button>
 
-    <button
-      [routerLink]="['/recipes/recipes-list/recipes-base']"
-      [routerLinkActive]="'active'"
-      class="recipes-nav-btn">
-      Recipes Base
-    </button>
+        <button
+          [routerLink]="['/recipes/recipes-list/recipes-base']"
+          [routerLinkActive]="'active'"
+          class="recipes-nav-btn">
+          Recipes Base
+        </button>
 
-    <button
-      [routerLink]="['/recipes/recipes-list/community-recipes']"
-      [routerLinkActive]="'active'"
-      class="recipes-nav-btn comm-rec">
-      Community
-    </button>
+      </div>
 
-  </div>
+    <div class="filter-sort-menu">
+      <button *ngIf="recipes !== undefined && recipes.length !==0 && !loading" (click)="onFilterButtonClick()" class="btn-default">Filter & Sort</button>
+    </div>
+    </div>
 
-  <div class="filter-sort-menu">
-    <button *ngIf="recipes !== undefined && recipes.length !==0 && !loading" (click)="onFilterButtonClick()" class="btn-default">Filter & Sort</button>
-  </div>
+
 
   <div *ngIf="filterModalOpen" class="modal-container">
 
@@ -134,8 +131,8 @@
     </p>
 
   </div>
-  <div *ngIf="recipesType === 'user-recipes'" class="new-recipe-container">
+  <!-- <div *ngIf="recipesType === 'user-recipes'" class="new-recipe-container">
     <button class="btn-default" [routerLink]="['/new-recipe']"> New Recipe</button>
-  </div>
+  </div> -->
 </div>
 </div>
