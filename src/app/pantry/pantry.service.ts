@@ -70,55 +70,6 @@ export class PantryService {
     return this.pantry.slice();
   }
 
-  clearPantry(): void {
-    const updatedPantry: PantryElement[] = [];
-
-    this._putPantry(updatedPantry).subscribe({
-      next: () => {
-        this.pantry = updatedPantry;
-        this.pantryLoading.next(false);
-        this.pantryChanged.next('');
-      },
-      error: (error) => {
-        this.toastr.error('Error: Could not connect to DataBase.');
-        console.warn(error);
-        this.pantryLoading.next(false);
-      },
-    });
-  }
-
-  deleteElement(index: number): void {
-    const updatedPantry = this.pantry!.filter((_, i) => i !== index);
-    this._putPantry(updatedPantry).subscribe({
-      next: () => {
-        this.pantry = updatedPantry.slice();
-        this.pantryLoading.next(false);
-        this.pantryChanged.next('');
-      },
-      error: (error) => {
-        this.toastr.error('Error: Product could not be removed.');
-        console.warn(error);
-        this.pantryLoading.next(false);
-      },
-    });
-  }
-
-  updateElement(product: PantryElement, index: number): void {
-    const updatedPantry = this.pantry!.map((prod, i) => (i === index) ? product : prod);
-    this._putPantry(updatedPantry).subscribe({
-      next: () => {
-        this.pantry = updatedPantry.slice();
-        this.pantryLoading.next(false);
-        this.pantryChanged.next('');
-      },
-      error: (error) => {
-        this.toastr.error('Error: Product could not be updated.');
-        console.warn(error);
-        this.pantryLoading.next(false);
-      },
-    });
-  }
-
   addElement(product: PantryElement): void {
     let updatedPantry: PantryElement[] = [];
 
@@ -131,12 +82,41 @@ export class PantryService {
     this._putPantry(updatedPantry).subscribe({
       next: () => {
         this.pantry = updatedPantry.slice();
-        this.pantryLoading.next(false);
         this.pantryChanged.next('');
       },
       error: (error) => {
-        this.toastr.error('Error: Product could not be added.');
         console.warn(error);
+        this.toastr.error('Error: Product could not be added.');
+        this.pantryLoading.next(false);
+      },
+    });
+  }
+
+  updateElement(product: PantryElement, index: number): void {
+    const updatedPantry = this.pantry!.map((prod, i) => (i === index) ? product : prod);
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry.slice();
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        console.warn(error);
+        this.toastr.error('Error: Product could not be updated.');
+        this.pantryLoading.next(false);
+      },
+    });
+  }
+
+  deleteElement(index: number): void {
+    const updatedPantry = this.pantry!.filter((_, i) => i !== index);
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry.slice();
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        console.warn(error);
+        this.toastr.error('Error: Product could not be removed.');
         this.pantryLoading.next(false);
       },
     });
@@ -157,8 +137,24 @@ export class PantryService {
         this.pantryChanged.next('');
       },
       error: (error) => {
-        this.toastr.error('Error: Products could not be added to Pantry.');
         console.warn(error);
+        this.toastr.error('Error: Products could not be added to Pantry.');
+        this.pantryLoading.next(false);
+      },
+    });
+  }
+
+  clearPantry(): void {
+    const updatedPantry: PantryElement[] = [];
+
+    this._putPantry(updatedPantry).subscribe({
+      next: () => {
+        this.pantry = updatedPantry;
+        this.pantryChanged.next('');
+      },
+      error: (error) => {
+        console.warn(error);
+        this.toastr.error('Error: Could not connect to DataBase.');
         this.pantryLoading.next(false);
       },
     });
@@ -170,12 +166,11 @@ export class PantryService {
     this._putPantry(sortedPantry).subscribe({
       next: () => {
         this.pantry = sortedPantry.slice();
-        this.pantryLoading.next(false);
         this.pantryChanged.next('');
       },
       error: (error) => {
-        this.toastr.error('Error: Products could not be sorted.');
         console.warn(error);
+        this.toastr.error('Error: Products could not be sorted.');
         this.pantryLoading.next(false);
       },
     });
