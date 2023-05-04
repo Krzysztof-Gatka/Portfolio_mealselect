@@ -118,6 +118,26 @@
   z-index: 20;
 }
 
+.empty-list-message-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem;
+  gap:0.5rem;
+}
+
+.empty-list-message-container p{
+  text-align: center;
+  font-size: 0.85rem;
+  color: $default-text-color;
+}
+
+.empty-list-message-container .btn-default {
+  margin-top: 1rem;
+}
+
 // FILTER & SORT
 .filter-sort-fixed-container {
   position: fixed;
