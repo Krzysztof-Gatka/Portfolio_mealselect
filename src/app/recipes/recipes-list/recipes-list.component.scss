@@ -118,6 +118,26 @@
   z-index: 20;
 }
 
+.empty-list-message-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem;
+  gap:0.5rem;
+}
+
+.empty-list-message-container p{
+  text-align: center;
+  font-size: 0.85rem;
+  color: $default-text-color;
+}
+
+.empty-list-message-container .btn-default {
+  margin-top: 1rem;
+}
+
 // FILTER & SORT
 .filter-sort-fixed-container {
   position: fixed;
@@ -145,7 +165,7 @@
 
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 3rem;
   padding: 1rem;
 
 }
@@ -192,10 +212,25 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+.filter-btns-container {
+  display: flex;
+  flex-direction: column;
+  gap:0.75rem;
+}
+
 .btn-apply {
-  position: relative;
-  top:2.5rem;
   padding:1rem 0.25rem;
+}
+
+.btn-clear {
+  position: relative;
+  right: 0;
+
+  transition: right 750ms ease-in-out 0ms;
+}
+
+.btn-clear.hidden {
+  right: 100vw;
 }
 
 .btn-sort {

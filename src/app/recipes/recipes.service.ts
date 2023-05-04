@@ -1,12 +1,12 @@
-import { HttpClient, HttpEvent, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { MonoTypeOperatorFunction, Observable, Subject, catchError, map, of, retry } from "rxjs";
+import { Observable, Subject, catchError, of, retry } from "rxjs";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
 import { AuthService } from "../auth/auth.service";
 import { Recipe } from "./recipe/recipe.model";
-import { User_Recipes, Recipes_Base, Community_Recipes } from "./recipes-list/recipes-list.component";
+import { User_Recipes, Recipes_Base } from "./recipes-list/recipes-list.component";
 import { PantryService } from "../pantry/pantry.service";
 
 export const Fetch_Recipes_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/recipes.json';
@@ -17,85 +17,49 @@ export class RecipesService {
 
   private recipesBase: Recipe[] | undefined;
   private userRecipes: Recipe[] | undefined;
-  private communityRecipes: Recipe[] | undefined;
+
 
   recipesBaseFetched: boolean = false;
   userRecipesFetched: boolean = false;
   error: boolean = false;
 
+  sorting: {type: string, asc: boolean,  active: boolean} = {type: 'none', asc: false, active: false};
+  timeFilterValue: number = -1;
+
   recipesChanged = new Subject<string>();
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
-    private toastr: ToastrService,
     private router: Router,
+    private toastr: ToastrService,
+    private authService: AuthService,
     private pantryService: PantryService,
   ) {}
 
   fetchRecipes(recipesType: string) {
-    if(recipesType === Recipes_Base) {
-      this._fetchRecipesBase();
-    }
-
-    if(recipesType === User_Recipes) {
-      this._fetchUserRecipes();
-    }
+    recipesType === Recipes_Base ? this._fetchRecipesBase() : this._fetchUserRecipes();
   }
 
   getRecipes(recipesType: string): Recipe[] {
-    let recipes: Recipe[];
-
-    switch(recipesType) {
-      case User_Recipes:
-        if(this.userRecipes === null || this.userRecipes === undefined) {
-          recipes = []
-        } else {
-          recipes = this._updateRecipesInPantry(this.userRecipes);
-        }
-        break;
-      default:
-        if(this.recipesBase === null || this.recipesBase === undefined) {
-          recipes = [];
-        } else {
-          recipes = this._updateRecipesInPantry(this.recipesBase);
-        }
-    }
-
-    return recipes;
-  }
-
-
-  private _putRecipes(): Observable<Recipe> {
-    const user =  this.authService.user!;
-    const params = new HttpParams().set('auth', user.token);
-    const recipes = this.userRecipes!.slice();
-    return this.http.put<Recipe>(Default_URL + user.uid + '/recipes.json', recipes ,{params: params})
-      .pipe(
-        retry({count: 3, delay: 2000}),
-        catchError((error) => {
-          console.warn(error);
-          this.toastr.error('Error: Connection to DataBase failed.');
-          this.error = true;
-          throw new Error(error);
-        })
-      )
+    let recipes = (recipesType === User_Recipes) ? this.userRecipes : this.recipesBase;
+    if(!recipes) return [];
+    if(this.timeFilterValue !== -1) recipes = this.filterByTime(recipes);
+    if(this.sorting.active) recipes = this.sort(recipes);
+    return this._getRecipesWithIngsInPantry(recipes);
   }
 
   addRecipe(recipe: Recipe): void {
-    recipe.id = this.authService.user?.email! + recipe.id;
-    if(this.userRecipes === null || this.userRecipes === undefined) {
-      this.userRecipes = [recipe];
-    } else {
-      this.userRecipes.push(recipe);
-    }
-    this.recipesChanged.next(User_Recipes);
-    this._putRecipes()
+    recipe.id = this.authService.user!.email + recipe.id;
+    const updatedRecipes = (!this.userRecipes) ? [recipe] : [...this.userRecipes, recipe];
+
+    this._putRecipes(updatedRecipes)
       .subscribe({
         next: () => {
+          this.userRecipes = updatedRecipes;
+          this.recipesChanged.next(User_Recipes);
           this.toastr.success('Successfully added recipe to Your Recipes.');
           this.router.navigate(['recipes']);
-        },
+          },
         error: (error) => {
           this.toastr.error('Recipe was not saved in DataBase.');
           console.warn(error);
@@ -104,11 +68,12 @@ export class RecipesService {
   }
 
   deleteRecipe(id: string): void {
-    this.userRecipes = this.userRecipes!.filter((recipe) => recipe.id !== id);
-    this.recipesChanged.next(User_Recipes);
-    this._putRecipes()
-      .subscribe({
+    const updatedRecipes = this.userRecipes!.filter((recipe) => recipe.id !== id);
+    this._putRecipes(updatedRecipes)
+    .subscribe({
         next: () => {
+          this.userRecipes = updatedRecipes;
+          this.recipesChanged.next(User_Recipes);
           this.toastr.success('Successfully removed recipe from Your Recipes.');
           this.router.navigate(['recipes']);
         },
@@ -120,9 +85,96 @@ export class RecipesService {
   }
 
   updateRecipe(updatedRecipe: Recipe): void {
-    this.userRecipes!.map(rec => rec.id === updatedRecipe.id ? updatedRecipe : rec);
-    this.recipesChanged.next(User_Recipes);
-    this._putRecipes();
+    const updatedRecipes = this.userRecipes!.map(rec => rec.id === updatedRecipe.id ? updatedRecipe : rec);
+    this._putRecipes(updatedRecipes).subscribe({
+      next: () => {
+        this.userRecipes = updatedRecipes;
+        this.recipesChanged.next(User_Recipes);
+        this.toastr.success('Successfully updated recipe.');
+        this.router.navigate(['recipes']);
+        },
+      error: (error) => {
+        this.toastr.error('Recipe Could not be updated.');
+        console.warn(error);
+      }
+    });
+  }
+
+  sort(recipes: Recipe[]): Recipe[] {
+
+    const diffSortHelp = {
+      easy: 1,
+      medium: 2,
+      hard: 3
+    };
+
+    let sortedRecipes = recipes.slice();
+
+    switch(this.sorting.type){
+      case 'time':
+        sortedRecipes.sort((a, b) => {
+          return (this.sorting.asc) ? a.prepTime - b.prepTime : b.prepTime - a.prepTime;
+        });
+        break;
+      case 'difficulty':
+        sortedRecipes.sort((a, b) => {
+          return (this.sorting.asc) ?
+           diffSortHelp[a.difficulty as keyof typeof diffSortHelp] - diffSortHelp[b.difficulty as keyof typeof diffSortHelp] :
+           diffSortHelp[b.difficulty as keyof typeof diffSortHelp] - diffSortHelp[a.difficulty as keyof typeof diffSortHelp];
+        });
+        break;
+      case 'ingredients':
+        sortedRecipes.sort((a, b) => {
+          return (this.sorting.asc) ?
+            diffSortHelp[a.difficulty as keyof typeof diffSortHelp] - diffSortHelp[b.difficulty as keyof typeof diffSortHelp] :
+            diffSortHelp[b.difficulty as keyof typeof diffSortHelp] - diffSortHelp[a.difficulty as keyof typeof diffSortHelp]
+        });
+        break;
+    }
+
+    return sortedRecipes;
+  }
+
+  filterByTime(recipes: Recipe[]): Recipe[] {
+    return recipes.filter(recipe => recipe.prepTime <= this.timeFilterValue);
+  }
+
+  filterSearch(searchWords: string[], recipesType: string): Recipe [] {
+    searchWords = searchWords.map((searchWords) => searchWords.toLowerCase())
+    const recipes = this.getRecipes(recipesType);
+
+    const filteredRecipes = recipes.map((recipe) => {
+      let matches = 0;
+
+      searchWords.map((searchWord) => {
+
+        recipe.name
+          .split(" ")
+          .map(word => word.toLowerCase())
+          .map((nameWord) => {
+            if (nameWord.includes(searchWord)) matches++
+          });
+
+        recipe.tags
+          .map(tag => tag.toLowerCase())
+          .map((tag) => {
+            if(tag.includes(searchWord)) matches++
+          });
+
+        recipe.ingredients
+          .map(ing => ing.name.toLowerCase())
+          .map((ingredient) => {
+            if(ingredient.includes(searchWord)) matches++
+          });
+      });
+
+      return {recipe, matches}
+    })
+    .filter(rec => rec.matches > 0)
+    .sort((a, b) => b.matches - a.matches)
+    .map(rec => rec.recipe);
+
+    return filteredRecipes;
   }
 
   private _fetchRecipesBase(): void {
@@ -154,6 +206,7 @@ export class RecipesService {
 
     this.http.get<Recipe[]>(URL, {params: params})
     .pipe(
+      retry({count: 3, delay: 2000}),
       catchError((error) => {
         console.warn(error);
         this.toastr.error('Error: Downloading of your recipes from sever failed.');
@@ -162,64 +215,40 @@ export class RecipesService {
       })
       )
       .subscribe((recipes) => {
-        if (recipes === null) {
-          this.userRecipes = [];
-        } else {
-          this.userRecipes = recipes.slice();
-        }
+        this.userRecipes = recipes ? recipes.slice() : [];
         this.recipesChanged.next(User_Recipes);
         if(!this.error) this.userRecipesFetched = true;
       });
   }
 
-  private _updateRecipesInPantry(recipes: Recipe[]): Recipe[] {
-    const pantry = this.pantryService.getPantry();
-    recipes = recipes.map((recipe) => {
-        recipe.ingredients = recipe.ingredients.map((ing) => {
-          const inPantry = pantry.some((prod) => {
-            return prod.name === ing.name && prod.quantity! >= ing.quantity!
-          })
-          ing.inPantry = inPantry;
-          return ing;
+  private _putRecipes(updatedRecipes: Recipe[]): Observable<Recipe> {
+    const user =  this.authService.user!;
+    const params = new HttpParams().set('auth', user.token);
+
+    return this.http.put<Recipe>(Default_URL + user.uid + '/recipes.json', updatedRecipes ,{params: params})
+      .pipe(
+        retry({count: 3, delay: 2000}),
+        catchError((error) => {
+          console.warn(error);
+          this.toastr.error('Error: Connection to DataBase failed.');
+          this.error = true;
+          throw new Error(error);
         })
-        return recipe;
-      });
-      return recipes;
+      )
   }
 
-  filterSearch(searchWords: string[], recipesType: string): Recipe [] {
-    searchWords = searchWords.map((searchWords) => searchWords.toLowerCase())
-    const recipes = this.getRecipes(recipesType);
+  private _getRecipesWithIngsInPantry(recipes: Recipe[]): Recipe[] {
+    const pantry = this.pantryService.getPantry();
 
-    return recipes.map((recipe) => {
-      let matches = 0;
-
-      searchWords.map((searchWord) => {
-
-        recipe.name
-          .split(" ")
-          .map(word => word.toLowerCase())
-          .map((nameWord) => {
-            if (nameWord.includes(searchWord)) matches++
-          });
-
-        recipe.tags
-          .map(tag => tag.toLowerCase())
-          .map((tag) => {
-            if(tag.includes(searchWord)) matches++
-          });
-
-        recipe.ingredients
-          .map(ing => ing.name.toLowerCase())
-          .map((ingredient) => {
-            if(ingredient.includes(searchWord)) matches++
-          });
+    recipes = recipes.map(recipe => {
+      recipe.ingredients = recipe.ingredients.map(ing => {
+        ing.inPantry = pantry.some((prod) => prod.name === ing.name && prod.quantity! >= ing.quantity!)
+        return ing;
       });
 
-      return {recipe, matches}
-    })
-    .filter(rec => rec.matches > 0)
-    .sort((a, b) => b.matches - a.matches)
-    .map(rec => rec.recipe);
+      return recipe;
+    });
+
+    return recipes;
   }
 }

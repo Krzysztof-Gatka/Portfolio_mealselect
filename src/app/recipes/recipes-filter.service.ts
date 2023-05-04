@@ -5,6 +5,20 @@ import { RecipesService } from "./recipes.service";
 @Injectable({providedIn: 'root'})
 export class RecipesFilterService {
 
+
+  constructor(private recipesService: RecipesService) {}
+
+
+
+
+  sort(sorting: {type: string, asc: boolean, active: boolean}, searchFiltering: boolean): Recipe [] {
+
+
+
+    return[]
+  }
+
+
   // filter(recipesType: string, name: string | null, prepTime: number | null, difficulty: string | null, tags: string[]): Recipe[] {
   //   let filteredRecipes: Recipe[] = [];
 

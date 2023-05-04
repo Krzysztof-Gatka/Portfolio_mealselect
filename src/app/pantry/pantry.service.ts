@@ -66,8 +66,7 @@ export class PantryService {
   }
 
   getPantry(): PantryElement[] {
-    if(!this.pantry) return [];
-    return this.pantry.slice();
+    return (this.pantry) ? this.pantry.slice() : [];
   }
 
   addElement(product: PantryElement): void {

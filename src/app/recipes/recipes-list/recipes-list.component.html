@@ -43,6 +43,16 @@
       [recipesType]="recipesType"
     ></app-recipes-list-element>
 
+    <div *ngIf="!(recipesService.sorting.active || recipesService.timeFilterValue !== -1 || searchFiltering) && (recipes === undefined || recipes.length === 0)" class="empty-list-message-container">
+      <p>Your Recipes List is empty.</p>
+      <p>Add recipe from Recipes Base or create your own recipe</p>
+      <button class="btn-default" [routerLink]="['/new-recipe']">Create Recipe</button>
+    </div>
+
+    <div *ngIf="(recipesService.sorting.active || recipesService.timeFilterValue !== -1 || searchFiltering) && (recipes === undefined || recipes.length === 0)" class="empty-list-message-container">
+      <p>No matches found.</p>
+    </div>
+
   </div>
 </div>
 
@@ -67,24 +77,24 @@
 
       <button class="btn-sort" (click)="onSortByBtnClick('time')">
         <p>Preparation Time</p>
-        <img *ngIf="sorting.type === 'time'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+        <img *ngIf="recipesService.sorting.type === 'time'" [src]="recipesService.sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
       </button>
 
       <button class="btn-sort" (click)="onSortByBtnClick('difficulty')">
         <p>Difficulty</p>
-        <img *ngIf="sorting.type === 'difficulty'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+        <img *ngIf="recipesService.sorting.type === 'difficulty'" [src]="recipesService.sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
       </button>
 
       <button class="btn-sort" (click)="onSortByBtnClick('ingredients')">
         <p>Missing Ingredients</p>
-        <img *ngIf="sorting.type === 'ingredients'" [src]="sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
+        <img *ngIf="recipesService.sorting.type === 'ingredients'" [src]="recipesService.sorting.asc ? '../../../assets/chevron-up-svgrepo-com.svg' : '../../../assets/chevron-down-svgrepo-com.svg'" alt="">
       </button>
 
     </div>
 
     <div class="filter-container" >
 
-      <h4 class="filter-header">Filter By Prep. Time: <span class="highlight">{{ sliderForm.controls.time.value }}</span></h4>
+      <h4 class="filter-header">Filter By Prep Time: <span class="highlight">{{ sliderForm.controls.time.value }}</span></h4>
 
       <form [formGroup]="sliderForm">
         <input type="range" min="10" max="120" value="60" class="slider" formControlName="time">
@@ -93,8 +103,10 @@
 
     </div>
 
-    <button class="btn-default btn-apply" (click)="onApplyClick()">Apply</button>
-
+    <div class="filter-btns-container">
+      <button [ngClass]="{ 'hidden': !(recipesService.sorting.active || recipesService.timeFilterValue !== -1)}" class="btn-default btn-clear" (click)="onClearClick()">Clear</button>
+      <button class="btn-default btn-apply" (click)="onApplyClick()">Apply</button>
+    </div>
 
   </div>
 
