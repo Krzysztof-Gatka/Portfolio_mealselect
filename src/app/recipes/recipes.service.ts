@@ -18,9 +18,13 @@ export class RecipesService {
   private recipesBase: Recipe[] | undefined;
   private userRecipes: Recipe[] | undefined;
 
+
   recipesBaseFetched: boolean = false;
   userRecipesFetched: boolean = false;
   error: boolean = false;
+
+  sorting: {type: string, asc: boolean,  active: boolean} = {type: 'none', asc: false, active: false};
+  timeFilterValue: number = -1;
 
   recipesChanged = new Subject<string>();
 
@@ -39,7 +43,8 @@ export class RecipesService {
   getRecipes(recipesType: string): Recipe[] {
     let recipes = (recipesType === User_Recipes) ? this.userRecipes : this.recipesBase;
     if(!recipes) return [];
-
+    if(this.timeFilterValue !== -1) recipes = this.filterByTime(recipes);
+    if(this.sorting.active) recipes = this.sort(recipes);
     return this._getRecipesWithIngsInPantry(recipes);
   }
 
@@ -95,11 +100,50 @@ export class RecipesService {
     });
   }
 
+  sort(recipes: Recipe[]): Recipe[] {
+
+    const diffSortHelp = {
+      easy: 1,
+      medium: 2,
+      hard: 3
+    };
+
+    let sortedRecipes = recipes.slice();
+
+    switch(this.sorting.type){
+      case 'time':
+        sortedRecipes.sort((a, b) => {
+          return (this.sorting.asc) ? a.prepTime - b.prepTime : b.prepTime - a.prepTime;
+        });
+        break;
+      case 'difficulty':
+        sortedRecipes.sort((a, b) => {
+          return (this.sorting.asc) ?
+           diffSortHelp[a.difficulty as keyof typeof diffSortHelp] - diffSortHelp[b.difficulty as keyof typeof diffSortHelp] :
+           diffSortHelp[b.difficulty as keyof typeof diffSortHelp] - diffSortHelp[a.difficulty as keyof typeof diffSortHelp];
+        });
+        break;
+      case 'ingredients':
+        sortedRecipes.sort((a, b) => {
+          return (this.sorting.asc) ?
+            diffSortHelp[a.difficulty as keyof typeof diffSortHelp] - diffSortHelp[b.difficulty as keyof typeof diffSortHelp] :
+            diffSortHelp[b.difficulty as keyof typeof diffSortHelp] - diffSortHelp[a.difficulty as keyof typeof diffSortHelp]
+        });
+        break;
+    }
+
+    return sortedRecipes;
+  }
+
+  filterByTime(recipes: Recipe[]): Recipe[] {
+    return recipes.filter(recipe => recipe.prepTime <= this.timeFilterValue);
+  }
+
   filterSearch(searchWords: string[], recipesType: string): Recipe [] {
     searchWords = searchWords.map((searchWords) => searchWords.toLowerCase())
     const recipes = this.getRecipes(recipesType);
 
-    return recipes.map((recipe) => {
+    const filteredRecipes = recipes.map((recipe) => {
       let matches = 0;
 
       searchWords.map((searchWord) => {
@@ -129,6 +173,8 @@ export class RecipesService {
     .filter(rec => rec.matches > 0)
     .sort((a, b) => b.matches - a.matches)
     .map(rec => rec.recipe);
+
+    return filteredRecipes;
   }
 
   private _fetchRecipesBase(): void {

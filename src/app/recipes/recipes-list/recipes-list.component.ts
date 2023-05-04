@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipesService } from '../recipes.service';
+import { RecipesFilterService } from '../recipes-filter.service';
 
 export const Recipes_Base = 'recipes-base';
 export const User_Recipes = 'user-recipes';
@@ -19,7 +20,7 @@ export class RecipesListComponent implements OnInit{
   recipesType: string = '';
   loading: boolean = true;
   filterSortMenuOpened: boolean = false;
-  sorting: {type: string, asc: boolean} = {type: 'none', asc: false};
+  searchFiltering: boolean = false;
 
   searchForm = new FormGroup({
     search: new FormControl(''),
@@ -30,8 +31,9 @@ export class RecipesListComponent implements OnInit{
   })
 
   constructor (
-    private recipesService: RecipesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public recipesService: RecipesService,
+    private recipesFilterService: RecipesFilterService,
   ) {}
 
   ngOnInit(): void {
@@ -52,19 +54,23 @@ export class RecipesListComponent implements OnInit{
       this.loading = false;
     });
 
-    this.searchForm.controls.search.valueChanges.subscribe((input) => {
-      const searchWords = input?.split(" ").filter((word) => word !== '');
+    this.sliderForm.controls.time.valueChanges.subscribe(time => {
+      if(time) this.recipesService.timeFilterValue = +time;
+    })
 
+    this.searchForm.controls.search.valueChanges.subscribe((input) => {
+      const searchWords = input?.split(" ").filter(word => word !== '');
       if (searchWords && searchWords.length > 0) {
         this.loading = true;
         this.recipes = this.recipesService.filterSearch(searchWords, this.recipesType);
+        this.searchFiltering = true;
         this.loading = false;
       } else {
-        this.recipesService.fetchRecipes(this.recipesType);
+        this.recipes = this.recipesService.getRecipes(this.recipesType);
+        this.searchFiltering = false;
       }
     })
   }
-
 
   onFilterButtonClick() {
     this.filterSortMenuOpened = !this.filterSortMenuOpened;
@@ -74,17 +80,27 @@ export class RecipesListComponent implements OnInit{
     this.filterSortMenuOpened = false;
   }
 
-
   onSortByBtnClick(type: string): void {
-    if(this.sorting.type === type) {
-      this.sorting.asc = !this.sorting.asc;
+    this.recipesService.sorting.active = true;
+    if(this.recipesService.sorting.type === type) {
+      this.recipesService.sorting.asc = !this.recipesService.sorting.asc;
     } else {
-      this.sorting.type = type;
-      this.sorting.asc = true;
+      this.recipesService.sorting.type = type;
+      this.recipesService.sorting.asc = true;
     }
   }
 
   onApplyClick(): void {
     this.filterSortMenuOpened = false;
+    this.recipesService.sorting.active = true;
+    if(this.recipes) this.recipes = this.recipesService.getRecipes(this.recipesType);
+  }
+
+  onClearClick(): void {
+    this.recipesService.sorting.active = false;
+    this.recipesService.sorting.type = 'none';
+
+    this.recipesService.timeFilterValue = -1;
+    this.sliderForm.reset();
   }
 }
