@@ -3,13 +3,15 @@ import { Subscription } from 'rxjs';
 
 import { PantryService } from '../pantry.service';
 import { PantryElement } from './pantry.model';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 
 const Miliseconds_In_Day = 1000*60*60*24;
 
 @Component({
   selector: 'app-pantry-element',
   templateUrl: './pantry-element.component.html',
-  styleUrls: ['./pantry-element.component.scss']
+  styleUrls: ['./pantry-element.component.scss'],
+
 })
 export class PantryElementComponent implements OnInit, OnDestroy, OnChanges{
   @Input() product!: PantryElement;

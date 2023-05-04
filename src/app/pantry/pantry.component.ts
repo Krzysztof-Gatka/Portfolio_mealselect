@@ -5,11 +5,42 @@ import { formatDate } from '@angular/common';
 
 import { PantryService } from './pantry.service';
 import { PantryElement } from './pantry-element/pantry.model';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-pantry',
   templateUrl: './pantry.component.html',
-  styleUrls: ['./pantry.component.scss']
+  styleUrls: ['./pantry.component.scss'],
+  animations: [
+    trigger('added', [
+
+      transition(':enter', [
+
+        animate('800ms ease-in-out', keyframes([
+
+          style({
+            transform: 'translateY(100vh)'
+          }),
+          style({
+            transform: 'translateY(0)'
+          }),
+
+      ]))]),
+
+      transition(':leave', [
+
+        animate('800ms ease-in-out',
+          style({
+            height:0,
+            transform: 'translateY(100vh)',
+          })
+        )
+
+      ]),
+
+
+    ])
+  ]
 })
 export class PantryComponent implements OnInit, OnDestroy{
   pantry: PantryElement[] | undefined;
@@ -22,6 +53,8 @@ export class PantryComponent implements OnInit, OnDestroy{
   loading: boolean = true;
   elementEditing: boolean = false;
   elementIndex: number | undefined | null;
+
+  animation: string = 'add';
 
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
@@ -74,6 +107,7 @@ export class PantryComponent implements OnInit, OnDestroy{
   }
 
   onAddClick(): void {
+    this.animation = 'add';
     const newProduct = this._getFormElement();
     this.loading = true;
     this.pantryService.addElement(newProduct);
@@ -81,6 +115,7 @@ export class PantryComponent implements OnInit, OnDestroy{
   }
 
   onSaveClick(): void {
+    this.animation = 'edit';
     const updatedProduct = this._getFormElement();
     this.loading = true;
     this.pantryService.updateElement(updatedProduct, this.elementIndex!);
