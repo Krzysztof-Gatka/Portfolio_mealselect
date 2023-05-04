@@ -4,11 +4,43 @@ import { Subscription } from 'rxjs';
 
 import { ShoppingListService } from './shopping-list.service';
 import { ShoppingListElement } from './shopping-list-element/shopping-list-element.model';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.scss']
+  styleUrls: ['./shopping-list.component.scss'],
+  animations: [
+    trigger('added', [
+
+      transition(':enter', [
+
+        animate('800ms ease-in-out', keyframes([
+
+          style({
+            transform: 'translateY(100vh)'
+          }),
+          style({
+            transform: 'translateY(0)'
+          }),
+
+      ]))]),
+
+      transition(':leave', [
+
+        animate('800ms ease-in-out',
+          style({
+            height:0,
+            transform: 'translateY(100vh)',
+          })
+        )
+
+      ]),
+
+
+    ])
+  ]
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   shoppingListElements: ShoppingListElement[] | undefined;
