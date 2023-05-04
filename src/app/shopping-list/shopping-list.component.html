@@ -66,10 +66,11 @@
 
       <div class="shopping-list-elements-container">
         <app-shopping-list-element
-        *ngFor="let element of shoppingListElements; let i = index"
-        [product]="element"
-        [productIndex]="i"
-        [editing]="i === editedProductIndex"
+          @added
+          *ngFor="let element of shoppingListElements; let i = index"
+          [product]="element"
+          [productIndex]="i"
+          [editing]="i === editedProductIndex"
         ></app-shopping-list-element>
       </div>
 

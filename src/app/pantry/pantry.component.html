@@ -18,7 +18,7 @@
     </div>
 
     <div class="form-container">
-      <form [formGroup]="form">
+      <div [formGroup]="form">
         <div [ngClass]="{'editing': elementEditing}" class="inputs-container">
 
           <div class="first-row">
@@ -58,7 +58,7 @@
           </div>
 
         </div>
-      </form>
+      </div>
 
       <div class="btn-container">
         <button
@@ -92,9 +92,10 @@
       </div>
 
       <div class="pantry-elements-container" >
-        <div class="animation-container"
-        [@added]="false"
-        *ngFor="let product of pantry; let i = index"
+        <div
+          *ngFor="let product of pantry; let i = index"
+          class="animation-container"
+          @added
         >
             <app-pantry-element
             [product]="product"

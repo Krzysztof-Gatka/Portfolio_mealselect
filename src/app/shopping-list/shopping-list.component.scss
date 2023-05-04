@@ -91,7 +91,7 @@
 
 .list-container {
   position: relative;
-  margin-top: 11.5rem;
+  margin-top: 12.5rem;
   padding:0.5rem;
 }
 
@@ -142,6 +142,7 @@
 
 .btn-container {
   width:30%;
+  min-width: 6rem;
 }
 
 .btn-form {
@@ -150,7 +151,7 @@
 
 .loading-container {
   position: fixed;
-  top:13rem;
+  top: 14.5rem;
   left:0;
 
   height: 100%;
@@ -176,4 +177,8 @@
   color:$default-text-color;
   font-size: 0.85rem;
   text-align: center;
+}
+
+app-shopping-list-element {
+  display: block;
 }
