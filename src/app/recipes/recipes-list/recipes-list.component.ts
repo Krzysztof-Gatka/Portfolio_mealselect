@@ -35,10 +35,6 @@ export class RecipesListComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.recipesService.recipesChanged.subscribe(() => {
-      this.recipes = this.recipesService.getRecipes(this.recipesType);
-      this.loading = false;
-    })
 
     this.route.params.subscribe((params) => {
       this.loading = true;
@@ -51,13 +47,17 @@ export class RecipesListComponent implements OnInit{
       }
     });
 
+    this.recipesService.recipesChanged.subscribe(() => {
+      this.recipes = this.recipesService.getRecipes(this.recipesType);
+      this.loading = false;
+    });
+
     this.searchForm.controls.search.valueChanges.subscribe((input) => {
       const searchWords = input?.split(" ").filter((word) => word !== '');
 
       if (searchWords && searchWords.length > 0) {
         this.loading = true;
         this.recipes = this.recipesService.filterSearch(searchWords, this.recipesType);
-        console.log(this.recipes.length);
         this.loading = false;
       } else {
         this.recipesService.fetchRecipes(this.recipesType);
