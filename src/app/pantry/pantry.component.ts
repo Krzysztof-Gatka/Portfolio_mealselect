@@ -16,7 +16,7 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
 
       transition(':enter', [
 
-        animate('500ms ease-in-out', keyframes([
+        animate('800ms ease-in-out', keyframes([
 
           style({
             transform: 'translateY(100vh)'
@@ -29,19 +29,14 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
 
       transition(':leave', [
 
-        animate('500ms ease-in-out', keyframes([
-
+        animate('800ms ease-in-out',
           style({
-            transform: 'translateY(0)',
-            height: 0,
-            marginBottom: 0,
-            zIndex:50,
-          }),
-          style({
+            height:0,
             transform: 'translateY(100vh)',
-          }),
+          })
+        )
 
-      ]))]),
+      ]),
 
 
     ])
