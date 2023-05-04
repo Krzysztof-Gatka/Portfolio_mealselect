@@ -26,7 +26,7 @@
 }
 
 .page-header-container.opened {
-  height: 11rem;
+  height: 12rem;
 }
 
 .header-container {
@@ -79,7 +79,7 @@
 
 .list-container {
   position: relative;
-  margin-top: 11.5rem;
+  margin-top: 12.5rem;
 }
 
 .form-container {
@@ -129,7 +129,6 @@
 }
 
 .ipt-default {
-  font-size: 0.8rem;
   height: 100%;
 }
 
@@ -153,7 +152,7 @@
 
 .loading-container {
   position: fixed;
-  top:13rem;
+  top:14.5rem;
   left:0;
 
   height: 100%;
@@ -184,4 +183,9 @@
 .pantry-elements-container{
   position: relative;
   padding:0.5rem;
+}
+
+.animation-container {
+  position: relative;
+  transition: margin 500ms ease-in-out 0ms;
 }

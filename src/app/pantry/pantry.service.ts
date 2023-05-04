@@ -21,6 +21,7 @@ export class PantryService {
   pantryElementEdit = new Subject<number>();
   clickOutsideMoreMenu = new Subject<MouseEvent>();
 
+
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
