@@ -60,7 +60,7 @@
 
   background-color: $accent-cta-color;
 
-  transition: width 500ms ease-in-out 0ms;
+  transition: width 800ms ease-in-out 100ms;
 }
 
 .progress-bar-25 {
@@ -77,12 +77,6 @@
 
 .progress-bar-100 {
   width: 100%
-}
-
-.ingredient-form {
-  display: flex;
-  flex-direction: row;
-  gap:0.75rem;
 }
 
 .ingredients-inputs-container {
@@ -102,6 +96,20 @@
   gap:0.5rem;
 }
 
+@keyframes btn-change {
+  0%   {transform: scale(1);}
+  20%   {transform: scale(1.05);}
+  60%   {transform: scale(0.9);}
+  100% {transform: scale(1);}
+}
+
+@keyframes btn-activate {
+  0%   {transform: scale(1); opacity:0.5;}
+  20%   {transform: scale(1.05); opacity:0.7;}
+  60%   {transform: scale(0.9); opacity:0.9;}
+  100% {transform: scale(1); opacity:1;}
+}
+
 .btn-add,
 .btn-save {
   padding: 0;
@@ -110,8 +118,22 @@
   min-height: 5rem;
 }
 
+.btn-save {
+  animation-name: btn-change;
+  animation-duration: 400ms;
+  animation-timing-function: ease;
+}
+
+.btn-default.activated {
+  animation-name: btn-change;
+  animation-duration: 400ms;
+  animation-timing-function: ease;
+}
+
+.ingredient-form,
 .tags-form,
 .steps-form {
+  position: relative;
   display: flex;
   flex-direction: row;
   gap: 0.75rem;
@@ -124,14 +146,12 @@
 }
 
 // CONTENT
-.recipe-form {
-  margin-top:5rem;
-
-  display: flex;
-  flex-direction: column;
-  gap:0.5rem;
-
-  padding:0.5rem;
+.new-recipe-container {
+  position: fixed;
+  top: 7rem;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 11rem);
 }
 
 .recipe-input-container {
@@ -142,22 +162,65 @@
   padding:0.25rem;
 }
 
+.recipe-form,
 .preview-container,
 .tags-container,
 .steps-container,
 .ingredients-container {
-  margin-top: 10.25rem;
+  position: absolute;
+  top:0;
+  left:0;
   margin-bottom: 5.5rem;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 
   padding:0.5rem;
+
+  transition: transform 800ms ease-in-out 100ms;
+}
+
+.left {
+  transform: translateX(-100vw);
+}
+
+.ceneter {
+  transform: translateX(0);
+}
+
+.right {
+  transform: translateX(100vw);
+}
+
+.recipe-form {
+  gap:0.5rem;
 }
 
 .preview-container {
-  margin-top:4rem;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.list-container {
+  max-height: calc(100% - 6.65rem);
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  position: absolute;
+  bottom: -0.5rem;
+  left: -0.5rem;
+
+  width: 100vw;
+  -webkit-appearance: none;
+  box-shadow:  0px 0px .25px .25px $accent-dark-color;
+  -webkit-box-shadow:  0px 0px .25px .25px $accent-dark-color;
 }
 
 .list-el-container {
@@ -165,7 +228,7 @@
   flex-direction: row;
   gap:0.75rem;
 
-  padding: 0rem 0.25rem;
+  padding: 0.35rem 0.25rem;
 }
 
 .tag,
@@ -264,4 +327,17 @@
   -webkit-box-shadow:  0px 0px 2px 0px $accent-dark-color;
 
   z-index: 60;
+}
+
+@keyframes shine {
+  0% { transform: scale(1)}
+  50% { transform: scale(1.1)}
+  100% { transform: scale(1)}
+}
+
+.btn-recipe-save,
+.btn-recipe-add {
+  animation-name: shine;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
 }
