@@ -94,6 +94,12 @@
   border: none;
   background-color: $dominant-color;
   width: fit-content;
+
+  transition: transform 300ms ease-in-out 0ms;
+}
+
+.btn-filter-sort:active {
+  transform: translateY(-5px);
 }
 
 .btn-filter-sort img {
