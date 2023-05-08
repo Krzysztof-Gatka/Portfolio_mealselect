@@ -141,7 +141,11 @@
 .spinner-container {
   position: fixed;
   top: 12.5rem;
-  left: 40%;
+  left: 50vw;
+
+  width: fit-content;
+
+  transform: translateX(-50%);
 
   z-index: 20;
 }
