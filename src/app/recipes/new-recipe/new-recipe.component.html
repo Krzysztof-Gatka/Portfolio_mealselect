@@ -384,7 +384,9 @@
 
 <div class="bottom-fixed-container">
 
-  <button
+  <div class="buttons-bottom-container">
+
+    <button
     *ngIf="progress !== 0"
     class="btn-default"
     (click)="onBackClick()">
@@ -421,5 +423,8 @@
     (click)="onSaveChanges(recipe)">
     Save Changes
   </button>
+
+
+  </div>
 
 </div>
