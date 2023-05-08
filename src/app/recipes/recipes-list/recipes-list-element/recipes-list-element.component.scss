@@ -54,6 +54,12 @@
   height: fit-content;
   border:none;
   background-color: $dominant-color;
+
+  transition:  scale 500ms ease-in-out 0ms;
+}
+
+.btn-more:active {
+  transform: scale(1.1);
 }
 
 .btn-more img {

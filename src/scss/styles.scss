@@ -295,3 +295,11 @@
   60%   {transform: scale(0.9); opacity:0.9;}
   100% {transform: scale(1); opacity:1;}
 }
+
+.btn-more{
+transition:  scale 500ms ease-in-out 0ms;
+}
+
+.btn-more:active {
+  transform: scale(1.1);
+}
