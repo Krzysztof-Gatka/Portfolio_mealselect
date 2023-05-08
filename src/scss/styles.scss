@@ -97,6 +97,12 @@
   box-shadow: 0px 0px 10px 1px $accent-cta-color;
 }
 
+.btn-default.activated {
+  animation-name: btn-change;
+  animation-duration: 400ms;
+  animation-timing-function: ease;
+}
+
 @media screen and (min-width: 420px) {
   .btn-default:hover {
     box-shadow: 0px 0px 10px 1px $accent-cta-color;
@@ -150,6 +156,65 @@
   box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
 }
 
+
+// progress bar
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.progress-description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.progress-description p {
+  width: fit-content;
+
+  color: $accent-cta-color;
+  font-size: 0.75rem;
+  font-weight: bolder;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.progress-bar-container {
+  height: 1rem;
+  background-color: $accent-color;
+  border-radius: 5px;
+
+  overflow: hidden;
+
+  -webkit-appearance: none;
+  box-shadow:  0px 0px 2px 0px $accent-dark-color;;
+  -webkit-box-shadow:  0px 0px 2px 0px $accent-dark-color;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+
+  background-color: $accent-cta-color;
+
+  transition: width 800ms ease-in-out 100ms;
+}
+
+.progress-bar-25 {
+  width: 25%
+}
+
+.progress-bar-50 {
+  width: 50%
+}
+
+.progress-bar-75 {
+  width: 75%
+}
+
+.progress-bar-100 {
+  width: 100%
+}
 
 
 // label
@@ -212,4 +277,29 @@
   100% {
     transform: translate(24px, 0);
   }
+}
+
+
+// animations
+
+@keyframes btn-change {
+  0%   {transform: scale(1);}
+  20%   {transform: scale(1.05);}
+  60%   {transform: scale(0.9);}
+  100% {transform: scale(1);}
+}
+
+@keyframes btn-activate {
+  0%   {transform: scale(1); opacity:0.5;}
+  20%   {transform: scale(1.05); opacity:0.7;}
+  60%   {transform: scale(0.9); opacity:0.9;}
+  100% {transform: scale(1); opacity:1;}
+}
+
+.btn-more{
+transition:  scale 500ms ease-in-out 0ms;
+}
+
+.btn-more:active {
+  transform: scale(1.1);
 }
