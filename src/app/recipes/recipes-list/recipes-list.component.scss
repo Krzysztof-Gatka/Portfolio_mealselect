@@ -45,6 +45,22 @@
   filter: invert(73%) sepia(15%) saturate(5545%) hue-rotate(338deg) brightness(98%) contrast(87%);
 }
 
+.search-container .searching {
+  opacity: 1;
+  transition: opacity 500ms ease-in-out 0ms ;
+
+  animation-name: search-icon;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+
+  @keyframes search-icon {
+    0%   {transform: translateY(0)}
+    20%   {transform: translateY(-5px)}
+    100%   {transform: translateY(0)}
+  }
+}
+
 .ipt-default {
   padding: 0.75rem 0.25rem;
   color:$default-text-color;

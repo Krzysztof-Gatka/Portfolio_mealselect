@@ -24,7 +24,7 @@
 
   <div class="search-container" [formGroup]="searchForm">
     <input class="ipt-default" type="text" placeholder="Name, tags, ingredients..." formControlName="search">
-    <img src="../../../assets/search-svgrepo-com.svg" alt="">
+    <img [ngClass]="{'searching': searchForm.controls.search.value }" src="../../../assets/search-svgrepo-com.svg" alt="">
   </div>
 
 </div>
