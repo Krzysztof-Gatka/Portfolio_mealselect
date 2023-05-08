@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 0.75rem;
 
   background-color: $dominant-color;
@@ -19,6 +20,7 @@
   -webkit-box-shadow:  0px 0px 2px 0px $accent-dark-color;
 
   z-index: 60;
+
 }
 
 
@@ -76,6 +78,10 @@
   left: 0;
   width: 100%;
   height: calc(100% - 11rem);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .recipe-input-container {
@@ -104,10 +110,24 @@
   padding:0.5rem;
 
   transition: transform 800ms ease-in-out 100ms;
+
+  max-width: 40rem;
+}
+
+@media screen and (min-width: 420px) {
+  .recipe-form,
+  .preview-container,
+  .tags-container,
+  .steps-container,
+  .ingredients-container {
+    left:50%;
+    transform: translate(-50%);
+  }
+
 }
 
 .left {
-  transform: translateX(-100vw);
+  transform: translateX(-150vw);
 }
 
 .ceneter {
@@ -115,7 +135,7 @@
 }
 
 .right {
-  transform: translateX(100vw);
+  transform: translateX(150vw);
 }
 
 .recipe-form {
@@ -139,9 +159,9 @@
 .divider {
   position: absolute;
   bottom: -0.5rem;
-  left: -0.5rem;
+  left: 0;
 
-  width: 100vw;
+  width: 100%;
   -webkit-appearance: none;
   box-shadow:  0px 0px .25px .25px $accent-dark-color;
   -webkit-box-shadow:  0px 0px .25px .25px $accent-dark-color;
@@ -241,7 +261,8 @@
 
   display: flex;
   flex-direction: row;
-  gap:1rem;
+  justify-content: center;
+
 
   padding:0.75rem;
   background-color: $dominant-color;
@@ -251,6 +272,14 @@
   -webkit-box-shadow:  0px 0px 2px 0px $accent-dark-color;
 
   z-index: 60;
+}
+
+.buttons-bottom-container {
+  max-width: 40rem;
+
+  display: flex;
+  flex-direction: row;
+  gap:1rem;
 }
 
 @keyframes shine {

@@ -21,36 +21,40 @@
       class="form-container"
       [formGroup]="form"
       >
-        <div [ngClass]="{'editing': productEditing}" class="inputs-container">
+        <div class="form-cont">
 
-          <div class="ipts-first-row">
-            <input
-            type="text"
-            class="ipt-default ipt-name"
-            placeholder="Name"
-            formControlName="productName">
-          </div>
+          <div [ngClass]="{'editing': productEditing}" class="inputs-container">
 
-          <div class="ipts-second-row">
-            <input
-              type="number"
-              class="ipt-default ipt-qty"
-              placeholder="Qty"
-              formControlName="productQuantity">
-
-            <input
+            <div class="ipts-first-row">
+              <input
               type="text"
-              class="ipt-default ipt-unit"
-              placeholder="Unit"
-              formControlName="productUnit">
+              class="ipt-default ipt-name"
+              placeholder="Name"
+              formControlName="productName">
+            </div>
+
+            <div class="ipts-second-row">
+              <input
+                type="number"
+                class="ipt-default ipt-qty"
+                placeholder="Qty"
+                formControlName="productQuantity">
+
+              <input
+                type="text"
+                class="ipt-default ipt-unit"
+                placeholder="Unit"
+                formControlName="productUnit">
+            </div>
+
           </div>
 
+          <div class="btn-container">
+            <button [ngClass]="{'invalid' : loading || form.invalid, 'activated': form.valid && !loading}" (click)="onSaveClick()" *ngIf="productEditing" class="btn-default btn-form">Save</button>
+            <button [ngClass]="{'invalid' : loading || form.invalid, 'activated': form.valid && !loading}" (click)="onAddClick()" *ngIf="!productEditing" class="btn-default btn-form">Add</button>
+          </div>
         </div>
 
-        <div class="btn-container">
-          <button [ngClass]="{'invalid' : loading || form.invalid, 'activated': form.valid && !loading}" (click)="onSaveClick()" *ngIf="productEditing" class="btn-default btn-form">Save</button>
-          <button [ngClass]="{'invalid' : loading || form.invalid, 'activated': form.valid && !loading}" (click)="onAddClick()" *ngIf="!productEditing" class="btn-default btn-form">Add</button>
-        </div>
 
       </div>
 
