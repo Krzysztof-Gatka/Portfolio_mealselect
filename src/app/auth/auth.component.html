@@ -18,7 +18,7 @@
           <input formControlName="password" class="ipt-default" id="password" type="password">
         </div>
 
-        <button class="btn-default" [disabled]="form.invalid">
+        <button [ngClass]="{'invalid' : loading || form.invalid, 'activated': form.valid && !loading}" class="btn-default" [disabled]="form.invalid">
           {{ type === 'login' ? 'Log in' : 'Sign up'}}
         </button>
 

@@ -63,7 +63,7 @@
       <div class="btn-container">
         <button
           *ngIf="!elementEditing"
-          [ngClass]="loading || form.invalid ? 'invalid' : ''"
+          [ngClass]="{'invalid' : loading || form.invalid, 'activated': form.valid && !loading}"
           (click)="onAddClick()"
           class="btn-default btn-add">
           Add
@@ -71,7 +71,7 @@
 
         <button
           *ngIf="elementEditing"
-          [ngClass]="loading || form.invalid ? 'invalid' : ''"
+          [ngClass]="{'invalid' : loading || form.invalid, 'activated': form.valid && !loading}"
           (click)="onSaveClick()"
           class="btn-default btn-save">
           Save

@@ -97,6 +97,12 @@
   box-shadow: 0px 0px 10px 1px $accent-cta-color;
 }
 
+.btn-default.activated {
+  animation-name: btn-change;
+  animation-duration: 400ms;
+  animation-timing-function: ease;
+}
+
 @media screen and (min-width: 420px) {
   .btn-default:hover {
     box-shadow: 0px 0px 10px 1px $accent-cta-color;
@@ -271,4 +277,21 @@
   100% {
     transform: translate(24px, 0);
   }
+}
+
+
+// animations
+
+@keyframes btn-change {
+  0%   {transform: scale(1);}
+  20%   {transform: scale(1.05);}
+  60%   {transform: scale(0.9);}
+  100% {transform: scale(1);}
+}
+
+@keyframes btn-activate {
+  0%   {transform: scale(1); opacity:0.5;}
+  20%   {transform: scale(1.05); opacity:0.7;}
+  60%   {transform: scale(0.9); opacity:0.9;}
+  100% {transform: scale(1); opacity:1;}
 }
