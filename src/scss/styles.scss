@@ -66,6 +66,11 @@
 }
 
 // button
+.btn-text {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+}
+
 .btn-default {
   cursor: pointer;
 
@@ -131,6 +136,8 @@
   font-size: 1.2rem;
   border-radius: 5px;
   padding: 0.4rem 0.3rem;
+
+  transition: box-shadow 100ms ease-in-out 0ms;
 }
 
 .ipt-default.highlight,
@@ -142,6 +149,7 @@
   -webkit-box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
   box-shadow: 0px 0px 1.5px 1.5px $accent-cta-color;
 }
+
 
 
 // label

@@ -8,11 +8,55 @@ import { Subscription } from 'rxjs';
 import { User_Recipes } from '../recipes-list/recipes-list.component';
 import { Ingredient } from '../recipe/ingredient.model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-new-recipe',
   templateUrl: './new-recipe.component.html',
-  styleUrls: ['./new-recipe.component.scss']
+  styleUrls: ['./new-recipe.component.scss'],
+  animations: [
+    trigger('added', [
+
+      transition(':enter', [
+
+        animate('800ms ease-in-out', keyframes([
+
+          style({
+            opacity: 0,
+            transform: 'translateY(-100%)'
+          }),
+
+          style({
+            opacity: 1,
+            transform: 'translateY(0)'
+         }),
+
+        ]))
+      ]),
+
+      transition(':leave', [
+
+        animate('800ms ease-in-out',keyframes([
+
+          style({
+            opacity: 1,
+          }),
+
+          style({
+            opacity: 0,
+          }),
+
+          style({
+            height: 0,
+            padding: 0,
+         }),
+        ]))
+      ]),
+    ]),
+
+
+  ]
 })
 export class NewRecipeComponent implements OnInit{
   recipeForm = new FormGroup({
@@ -39,6 +83,9 @@ export class NewRecipeComponent implements OnInit{
 
   @ViewChild('ing_name_input') ingNameInpt?: ElementRef<HTMLInputElement>;
   @ViewChild('step_input') stepInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('ings_list') ingsList? : ElementRef<HTMLElement>;
+  @ViewChild('steps_list') stepsList? : ElementRef<HTMLElement>;
+  @ViewChild('tags_list') tagsList? : ElementRef<HTMLElement>;
   paramsSub: Subscription | undefined;
   editMode: boolean = false;
   btnsOpened: { id: number, open: boolean} | undefined;
@@ -55,6 +102,7 @@ export class NewRecipeComponent implements OnInit{
   editingIngIndex: number = -1;
   editingStepIndex: number = -1;
   editingTagIndex: number = -1;
+  movingForwards: boolean = false;
   units = units;
   recipe: Recipe = new Recipe(this.authService.user!.email + new Date().getTime().toString(), '', [], []);
 
@@ -93,6 +141,15 @@ export class NewRecipeComponent implements OnInit{
     this.recipe.ingredients.push(new Ingredient(productName, productQuantity, productUnit));
     this.ingredientForm.reset();
     this.ingNameInpt?.nativeElement.focus();
+
+    setTimeout(()=> {
+      this.ingsList?.nativeElement.scroll({
+        top:this.ingsList.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
+    },0);
+
   }
 
   onAddStep(): void {
@@ -102,6 +159,14 @@ export class NewRecipeComponent implements OnInit{
     this.stepForm.reset();
 
     this.stepInput?.nativeElement.focus();
+
+    setTimeout(()=> {
+      this.stepsList?.nativeElement.scroll({
+        top:this.stepsList.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
+    },0);
   }
 
   _getFormRecipe(): void {
@@ -209,6 +274,13 @@ export class NewRecipeComponent implements OnInit{
     } else {
       this.recipe.tags = [tag];
     }
+    setTimeout(()=> {
+      this.tagsList?.nativeElement.scroll({
+        top:this.tagsList.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
+    },0);
   }
 
   onNextClick(): void {
@@ -220,10 +292,12 @@ export class NewRecipeComponent implements OnInit{
       this.btnsOpened.open = false;
     }
     this.progress = this.progress + 1;
+    if(!this.editMode) this.movingForwards = true;
   }
 
   onBackClick(): void {
     this.progress = this.progress - 1;
+    this.movingForwards = false;
   }
 
   onMoreClick(id: number): void {
