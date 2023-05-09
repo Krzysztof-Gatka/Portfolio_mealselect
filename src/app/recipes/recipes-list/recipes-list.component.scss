@@ -85,8 +85,20 @@
   font-weight: bolder;
   background-color: $dominant-color;
   color: $default-text-color;
-  transition: box-shadow 500ms ease-out 0ms;
+  transition: box-shadow 500ms ease-out 0ms, color 500ms ease-in-out 0ms, background-color 500ms ease-in-out 0ms;
 }
+
+@media screen and (min-width: 420px) {
+  .recipes-nav-btn:hover {
+    -webkit-appearance: none;
+    box-shadow:  0px 0px 1.5px 1.5px $accent-cta-color;
+    -webkit-box-shadow:  0px 0px 1.5px 1.5px $accent-cta-color;
+    color: $accent-cta-color;
+    background-color: $accent-color;
+  }
+}
+
+
 
 .recipes-nav-btn.active {
   -webkit-appearance: none;
@@ -102,6 +114,12 @@
   width: fit-content;
 
   transition: transform 300ms ease-in-out 0ms;
+}
+
+@media screen and (min-width: 420px) {
+  .btn-filter-sort:hover {
+    transform: translateY(-1px);
+  }
 }
 
 .btn-filter-sort:active {

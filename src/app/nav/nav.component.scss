@@ -36,6 +36,16 @@
   color: $default-text-color;
   font-weight: bolder;
   font-size: 1.25rem;
+
+  transition: transform 200ms ease-in-out 0ms, color 200ms ease-in-out 0ms;
+}
+
+@media screen and (min-width: 420px) {
+  .btn-hamburger:hover, .btn-nav:hover{
+  transform: scale(1.1);
+  color: $accent-cta-color;
+
+  }
 }
 
 .btn-nav.active-link {
