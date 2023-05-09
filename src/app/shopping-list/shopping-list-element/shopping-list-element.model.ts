@@ -7,4 +7,6 @@ export class ShoppingListElement implements Product {
     public unit?: string | null,
     public bought?: boolean,
   ) {}
+
+
 }

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ShoppingListService } from './shopping-list.service';
 import { ShoppingListElement } from './shopping-list-element/shopping-list-element.model';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { units } from '../recipes/recipe/recipe.model';
 
 
 @Component({
@@ -56,6 +57,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   changeSub: Subscription | undefined;
   editSub: Subscription | undefined;
   loadingSub: Subscription | undefined;
+  units = units;
 
   form = new FormGroup({
     productName: new FormControl<string | null>(null, Validators.required),

@@ -12,7 +12,8 @@ export class Recipe {
     public servings: number = -1,
     public description?: string,
   ) {}
+
 }
 
-export const units = ['g', 'kg', 'tbs.', 'pc', 'pcs', 'tsp.', 'cup'];
+export const units = ['g', 'kg', 'lb', 'tbs', 'tsp', 'pc', 'ml', 'l', 'to taste', 'to serve'];
 export const difficulty = ['easy', 'medium', 'hard'];
