@@ -101,7 +101,6 @@ export class RecipesService {
   }
 
   sort(recipes: Recipe[]): Recipe[] {
-
     const diffSortHelp = {
       easy: 1,
       medium: 2,
@@ -126,12 +125,11 @@ export class RecipesService {
       case 'ingredients':
         sortedRecipes.sort((a, b) => {
           return (this.sorting.asc) ?
-            diffSortHelp[a.difficulty as keyof typeof diffSortHelp] - diffSortHelp[b.difficulty as keyof typeof diffSortHelp] :
-            diffSortHelp[b.difficulty as keyof typeof diffSortHelp] - diffSortHelp[a.difficulty as keyof typeof diffSortHelp]
+            (a.ingredients.length - a.ingredients.filter(ing=>ing.inPantry).length) - (b.ingredients.length - b.ingredients.filter(ing=>ing.inPantry).length) :
+            (b.ingredients.length - b.ingredients.filter(ing=>ing.inPantry).length) - (a.ingredients.length - a.ingredients.filter(ing=>ing.inPantry).length)
         });
         break;
     }
-
     return sortedRecipes;
   }
 
