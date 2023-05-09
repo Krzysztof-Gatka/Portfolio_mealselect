@@ -12,7 +12,7 @@
 
       <div (click)="closeMoreMenu()" class="page-menu-opened">
           <button [ngClass]="shoppingListElements?.length !== 0 ? '' : 'invalid'"  class="btn-default" (click)="onClearList()">Clear list</button>
-          <button [ngClass]="boughtElements ? '' : 'invalid'" class="btn-default" (click)="onAddBoughtElementsToPantry()">Add marked to Pantry</button>
+          <button [ngClass]="boughtElements ? '' : 'invalid'" class="btn-default" (click)="onAddBoughtElementsToPantry()">Move marked to Pantry</button>
       </div>
 
     </div>
