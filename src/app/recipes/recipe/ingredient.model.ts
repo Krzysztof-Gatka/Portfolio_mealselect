@@ -7,4 +7,6 @@ export class Ingredient implements Product {
     public unit?: string | null,
     public inPantry?: boolean | null,
   ) {}
+
 }
+

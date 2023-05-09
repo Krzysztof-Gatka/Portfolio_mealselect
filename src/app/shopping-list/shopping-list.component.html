@@ -45,7 +45,11 @@
                 type="text"
                 class="ipt-default ipt-unit"
                 placeholder="Unit"
+                list="units"
                 formControlName="productUnit">
+                <datalist id="units">
+                  <option *ngFor="let unit of units">{{ unit }}</option>
+                </datalist>
             </div>
 
           </div>

@@ -8,6 +8,8 @@ import { AuthService } from "../auth/auth.service";
 import { Recipe } from "./recipe/recipe.model";
 import { User_Recipes, Recipes_Base } from "./recipes-list/recipes-list.component";
 import { PantryService } from "../pantry/pantry.service";
+import { Ingredient } from "./recipe/ingredient.model";
+import { Product, units_to_grams } from "./recipe/product.model";
 
 export const Fetch_Recipes_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/recipes.json';
 export const Default_URL = 'https://mealselect-ce74f-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -240,7 +242,14 @@ export class RecipesService {
 
     recipes = recipes.map(recipe => {
       recipe.ingredients = recipe.ingredients.map(ing => {
-        ing.inPantry = pantry.some((prod) => prod.name === ing.name && prod.quantity! >= ing.quantity!)
+        ing.inPantry = pantry.some((prod) => {
+          if(prod.name === ing.name) {
+            if(prod.unit === 'to taste' || prod.unit === 'to serve') return true
+            if(prod.unit === 'pc') return prod.quantity! >= ing.quantity!;
+            return this._getQuantityGrams(prod) >= this._getQuantityGrams(ing);
+          }
+          return false;
+        })
         return ing;
       });
 
@@ -248,5 +257,14 @@ export class RecipesService {
     });
 
     return recipes;
+  }
+
+  private _getQuantityGrams(prod: Product): number | boolean{
+    if(prod.unit && prod.quantity) {
+      return prod.quantity * +units_to_grams[prod.unit as keyof typeof units_to_grams];
+    }
+    else {
+      return false;
+    }
   }
 }

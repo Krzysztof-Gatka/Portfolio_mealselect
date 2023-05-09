@@ -46,8 +46,12 @@
                 <input
                 placeholder="Unit"
                 formControlName="unit"
+                list="units"
                 class="ipt-default ipt-unit"
                 type="text">
+                <datalist id="units">
+                  <option *ngFor="let unit of units">{{ unit }}</option>
+                </datalist>
               </div>
 
               <div class="date-container">
@@ -57,6 +61,7 @@
                 type="date"
                 >
               </div>
+
             </div>
 
           </div>

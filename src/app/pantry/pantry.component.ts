@@ -6,6 +6,7 @@ import { formatDate } from '@angular/common';
 import { PantryService } from './pantry.service';
 import { PantryElement } from './pantry-element/pantry.model';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { units } from '../recipes/recipe/recipe.model';
 
 @Component({
   selector: 'app-pantry',
@@ -54,6 +55,7 @@ export class PantryComponent implements OnInit, OnDestroy{
   loading: boolean = true;
   elementEditing: boolean = false;
   elementIndex: number | undefined | null;
+  units = units;
 
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),

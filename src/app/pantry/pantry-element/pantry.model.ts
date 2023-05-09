@@ -7,4 +7,5 @@ export class PantryElement implements Product {
     public unit?: string | null,
     public expDate?: Date | null,
   ) {}
+
 }
