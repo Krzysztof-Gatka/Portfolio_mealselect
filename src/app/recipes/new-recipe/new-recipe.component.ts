@@ -61,15 +61,15 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
 export class NewRecipeComponent implements OnInit{
   recipeForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
-    prepTime: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*/)]),
+    prepTime: new FormControl<number | null>(null, [Validators.required]),
     difficulty: new FormControl<string | null>(null, Validators.required),
-    servings: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*/)]),
+    servings: new FormControl<number | null>(null, [Validators.required]),
     description: new FormControl<string | null>(null),
   });
 
   ingredientForm =  new FormGroup({
     productName: new FormControl<string | null>(null, Validators.required),
-    productQuantity: new FormControl<number | null>(null, Validators.pattern(/^[1-9][0-9]*/)),
+    productQuantity: new FormControl<number | null>(null),
     productUnit: new FormControl<string | null>(null),
   });
 

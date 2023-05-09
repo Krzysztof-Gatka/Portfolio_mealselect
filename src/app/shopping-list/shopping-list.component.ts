@@ -61,7 +61,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   form = new FormGroup({
     productName: new FormControl<string | null>(null, Validators.required),
-    productQuantity: new FormControl<number | null | undefined>(null, Validators.pattern(/^[1-9][0-9]*/)),
+    productQuantity: new FormControl<number | null | undefined>(null),
     productUnit: new FormControl<string | null | undefined>(null)
   })
 
