@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -43,6 +43,7 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
   ]
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
+  @ViewChild('name_input') nameInput?: ElementRef<HTMLInputElement>;
   shoppingListElements: ShoppingListElement[] | undefined;
 
   pageMenuOpened: boolean = false;
@@ -105,6 +106,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   onAddClick(): void {
     this.loading = true;
     this.shoppingListService.addProduct(this._createProduct());
+    this.nameInput?.nativeElement.focus();
     this.form.reset();
   }
 
