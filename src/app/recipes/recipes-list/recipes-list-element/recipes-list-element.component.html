@@ -3,7 +3,7 @@
 
     <div class="recipe-container" [routerLink]="['/recipes', recipesType, 'recipe', recipe.id.toString()]">
       <p class="name"> {{ recipe.name }} </p>
-      <p class="tags">tags: <span class="tag" *ngFor="let tag of recipe.tags; let i = index">{{ tag }}{{ recipe.tags.length === 1 || i === recipe.tags.length-1 ? '.' : ',' }} </span></p>
+      <p *ngIf="recipe.tags" class="tags">tags: <span class="tag" *ngFor="let tag of recipe.tags; let i = index">#{{ tag }} </span></p>
       <p class="attributes"> {{ recipe.prepTime }}min, {{ recipe.difficulty }}, {{ recipe.ingredients.length - ingsInPantry}} ingredients missing</p>
       <p *ngIf="details" class="description">{{ recipe.description }}</p>
     </div>

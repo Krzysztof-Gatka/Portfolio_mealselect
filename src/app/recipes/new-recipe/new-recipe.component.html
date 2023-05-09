@@ -301,6 +301,7 @@
 
 
         <textarea
+          #tag_input
           class="ipt-default"
           [tabIndex]="progress !== 3"
           formControlName="tag"
@@ -396,6 +397,7 @@
   <button
     *ngIf="progress !== 4"
     class="btn-default"
+    [disabled]="(recipeForm.invalid) || (progress === 1 && recipe.ingredients.length === 0) || (progress === 2 && recipe.prepSteps.length === 0)"
     [ngClass]="{
       'disabled'
       :  (recipeForm.invalid)

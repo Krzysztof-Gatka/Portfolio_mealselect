@@ -101,6 +101,7 @@ export class RecipesListComponent implements OnInit{
     this.recipesService.sorting.type = 'none';
 
     this.recipesService.timeFilterValue = -1;
+    this.recipes = this.recipesService.getRecipes(this.recipesType);
     this.sliderForm.reset();
   }
 }

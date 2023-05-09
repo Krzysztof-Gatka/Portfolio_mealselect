@@ -55,7 +55,7 @@
 
     <div class="basic-attributes">
 
-      <p class="tags"> <span class="tag" *ngFor="let tag of recipe!.tags; let i = index">{{ tag }}{{ recipe!.tags.length === 1 || i === recipe!.tags.length-1 ? '.' : ',' }} </span></p>
+      <p class="tags"> <span class="tag" *ngFor="let tag of recipe!.tags; let i = index">#{{ tag }} </span></p>
 
       <p class="">{{ recipe!.prepTime }} min, {{ recipe!.difficulty }},  {{ recipe!.servings }} servings</p>
 

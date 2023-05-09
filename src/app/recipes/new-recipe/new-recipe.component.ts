@@ -83,6 +83,7 @@ export class NewRecipeComponent implements OnInit{
 
   @ViewChild('ing_name_input') ingNameInpt?: ElementRef<HTMLInputElement>;
   @ViewChild('step_input') stepInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('tag_input') tagInput?: ElementRef<HTMLInputElement>;
   @ViewChild('ings_list') ingsList? : ElementRef<HTMLElement>;
   @ViewChild('steps_list') stepsList? : ElementRef<HTMLElement>;
   @ViewChild('tags_list') tagsList? : ElementRef<HTMLElement>;
@@ -274,6 +275,7 @@ export class NewRecipeComponent implements OnInit{
     } else {
       this.recipe.tags = [tag];
     }
+    this.tagInput?.nativeElement.focus();
     setTimeout(()=> {
       this.tagsList?.nativeElement.scroll({
         top:this.tagsList.nativeElement.scrollHeight,

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { formatDate } from '@angular/common';
@@ -43,6 +43,7 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
   ]
 })
 export class PantryComponent implements OnInit, OnDestroy{
+  @ViewChild('name_input') nameInput?: ElementRef<HTMLInputElement>;
   pantry: PantryElement[] | undefined;
 
   pantryChangesSub: Subscription | undefined;
@@ -108,6 +109,8 @@ export class PantryComponent implements OnInit, OnDestroy{
     const newProduct = this._getFormElement();
     this.loading = true;
     this.pantryService.addElement(newProduct);
+    this.nameInput?.nativeElement.focus();
+
     this.form.reset();
   }
 
